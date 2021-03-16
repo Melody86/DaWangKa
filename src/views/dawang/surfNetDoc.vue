@@ -1,7 +1,7 @@
 
 <!-- surfNetDoc 入网协议 -->
 <template>
-    <div class="rulesMask" style="display: none;z-index: 1000;">
+    <div>
       <div class="maskBox" @touchmove="touchmove">
           <div class="agreementContent">
               <div class="agreementTop">
@@ -233,7 +233,7 @@ export default {
     ...mapGetters(['userName'])
   },
   mounted() {
-    this.initData()
+    // this.initData()
   },
   methods: {
     // 请求数据案例
@@ -244,6 +244,9 @@ export default {
         .then(() => { })
         .catch(() => { })
     },
+    touchmove(){
+
+    }
   }
 }
 </script>

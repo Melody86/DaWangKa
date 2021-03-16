@@ -1,6 +1,7 @@
 <!-- privacyDoc 个人隐私协议 -->
 <template>
-   <div class="concealMask" style="display: none;z-index: 1000;">
+   <div>
+      <!-- <div class="concealMask" style="z-index: 1000;"></div> -->
     <div class="maskBox" @touchmove="touchmove">
       <div class="agreementContent">
         <div class="agreementTop">
@@ -77,7 +78,7 @@ export default {
     
   },
   mounted() {
-    this.initData()
+    // this.initData()
   },
   methods: {
     // 请求数据案例
@@ -88,6 +89,9 @@ export default {
         .then(() => { })
         .catch(() => { })
     },
+    touchmove(){
+
+    }
   }
 }
 </script>

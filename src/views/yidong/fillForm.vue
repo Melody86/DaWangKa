@@ -1,0 +1,199 @@
+<!-- 电信星卡-填写表单 -->
+<template>
+  <div class="fill-form-box">
+    <img src="../../assets/images/yidong/gift50-210.png">
+
+    <!-- 表单部分 -->
+    <div class="form-box-content">
+      <div class="box-content-item">
+        <span>收卡人姓名：</span><input placeholder="请填写真实姓名（已加密）" v-model="nameValue"/>
+      </div>
+      <div class="box-content-item">
+        <span>联系电话：</span><input placeholder="客服将确认订单请保持畅通（已加密）" v-model="telValue"/>
+      </div>
+      <div class="box-content-item" v-show="checkName && checkTel">
+        <span>身份证号：</span><input placeholder="请输入身份证号码（已加密）" v-model="individualValue"/>
+      </div>
+      <div class="box-content-item box-content-adderess" v-show="checkName && checkTel">
+        <span>收货地址：</span><input readonly placeholder="请选择省市区（已加密）" v-model="cascaderValue" @click="show=true"/> <label>选择</label>
+      </div>
+      <div class="box-content-item" v-show="checkName && checkTel">
+        <span>详细地址：</span><input placeholder="请填写详细街道、小区信息（已加密）" v-model="detailareaValue"/>
+      </div>
+      
+      <div class="box-content-item form-box-doc">
+        <van-checkbox v-model="docChecked" @click="checkboxClicked" checked-color="#a3783f"></van-checkbox>
+        <div class="form-box-doc-link">
+          <p>我已阅读并同意<span>《客户入网服务协议》</span></p>
+          <p>和<span>《关于客户个人信息收集使用规则公告》</span></p>
+        </div>
+      </div>
+      <img class="box-content-btn" src="../../assets/images/yidong/apply_form_button.gif" @click="submit"/>
+    </div>
+
+    <!-- 地区选择部分 -->
+    <van-popup v-model="show" round position="bottom">
+      <van-area 
+        title="" 
+        cancel-button-text="" 
+        :area-list="areaList" 
+        :columns-num="3" 
+        @confirm="choiceArea"/>
+    </van-popup>
+  </div>
+</template>
+
+<script>
+import { areaList } from '@/assets/js/addressCode.js'
+export default {
+  name: 'fillForm',
+  data() {
+    return {
+      docChecked: false,
+      cascaderValue: '', // 地址
+      show: false,
+      areaList:areaList,//选择地址的地址数据
+      checkName:false,
+      checkTel:false,
+      nameValue:'',   //姓名
+      telValue:'',    //电话
+      individualValue:0,    //身份证号码
+      cascaderValue:'', //省市区
+      detailareaValue:'',  //详细地址
+      showNumber:0,
+    }
+  },
+  components: {},  
+  mounted() {
+    // 此处true需要加上，不加滚动事件可能绑定不成功
+     window.addEventListener("scroll", this.handleScroll, true);
+  },
+  watch:{
+    nameValue(newvalue,oldvalue){
+      // if(){
+
+      // }else{
+      //   this.checkName = true;
+      // }
+      // console.log(newvalue);
+      // console.log(oldvalue);
+    },
+    telValue(newValue,oldValue){
+      var isPhone = /^([0-9]{3,4}-)?[0-9]{7,8}$/;
+      var isMob=/^((\+?86)|(\(\+86\)))?(13[012356789][0-9]{8}|15[012356789][0-9]{8}|18[02356789][0-9]{8}|147[0-9]{8}|1349[0-9]{7})$/;
+      // var value= newValue.trim();
+      if(isMob.test(newValue)||isPhone.test(newValue)){
+        this.checkTel = false;
+      } else{
+        this.checkTel = true;
+      }
+    }
+  },
+  mounted(){
+  },
+  methods: {
+    checkboxClicked(){
+      console.log('this.docChecked', this.docChecked);
+    },
+    choiceArea(arr){
+      this.show=false;
+      this.cascaderValue="";
+      for (var i = 0; i < arr.length; i++) {
+        var a = arr[i].name
+        if(a!=this.cascaderValue){
+          this.cascaderValue=this.cascaderValue+a
+        }
+      }
+    },
+    submit(){
+      this.$toast({
+        message:'请输入正确的身份证号'
+      })
+    }
+  }
+}
+</script>
+<style lang="scss" scoped>
+.fill-form-box {
+  margin: 18px 15px 0 15px;
+  border-radius: 15px;
+  background: #fff;
+  width: 340px;
+  img {
+    width: 317.5px;
+    height: 71.984px;
+  }
+  .box-content-item {
+    padding: 0 10px 0 11px;
+    width: 310px;
+    height: 45px;
+    color:  rgb(51, 51, 51);
+    border-bottom: 1px solid #e5e5e5;
+    text-align: left;
+    line-height: 45px;
+    font-size: 14px;
+    font-weight: 400;
+    display: flex;
+    input{
+      color:#01d8ae;
+    }
+  }
+  .box-content-item input::-webkit-input-placeholder { /* WebKit browsers */
+    color: #999;
+    font-size: 12px;
+  }
+  .box-content-item input{
+    flex: 1;
+    border: none;
+    background: none;
+  }
+  .box-content-item span{
+    margin-right: 15px;
+  }
+  .box-content-adderess{
+    position: relative;
+    label{
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      right: .266667rem;
+      height: .586667rem;
+      line-height: .586667rem;
+      padding: 0 .266667rem;
+      font-size: .32rem;
+      color: #fff;
+      text-align: center;
+      background-color: #ddae60;
+      border-radius: .293333rem;
+      pointer-events: none;
+    }
+  }
+  .form-box-doc{
+    display: flex;
+    height: 54.98px;
+    border: none;
+    align-items: center;
+    line-height: unset;
+    .form-box-doc-link{
+      font-size: 12px;
+      p{
+        margin: 0;
+        height: 18px;
+        margin-left: 7.5px;
+        span{
+          color: #a3783f;
+        }
+      }
+    }
+  }
+  .box-content-btn{
+    margin-top: 5px;
+    margin-bottom: 25px;
+    width: 310px;
+    height: 47.281px;
+    text-align: center;
+  }
+  
+}
+</style>
+
