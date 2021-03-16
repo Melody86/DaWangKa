@@ -57,7 +57,7 @@ export default {
       checkTel:false,
       nameValue:'',   //姓名
       telValue:'',    //电话
-      individualValue:0,    //身份证号码
+      individualValue:'',    //身份证号码
       cascaderValue:'', //省市区
       detailareaValue:'',  //详细地址
       showNumber:0,
@@ -70,19 +70,16 @@ export default {
   },
   watch:{
     nameValue(newvalue,oldvalue){
-      // if(){
-
-      // }else{
-      //   this.checkName = true;
-      // }
-      // console.log(newvalue);
-      // console.log(oldvalue);
+      var isName = /^[\u4e00-\u9fa5]{2,4}$/.test(newvalue);
+      if(!isName){
+        this.checkName = false;
+      }else{
+        this.checkName = true;
+      }
     },
     telValue(newValue,oldValue){
-      var isPhone = /^([0-9]{3,4}-)?[0-9]{7,8}$/;
-      var isMob=/^((\+?86)|(\(\+86\)))?(13[012356789][0-9]{8}|15[012356789][0-9]{8}|18[02356789][0-9]{8}|147[0-9]{8}|1349[0-9]{7})$/;
-      // var value= newValue.trim();
-      if(isMob.test(newValue)||isPhone.test(newValue)){
+      var isMob = /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/.test(newValue);
+      if(!isMob){
         this.checkTel = false;
       } else{
         this.checkTel = true;
@@ -93,7 +90,7 @@ export default {
   },
   methods: {
     checkboxClicked(){
-      console.log('this.docChecked', this.docChecked);
+      // console.log('this.docChecked', this.docChecked);
     },
     choiceArea(arr){
       this.show=false;
@@ -106,9 +103,33 @@ export default {
       }
     },
     submit(){
-      this.$toast({
-        message:'请输入正确的身份证号'
-      })
+      var isIndividual =  /^[1-9][0-9]{5}([1][9][0-9]{2}|[2][0][0|1][0-9])([0][1-9]|[1][0|1|2])([0][1-9]|[1|2][0-9]|[3][0|1])[0-9]{3}([0-9]|[X])$/.test(this.individualValue);
+      if(!this.checkName){
+        this.$toast({
+          message:'请输入名字'
+        });
+        return
+      }else if(!this.checkTel){
+         this.$toast({
+          message:'请输入电话号码'
+        });
+        return
+      }else if(!isIndividual){
+        this.$toast({
+          message:'请输入正确的身份证号'
+        });
+        return
+      }else if(this.cascaderValue == '' || this.detailareaValue == ''){
+        this.$toast({
+          message:'请输入正确的地址'
+        });
+        return
+      }else if(!this.docChecked){
+        this.$toast({
+          message:'请勾选协议'
+        });
+        return
+      }
     }
   }
 }
