@@ -1,41 +1,33 @@
 <!-- 电信星卡-填写表单 -->
 <template>
   <div class="infoFixed">
-    <div class="close_infoFixed"><img src="images/index29_1/cancel2.png" alt="" /></div>
+    <div class="close_infoFixed"><img :src="closeImg" alt="" /></div>
     <p class="info_text">
       已选择<span>靓号{{ chooseNum }}</span
       >{{ numAddress }}
     </p>
-    <!-- <p class="info_text">已选择<span>靓号15611393975</span>北京北京市</p> -->
     <p class="info_text2">根据国家手机号卡实名要求，请如实填写以下信息，以便我们及时为您送达。</p>
     <div class="info_write_info">
       <div>收货地址</div>
       <ul>
-        <li @click="goods_address(2)" class="border_none area_error input_text" id="areaInfo">
+        <li class="border_none area_error input_text" id="areaInfo" @click="showChoiceArea=true">
           <div class="arr-DIV">
             <div class="fl tel_left">所在地区</div>
-            <div
-              class="tel_mid pro_mid info_address_choose"
-              style="white-space: nowrap; overflow-x: scroll; color: rgb(118, 118, 118)"
-              v-text="goods_addre"
-              v-cloak
-            ></div>
+            <div>{{cascaderValue||'请选择区/县'}}</div>
           </div>
-
-          <img src="images/index29_1/path.png" alt="" />
+          <img :src="pathImg" alt="" />
         </li>
         <li class="border_none tel_error address_detail_fill">
           <div class="info_mid">
             <input
               type="text"
               placeholder="请输入详细地址（*街道*门牌号*小区）"
-              v-model="sAddress"
+              v-model="detailareaValue"
               maxlength="50"
               id="addreInfo"
-              @input="areaFill"
             />
           </div>
-          <img src="images/index29_1/help.png" alt="" />
+          <img :src="helpImg" alt="" />
         </li>
       </ul>
     </div>
@@ -49,8 +41,7 @@
               type="tel"
               maxlength="11"
               placeholder="请输入联系电话，并保持畅通"
-              v-model="tel"
-              @input="infoFill(3)"
+              v-model="telValue"
               id="telInfo"
             />
           </div>
@@ -62,46 +53,58 @@
             <input
               type="text"
               placeholder="请输入姓名（已加密）"
-              v-model="handleName"
-              @input="infoFill(1)"
+              v-model="nameValue"
               id="nameInfo"
               maxlength="6"
             />
           </div>
         </li>
-        <li class="border_none id_error" v-show="idCard_show">
+        <li class="border_none id_error" v-show="checkName && checkTel">
           <div class="fl info_left">身份证号</div>
           <div class="info_mid">
             <input
               type="text"
               maxlength="18"
               placeholder="请输入身份证号(已加密)"
-              v-model="idCard"
-              @input="infoFill(2)"
+              v-model="individualValue"
               id="idCardInfo"
             />
           </div>
         </li>
       </ul>
     </div>
-    <div class="content_btn btnTj scale_div" @click="enterPay" id="tj_submit">0元领取，包邮到家</div>
+    <div class="content_btn btnTj scale_div" @click="submit" id="tj_submit">0元领取，包邮到家</div>
     <p class="info_text2">
       本活动为阶段性优惠活动，发布数量有限，请保持联系号码畅通，我们可能随时与您联系，电话无人接听或恶意下单，将不予发货。
     </p>
     <p class="info_text2" style="margin-top: 10px">您的个人信息将受到保护，仅用于此次信息填写</p>
+    <van-popup v-model="showChoiceArea" position="bottom">
+      <van-area 
+        title="" 
+        :area-list="areaList" 
+        :value="defaultAreaCode" 
+        @confirm="choiceArea"/>
+    </van-popup>
   </div>
 </template>
 
 <script>
 import { areaList } from '@/assets/js/addressCode.js'
+import qs from 'qs'
+// axios
+import request from '@/utils/request'
+// user api
 export default {
   name: 'fillForm',
+  props: {
+    chooseNum: String,
+    numAddress: String,
+    area: Array
+  },
   data() {
     return {
-      docChecked: false,
-      cascaderValue: '', // 地址
       show: false,
-      areaList: areaList, //选择地址的地址数据
+      countyList: {}, //选择地址的地址数据
       checkName: false,
       checkTel: false,
       nameValue: '', //姓名
@@ -109,13 +112,21 @@ export default {
       individualValue: '', //身份证号码
       cascaderValue: '', //省市区
       detailareaValue: '', //详细地址
-      showNumber: 0
+      showChoiceArea:false,
+      closeImg: require('@/assets/images/dawang/index29_1/cancel2.png'),
+      helpImg: require('@/assets/images/dawang/index29_1/help.png'),
+      pathImg: require('@/assets/images/dawang/index29_1/path.png'),
+      obj:'',
+      areaList:areaList,
+      defaultAreaCode:'',
+      areaList1:[]
     }
   },
   components: {},
+  created(){
+    this.defaultAreaCode = this.area[1].code
+  },
   mounted() {
-    // 此处true需要加上，不加滚动事件可能绑定不成功
-    window.addEventListener('scroll', this.handleScroll, true)
   },
   watch: {
     nameValue(newvalue, oldvalue) {
@@ -137,10 +148,8 @@ export default {
   },
   mounted() {},
   methods: {
-    checkboxClicked() {
-      // console.log('this.docChecked', this.docChecked);
-    },
     choiceArea(arr) {
+      this.areaList1 = arr;
       this.show = false
       this.cascaderValue = ''
       for (var i = 0; i < arr.length; i++) {
@@ -149,6 +158,7 @@ export default {
           this.cascaderValue = this.cascaderValue + a
         }
       }
+      this.showChoiceArea = false
     },
     submit() {
       var isIndividual = /^[1-9][0-9]{5}([1][9][0-9]{2}|[2][0][0|1][0-9])([0][1-9]|[1][0|1|2])([0][1-9]|[1|2][0-9]|[3][0|1])[0-9]{3}([0-9]|[X])$/.test(
@@ -174,28 +184,69 @@ export default {
           message: '请输入正确的地址'
         })
         return
-      } else if (!this.docChecked) {
-        this.$toast({
-          message: '请勾选协议'
-        })
-        return
       }
-    }
+      var Data = {
+        'name':this.nameValue,
+        'idcard':this.individualValue,
+        'mobile':this.telValue,
+        'address':this.detailareaValue,
+        'area':this.areaList1,
+        'sel_phone':this.chooseNum,
+      }
+      request({
+        url: ' api/submit',
+        method: 'post',
+        // params: qs.stringify(a),
+        params: Data,
+        hideloading: true // 隐藏 loading 组件
+      })
+        .then(res => {
+          this.$toast({
+            message:'提交成功'
+          });
+        })
+        .catch(() => {
+          console.log(22)
+        })
+    },
   }
 }
 </script>
 <style lang="scss" scoped>
+
+</style>
+<style lang="scss" scoped>
+@keyframes warn {
+  from {
+    transform: scale(1);
+    -webkit-transform: scale(0.95);
+    opacity: 0.9;
+  }
+
+  50% {
+    transform: scale(1);
+    -webkit-transform: scale(1);
+    opacity: 1;
+  }
+
+  to {
+    transform: scale(1);
+    -webkit-transform: scale(0.95);
+    opacity: 0.9;
+  }
+}
 .infoFixed {
   width: 100%;
-  height: 90%;
-  position: fixed;
+  height: 100%;
+  position: relative;
   bottom: 0;
   left: 0;
   background: white;
   z-index: 100;
   background-color: #f7f8fa;
   overflow: scroll;
-  display: none;
+  // display: none;
+  font-size:14px;
 }
 
 .infoFixed .close_infoFixed {
@@ -207,8 +258,8 @@ export default {
 }
 
 .infoFixed .close_infoFixed > img {
-  width: 100%;
-  height: 100%;
+  width: 46px;
+  height: 46px;
 }
 
 .infoFixed .info_text {
@@ -218,17 +269,21 @@ export default {
   color: #6e6e6e;
   align-items: center;
   padding: 20px 20px 10px 20px;
+  font-size:14px;
+  margin:0;
 }
 
 .infoFixed .info_text > span {
   font-size: 0.7rem;
   color: #fc1d3a;
+  font-size:16px;
 }
 
 .infoFixed .info_text2 {
-  font-size: 0.6rem;
+  font-size: 14px;
   color: #6e6e6e;
   padding: 0px 20px;
+  text-align:left;
 }
 
 .info_write_info {
@@ -237,16 +292,17 @@ export default {
 
 .info_write_info > div:nth-of-type(1) {
   width: 90%;
-  height: 1.5rem;
-  border-radius: 0.4rem;
+  height: 35px;
+  border-radius:9px;
   background-image: -webkit-gradient(linear, left top, right top, from(#4a6dfe), to(#3ff29d));
   background-image: linear-gradient(90deg, #4a6dfe, #3ff29d);
-  line-height: 1.5rem;
-  font-size: 0.7rem;
+  line-height: 35px;
+  font-size: 16px;
   text-align: left;
   color: #fff;
-  padding-left: 2rem;
+  padding-left: 46px;
   margin: 20px auto;
+  box-sizing:border-box;
 }
 
 .info_write_info ul {
@@ -260,29 +316,56 @@ export default {
   padding: 0px 20px;
   background-color: #fff;
   margin-bottom: 1px;
-  line-height: 1.8rem;
+  line-height: 42px;
 }
 
 .info_write_info ul .arr-DIV {
   width: 90%;
+  display: flex;
+  justify-content: right;
 }
 
 .info_write_info ul img {
-  width: 0.8rem;
-  height: 0.8rem;
+  width: 18px;
+  height: 18px;
 }
 
 .info_write_info ul .tel_left {
   color: #323233;
-  font-size: 0.6rem;
+  font-size: 14px;
 }
 
 .info_write_info ul .info_mid {
   width: 80%;
+  input{
+    border:none;
+    display:block;
+    width:100%;
+  }
 }
 
 .info_write_info ul .fl {
   width: 30%;
+  text-align:left;
+}
+
+.infoFixed .content_btn {
+  width:80%;
+  height:46px;
+  background:#fe4365;
+  border-color:#fe4365;
+  line-height:46px;
+  text-align:center;
+  font-size:18px;
+  border-radius:9px;
+  margin:30px auto;
+  animation: warn 2s ease-in;
+  -webkit-animation: warn 2s ease-in;
+  -moz-animation: warn 2s ease-in;
+  /*规定动画无限次播放*/
+  -webkit-animation-iteration-count: infinite;
+  -moz-animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
 }
 </style>
 

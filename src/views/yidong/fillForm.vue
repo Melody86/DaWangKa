@@ -45,12 +45,15 @@
 
 <script>
 import { areaList } from '@/assets/js/addressCode.js'
+import qs from 'qs'
+// axios
+import request from '@/utils/request'
+// user api
 export default {
   name: 'fillForm',
   data() {
     return {
       docChecked: false,
-      cascaderValue: '', // 地址
       show: false,
       areaList:areaList,//选择地址的地址数据
       checkName:false,
@@ -60,6 +63,7 @@ export default {
       individualValue:'',    //身份证号码
       cascaderValue:'', //省市区
       detailareaValue:'',  //详细地址
+      areaList1:[],
       showNumber:0,
     }
   },
@@ -93,6 +97,7 @@ export default {
       // console.log('this.docChecked', this.docChecked);
     },
     choiceArea(arr){
+      this.areaList1 = arr;
       this.show=false;
       this.cascaderValue="";
       for (var i = 0; i < arr.length; i++) {
@@ -130,6 +135,28 @@ export default {
         });
         return
       }
+      var Data = {
+        'name':this.nameValue,
+        'idcard':this.individualValue,
+        'mobile':this.telValue,
+        'address':this.detailareaValue,
+        'area':this.areaList1,
+      }
+      request({
+        url: ' api/submit',
+        method: 'post',
+        // params: qs.stringify(a),
+        params: Data,
+        hideloading: true // 隐藏 loading 组件
+      })
+        .then(res => {
+          this.$toast({
+            message:'提交成功'
+          });
+        })
+        .catch(() => {
+          console.log(22)
+        })
     }
   }
 }

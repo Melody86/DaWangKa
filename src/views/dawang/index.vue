@@ -95,12 +95,11 @@
     <van-popup v-model="showSur" style="width:90%;height:70%;">
       <surfNetDoc></surfNetDoc>
     </van-popup>
-    <van-popup v-model="showForm" style="width:90%;height:70%;">
-      <fillForm></fillForm>
+    <van-popup v-model="showForm" position="bottom" :style="{ height: '80%' }">
+      <fillForm :chooseNum="chooseNum" :numAddress="area" :area="codeList"></fillForm>
     </van-popup>
   </div>
 </template>
-
 <script>
 import privacyDoc from './privacyDoc'
 import surfNetDoc from './surfNetDoc'
@@ -145,57 +144,20 @@ export default {
       showPrivacy: false, // 个人信息授权与保护声明
       showSur: false, // 用户入网协议
       clickButton: true, // 点击按钮
-      showForm: true,
+      showForm: false,
+      codeList:[],
+      chooseNum:'',
       list: [
-        // 电话号码假数据
-        // {
-        //   price: 454,
-        //   number: 28394849484
-        // },
-        // {
-        //   price: 454,
-        //   number: 28394849484
-        // },
-        // {
-        //   price: 454,
-        //   number: 28394849484
-        // },
-        // {
-        //   price: 454,
-        //   number: 28394849484
-        // },
-        // {
-        //   price: 454,
-        //   number: 28394849484
-        // },
-        // {
-        //   price: 454,
-        //   number: 28394849484
-        // },
-        // {
-        //   price: 454,
-        //   number: 28394849484
-        // },
-        // {
-        //   price: 454,
-        //   number: 28394849484
-        // },
-        // {
-        //   price: 454,
-        //   number: 28394849484
-        // },
-        // {
-        //   price: 454,
-        //   number: 28394849484
-        // },
-        // {
-        //   price: 454,
-        //   number: 28394849484
-        // },
-        // {
-        //   price: 454,
-        //   number: 28394849484
-        // }
+        {"number":"15677716508","price":"100"},
+        {"number":"15677768886","price":"100"},
+        {"number":"15677722501","price":"100"},
+        {"number":"15677799962","price":"100"},
+        {"number":"15677751527","price":"100"},
+        {"number":"15677775093","price":"100"},
+        {"number":"15677736385","price":"100"},
+        {"number":"15677718634","price":"100"},
+        {"number":"15677751499","price":"100"},
+        {"number":"15677792232","price":"100"}
       ]
     }
   },
@@ -211,12 +173,19 @@ export default {
   },
   mounted() {
     // 此处true需要加上，不加滚动事件可能绑定不成功
-    window.addEventListener('scroll', this.handleScroll, true)
+    window.addEventListener('scroll', this.handleScroll, true);
   },
 
   methods: {
     selNum(number) {
+      if(this.area == ''){
+        this.$toast({
+          message:'请选择正确的地址'
+        });
+        return
+      }
       this.showForm = true
+      this.chooseNum = number
     },
     choiceArea(arr) {
       this.showAreaList = false
@@ -227,6 +196,8 @@ export default {
           this.area = this.area + a
         }
       }
+      this.codeList = arr
+      console.log(this.codeList)
     },
     requireData(a) {
       request({
