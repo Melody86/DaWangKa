@@ -3,7 +3,7 @@
   <div class="infoFixed">
     <div class="close_infoFixed"><img :src="closeImg" alt="" /></div>
     <p class="info_text">
-      已选择<span>靓号{{ chooseNum }}</span
+      已选择<span>靓号{{ chooseNum || '' }}</span
       >{{ numAddress }}
     </p>
     <p class="info_text2">根据国家手机号卡实名要求，请如实填写以下信息，以便我们及时为您送达。</p>
@@ -38,12 +38,31 @@
           <div class="fl info_left">联系电话</div>
           <div class="info_mid">
             <input
+              class="tel-info"
               type="tel"
               maxlength="11"
               placeholder="请输入联系电话，并保持畅通"
               v-model="telValue"
               id="telInfo"
             />
+          </div>
+          <div class="clear"></div>
+        </li>
+        <li class="border_none tel_error">
+          <div class="fl info_left">验证码</div>
+          <div class="info_mid tel-info-box">
+            <input
+              class="tel-info"
+              type="number"
+              maxlength="11"
+              placeholder="请输入短信验证码"
+              v-model="verifCode"
+              id="verifCode"
+            />
+            <van-button class="verif-code" type="primary" @click="getCode" :disabled="verifCodeDisab">
+              <span v-if="!verifCodeDisab">请输入验证</span>
+              <span v-else>{{ count + 'S' }}</span>
+            </van-button>
           </div>
           <div class="clear"></div>
         </li>
@@ -119,12 +138,18 @@ export default {
       obj:'',
       areaList:areaList,
       defaultAreaCode:'',
-      areaList1:[]
+      areaList1:[],
+      verifCodeDisab: false,  //是否禁用按钮
+      verifCode: '',
+      timer: null,
+      count: 60,
     }
   },
   components: {},
   created(){
-    this.defaultAreaCode = this.area[1].code
+    if(this.area[1]){
+      this.defaultAreaCode = this.area[1].code
+    }
   },
   mounted() {
   },
@@ -184,6 +209,11 @@ export default {
           message: '请输入正确的地址'
         })
         return
+      }else if(!/^[0-9]*$/.test(Number(this.verifCode))){
+        this.$toast({
+          message: '请输入正确的验证码'
+        })
+        return
       }
       var Data = {
         'name':this.nameValue,
@@ -192,6 +222,7 @@ export default {
         'address':this.detailareaValue,
         'area':this.areaList1,
         'sel_phone':this.chooseNum,
+        'smscode': this.verifCode,
       }
       request({
         url: ' api/submit',
@@ -209,6 +240,42 @@ export default {
           console.log(22)
         })
     },
+    getCode(){
+      if (!this.checkTel) {
+        this.$toast({
+          message: '请输入电话号码'
+        })
+        return
+      }
+      this.verifCodeDisab = true;
+      const TIME_COUNT = 60;
+      if (!this.timer) {
+        this.count = TIME_COUNT;
+        this.timer = setInterval(() => {
+        if (this.count > 0 && this.count <= TIME_COUNT) {
+          this.count--;
+          } else {
+          this.verifCodeDisab = false;
+          clearInterval(this.timer);
+          this.timer = null;
+          }
+        }, 1000)
+      }
+      request({
+        url: ' api/sendcode',
+        method: 'post',
+        params: { 'phone': this.telValue },
+        hideloading: true // 隐藏 loading 组件
+      })
+        .then(res => {
+          this.$toast({
+            message:'已发送，请注意查收！'
+          });
+        })
+        .catch(() => {
+          console.log(22)
+        })
+    }
   }
 }
 </script>
@@ -341,6 +408,22 @@ export default {
     border:none;
     display:block;
     width:100%;
+  }
+}
+
+.tel-info-box{
+  position: relative;
+  .tel-info{
+    padding-right: 20px;
+  }
+  .verif-code{
+    position: absolute;
+    top: 50%;
+    right: 0;
+    height: 30px;
+    width: 100px;
+    font-size: 12px;
+    transform: translateY(-50%);
   }
 }
 
