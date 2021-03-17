@@ -147,6 +147,7 @@ export default {
       showForm: false,
       codeList:[],
       chooseNum:'',
+      isLastPage:true, 
       list: [
         {"number":"15677716508","price":"100"},
         {"number":"15677768886","price":"100"},
@@ -210,6 +211,7 @@ export default {
         .then(res => {
           console.log(res)
           this.list = res.data.list
+          this.isLastPage = res.data.next_page
         })
         .catch(() => {
           console.log(22)
@@ -231,11 +233,21 @@ export default {
     beforeButton() {
       this.clickButton = true
       if (this.pageIndex == 1) {
+        this.$toast({
+          message: '已经是第一页了'
+        })
         return
       }
+      this.pageIndex--;
       this.onSearch()
     },
     afterButton() {
+      if(!this.isLastPage){
+        this.$toast({
+          message: '已经是最后一页了'
+        })
+        return
+      }
       this.pageIndex++
       this.clickButton = false
       this.onSearch()
