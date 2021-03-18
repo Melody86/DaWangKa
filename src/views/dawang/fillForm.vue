@@ -3,14 +3,13 @@
   <div class="infoFixed">
     <div class="close_infoFixed"><img :src="closeImg" alt="" /></div>
     <p class="info_text">
-      已选择<span>靓号{{ chooseNum || '' }}</span
-      >{{ numAddress }}
+      已选择<span>靓号{{ chooseNum || '' }} </span>{{ numAddress }}
     </p>
     <p class="info_text2">根据国家手机号卡实名要求，请如实填写以下信息，以便我们及时为您送达。</p>
     <div class="info_write_info">
       <div>收货地址</div>
       <ul>
-        <li class="border_none area_error input_text" id="areaInfo" @click="showChoiceArea = true">
+        <li class="border_none area_error input_text" id="areaInfo" @click="showAreaBox()">
           <div class="arr-DIV">
             <div class="fl tel_left">所在地区</div>
             <div>{{ cascaderValue || '请选择区/县' }}</div>
@@ -133,7 +132,9 @@ export default {
       verifCode: '',
       timer: null,
       count: 60,
-      need_sms_code: false
+      need_sms_code: false,
+      disable_submit: false,
+      zfb_address: true
     }
   },
   components: {},
@@ -163,6 +164,46 @@ export default {
   },
   mounted() {},
   methods: {
+    showAreaBox() {
+      if (this.zfb_address == true) {
+        this.zfb_address = false
+        if (typeof call_address == 'function') {
+          call_address(res => {
+            alert(JSON.stringify(res))
+            console.log(res)
+            if (res.status == 1) {
+              this.setAddress(res.data)
+            }
+          })
+        }
+        return
+      }
+      this.showChoiceArea = true
+    },
+    setAddress(data) {
+      this.detailareaValue = data.address
+      var county_arr = this.searchValue(areaList.county_list, data.area)
+      if (county_arr.length == 1) {
+        this.defaultAreaCode = county_arr[0]
+      }
+      if (county_arr.length > 1) {
+        for (let i = 0; i < county_arr.length; i++) {
+          const element = county_arr[i]
+          console.log(element)
+        }
+      }
+
+      // this.defaultAreaCode = '530800'
+    },
+    searchValue(object, value) {
+      for (var key in object) {
+        if (object[key] == value) return [key]
+        if (typeof object[key] == 'object') {
+          var temp = this.searchValue(object[key], value)
+          if (temp) return [key, temp].flat()
+        }
+      }
+    },
     choiceArea(arr) {
       this.areaList1 = arr
       this.show = false
@@ -205,37 +246,42 @@ export default {
         })
         return
       }
-      var Data = {
-        name: this.nameValue,
-        idcard: this.individualValue,
-        mobile: this.telValue,
-        address: this.detailareaValue,
-        area: this.areaList1,
-        sel_phone: this.chooseNum,
-        smscode: this.verifCode,
-        sel_phone_area: this.numAddress
+      if (this.disable_submit == false) {
+        this.disable_submit = true
+
+        var Data = {
+          name: this.nameValue,
+          idcard: this.individualValue,
+          mobile: this.telValue,
+          address: this.detailareaValue,
+          area: this.areaList1,
+          sel_phone: this.chooseNum,
+          smscode: this.verifCode,
+          sel_phone_area: this.numAddress
+        }
+        request({
+          url: 'yidong_submit',
+          method: 'post',
+          // params: qs.stringify(a),
+          data: Data,
+          hideloading: true // 隐藏 loading 组件
+        })
+          .then(res => {
+            if (res.errcode === 0) {
+              this.disable_submit = false
+              this.$toast({
+                message: '提交成功'
+              })
+            } else {
+              this.$toast({
+                message: res.message
+              })
+            }
+          })
+          .catch(() => {
+            console.log(22)
+          })
       }
-      request({
-        url: 'yidong_submit',
-        method: 'post',
-        // params: qs.stringify(a),
-        data: Data,
-        hideloading: true // 隐藏 loading 组件
-      })
-        .then(res => {
-          if (res.errcode === 0) {
-            this.$toast({
-              message: '提交成功'
-            })
-          } else {
-            this.$toast({
-              message: res.message
-            })
-          }
-        })
-        .catch(() => {
-          console.log(22)
-        })
     },
     getCode() {
       if (!this.checkTel) {

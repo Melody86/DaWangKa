@@ -155,9 +155,6 @@ export default {
 
   computed: {},
   created() {
-    console.log(areaList.city_list)
-    console.log(parseInt(returnCitySN['cid']) + 100)
-    console.log(areaList.city_list[parseInt(returnCitySN['cid']) + 100])
     if (areaList.city_list[parseInt(returnCitySN['cid'])] === undefined) {
       this.area =
         areaList.province_list[returnCitySN['cid'].slice(0, 2) + '0000'] +
