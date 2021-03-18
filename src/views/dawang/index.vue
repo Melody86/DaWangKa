@@ -100,6 +100,7 @@
     </van-popup>
   </div>
 </template>
+
 <script>
 import privacyDoc from './privacyDoc'
 import surfNetDoc from './surfNetDoc'
@@ -145,56 +146,81 @@ export default {
       showSur: false, // 用户入网协议
       clickButton: true, // 点击按钮
       showForm: false,
-      codeList:[],
-      chooseNum:'',
-      isLastPage:true, 
-      list: [
-        {"number":"15677716508","price":"100"},
-        {"number":"15677768886","price":"100"},
-        {"number":"15677722501","price":"100"},
-        {"number":"15677799962","price":"100"},
-        {"number":"15677751527","price":"100"},
-        {"number":"15677775093","price":"100"},
-        {"number":"15677736385","price":"100"},
-        {"number":"15677718634","price":"100"},
-        {"number":"15677751499","price":"100"},
-        {"number":"15677792232","price":"100"}
-      ]
+      codeList: [],
+      chooseNum: '',
+      isLastPage: true,
+      list: []
     }
   },
 
   computed: {},
   created() {
+    console.log(areaList.city_list)
+    console.log(parseInt(returnCitySN['cid']) + 100)
+    console.log(areaList.city_list[parseInt(returnCitySN['cid']) + 100])
+    if (areaList.city_list[parseInt(returnCitySN['cid'])] === undefined) {
+      this.area =
+        areaList.province_list[returnCitySN['cid'].slice(0, 2) + '0000'] +
+        ' ' +
+        areaList.city_list[parseInt(returnCitySN['cid']) + 100]
+      this.codeList.push({
+        code: returnCitySN['cid'].slice(0, 2) + '0000',
+        name: areaList.province_list[returnCitySN['cid'].slice(0, 2) + '0000']
+      })
+      this.codeList.push({
+        code: parseInt(returnCitySN['cid']) + 100 + '',
+        name: areaList.city_list[parseInt(returnCitySN['cid']) + 100]
+      })
+      console.log(this.codeList)
+    } else if (areaList.city_list[returnCitySN['cid']] === undefined) {
+      this.area =
+        areaList.province_list[returnCitySN['cid'].slice(0, 2) + '0000'] +
+        ' ' +
+        areaList.city_list[parseInt(returnCitySN['cid'])]
+      this.codeList = [
+        {
+          code: returnCitySN['cid'].slice(0, 2) + '0000',
+          name: areaList.province_list[parseInt(returnCitySN['cid'].slice(0, 2) + '0000')]
+        },
+        {
+          code: returnCitySN['cid'],
+          name: areaList.city_list[parseInt(returnCitySN['cid'])]
+        }
+      ]
+    } else {
+    }
     this.requireData({
       page: 1,
       pagesize: 10,
       formattype: this.pageIndex,
-      keyword: this.inputValue
+      keyword: this.inputValue,
+      area: this.area
     })
   },
   mounted() {
     // 此处true需要加上，不加滚动事件可能绑定不成功
-    window.addEventListener('scroll', this.handleScroll, true);
+    window.addEventListener('scroll', this.handleScroll, true)
   },
 
   methods: {
     selNum(number) {
-      if(this.area == ''){
+      if (this.area == '') {
         this.$toast({
-          message:'请选择正确的地址'
-        });
+          message: '请选择正确的地址'
+        })
         return
       }
       this.showForm = true
       this.chooseNum = number
     },
     choiceArea(arr) {
+      // console.log(arr)
       this.showAreaList = false
       this.area = ''
       for (var i = 0; i < arr.length; i++) {
         var a = arr[i].name
         if (a != this.area) {
-          this.area = this.area + a
+          this.area = this.area + ' ' + a
         }
       }
       this.codeList = arr
@@ -210,8 +236,14 @@ export default {
       })
         .then(res => {
           console.log(res)
-          this.list = res.data.list
-          this.isLastPage = res.data.next_page
+          if (res.errcode === 0) {
+            this.list = res.data.list
+            this.isLastPage = res.data.next_page
+          } else {
+            this.$toast({
+              message: '没有找到您心仪的号码'
+            })
+          }
         })
         .catch(() => {
           console.log(22)
@@ -222,7 +254,8 @@ export default {
         page: this.pageIndex,
         pagesize: 10,
         formattype: this.pageIndex,
-        keyword: this.inputValue
+        keyword: this.inputValue,
+        area: this.area
       })
       console.log(this.inputValue)
     },
@@ -238,11 +271,11 @@ export default {
         })
         return
       }
-      this.pageIndex--;
+      this.pageIndex--
       this.onSearch()
     },
     afterButton() {
-      if(!this.isLastPage){
+      if (!this.isLastPage) {
         this.$toast({
           message: '已经是最后一页了'
         })

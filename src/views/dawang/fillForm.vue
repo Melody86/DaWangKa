@@ -10,10 +10,10 @@
     <div class="info_write_info">
       <div>收货地址</div>
       <ul>
-        <li class="border_none area_error input_text" id="areaInfo" @click="showChoiceArea=true">
+        <li class="border_none area_error input_text" id="areaInfo" @click="showChoiceArea = true">
           <div class="arr-DIV">
             <div class="fl tel_left">所在地区</div>
-            <div>{{cascaderValue||'请选择区/县'}}</div>
+            <div>{{ cascaderValue || '请选择区/县' }}</div>
           </div>
           <img :src="pathImg" alt="" />
         </li>
@@ -48,7 +48,7 @@
           </div>
           <div class="clear"></div>
         </li>
-        <li class="border_none tel_error">
+        <li class="border_none tel_error" v-if="need_sms_code">
           <div class="fl info_left">验证码</div>
           <div class="info_mid tel-info-box">
             <input
@@ -69,13 +69,7 @@
         <li class="border_none name_error" style="border-radius: 0.25rem 0.25rem 0 0">
           <div class="fl info_left">姓名</div>
           <div class="info_mid">
-            <input
-              type="text"
-              placeholder="请输入姓名（已加密）"
-              v-model="nameValue"
-              id="nameInfo"
-              maxlength="6"
-            />
+            <input type="text" placeholder="请输入姓名（已加密）" v-model="nameValue" id="nameInfo" maxlength="6" />
           </div>
         </li>
         <li class="border_none id_error" v-show="checkName && checkTel">
@@ -98,11 +92,7 @@
     </p>
     <p class="info_text2" style="margin-top: 10px">您的个人信息将受到保护，仅用于此次信息填写</p>
     <van-popup v-model="showChoiceArea" position="bottom">
-      <van-area 
-        title="" 
-        :area-list="areaList" 
-        :value="defaultAreaCode" 
-        @confirm="choiceArea"/>
+      <van-area title="" :area-list="areaList" :value="defaultAreaCode" @confirm="choiceArea" />
     </van-popup>
   </div>
 </template>
@@ -131,28 +121,28 @@ export default {
       individualValue: '', //身份证号码
       cascaderValue: '', //省市区
       detailareaValue: '', //详细地址
-      showChoiceArea:false,
+      showChoiceArea: false,
       closeImg: require('@/assets/images/dawang/index29_1/cancel2.png'),
       helpImg: require('@/assets/images/dawang/index29_1/help.png'),
       pathImg: require('@/assets/images/dawang/index29_1/path.png'),
-      obj:'',
-      areaList:areaList,
-      defaultAreaCode:'',
-      areaList1:[],
-      verifCodeDisab: false,  //是否禁用按钮
+      obj: '',
+      areaList: areaList,
+      defaultAreaCode: '',
+      areaList1: [],
+      verifCodeDisab: false, //是否禁用按钮
       verifCode: '',
       timer: null,
       count: 60,
+      need_sms_code: false
     }
   },
   components: {},
-  created(){
-    if(this.area[1]){
+  created() {
+    if (this.area[1]) {
       this.defaultAreaCode = this.area[1].code
     }
   },
-  mounted() {
-  },
+  mounted() {},
   watch: {
     nameValue(newvalue, oldvalue) {
       var isName = /^[\u4e00-\u9fa5]{2,4}$/.test(newvalue)
@@ -174,13 +164,13 @@ export default {
   mounted() {},
   methods: {
     choiceArea(arr) {
-      this.areaList1 = arr;
+      this.areaList1 = arr
       this.show = false
       this.cascaderValue = ''
       for (var i = 0; i < arr.length; i++) {
         var a = arr[i].name
         if (a != this.cascaderValue) {
-          this.cascaderValue = this.cascaderValue + a
+          this.cascaderValue = this.cascaderValue + ' ' + a
         }
       }
       this.showChoiceArea = false
@@ -209,68 +199,75 @@ export default {
           message: '请输入正确的地址'
         })
         return
-      }else if(!/^[0-9]*$/.test(Number(this.verifCode))){
+      } else if (!/^[0-9]*$/.test(Number(this.verifCode))) {
         this.$toast({
           message: '请输入正确的验证码'
         })
         return
       }
       var Data = {
-        'name':this.nameValue,
-        'idcard':this.individualValue,
-        'mobile':this.telValue,
-        'address':this.detailareaValue,
-        'area':this.areaList1,
-        'sel_phone':this.chooseNum,
-        'smscode': this.verifCode,
+        name: this.nameValue,
+        idcard: this.individualValue,
+        mobile: this.telValue,
+        address: this.detailareaValue,
+        area: this.areaList1,
+        sel_phone: this.chooseNum,
+        smscode: this.verifCode,
+        sel_phone_area: this.numAddress
       }
       request({
-        url: ' api/submit',
+        url: 'yidong_submit',
         method: 'post',
         // params: qs.stringify(a),
-        params: Data,
+        data: Data,
         hideloading: true // 隐藏 loading 组件
       })
         .then(res => {
-          this.$toast({
-            message:'提交成功'
-          });
+          if (res.errcode === 0) {
+            this.$toast({
+              message: '提交成功'
+            })
+          } else {
+            this.$toast({
+              message: res.message
+            })
+          }
         })
         .catch(() => {
           console.log(22)
         })
     },
-    getCode(){
+    getCode() {
       if (!this.checkTel) {
         this.$toast({
           message: '请输入电话号码'
         })
         return
       }
-      this.verifCodeDisab = true;
-      const TIME_COUNT = 60;
+      this.verifCodeDisab = true
+      const TIME_COUNT = 60
       if (!this.timer) {
-        this.count = TIME_COUNT;
+        this.count = TIME_COUNT
         this.timer = setInterval(() => {
-        if (this.count > 0 && this.count <= TIME_COUNT) {
-          this.count--;
+          if (this.count > 0 && this.count <= TIME_COUNT) {
+            this.count--
           } else {
-          this.verifCodeDisab = false;
-          clearInterval(this.timer);
-          this.timer = null;
+            this.verifCodeDisab = false
+            clearInterval(this.timer)
+            this.timer = null
           }
         }, 1000)
       }
       request({
-        url: ' api/sendcode',
+        url: 'sendcode',
         method: 'post',
-        params: { 'phone': this.telValue },
+        params: { phone: this.telValue },
         hideloading: true // 隐藏 loading 组件
       })
         .then(res => {
           this.$toast({
-            message:'已发送，请注意查收！'
-          });
+            message: '已发送，请注意查收！'
+          })
         })
         .catch(() => {
           console.log(22)
@@ -280,7 +277,6 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-
 </style>
 <style lang="scss" scoped>
 @keyframes warn {
@@ -313,7 +309,7 @@ export default {
   background-color: #f7f8fa;
   overflow: scroll;
   // display: none;
-  font-size:14px;
+  font-size: 14px;
 }
 
 .infoFixed .close_infoFixed {
@@ -336,21 +332,21 @@ export default {
   color: #6e6e6e;
   align-items: center;
   padding: 20px 20px 10px 20px;
-  font-size:14px;
-  margin:0;
+  font-size: 14px;
+  margin: 0;
 }
 
 .infoFixed .info_text > span {
   font-size: 0.7rem;
   color: #fc1d3a;
-  font-size:16px;
+  font-size: 16px;
 }
 
 .infoFixed .info_text2 {
   font-size: 14px;
   color: #6e6e6e;
   padding: 0px 20px;
-  text-align:left;
+  text-align: left;
 }
 
 .info_write_info {
@@ -360,7 +356,7 @@ export default {
 .info_write_info > div:nth-of-type(1) {
   width: 90%;
   height: 35px;
-  border-radius:9px;
+  border-radius: 9px;
   background-image: -webkit-gradient(linear, left top, right top, from(#4a6dfe), to(#3ff29d));
   background-image: linear-gradient(90deg, #4a6dfe, #3ff29d);
   line-height: 35px;
@@ -369,7 +365,7 @@ export default {
   color: #fff;
   padding-left: 46px;
   margin: 20px auto;
-  box-sizing:border-box;
+  box-sizing: border-box;
 }
 
 .info_write_info ul {
@@ -404,19 +400,19 @@ export default {
 
 .info_write_info ul .info_mid {
   width: 80%;
-  input{
-    border:none;
-    display:block;
-    width:100%;
+  input {
+    border: none;
+    display: block;
+    width: 100%;
   }
 }
 
-.tel-info-box{
+.tel-info-box {
   position: relative;
-  .tel-info{
+  .tel-info {
     padding-right: 20px;
   }
-  .verif-code{
+  .verif-code {
     position: absolute;
     top: 50%;
     right: 0;
@@ -429,19 +425,19 @@ export default {
 
 .info_write_info ul .fl {
   width: 30%;
-  text-align:left;
+  text-align: left;
 }
 
 .infoFixed .content_btn {
-  width:80%;
-  height:46px;
-  background:#fe4365;
-  border-color:#fe4365;
-  line-height:46px;
-  text-align:center;
-  font-size:18px;
-  border-radius:9px;
-  margin:30px auto;
+  width: 80%;
+  height: 46px;
+  background: #fe4365;
+  border-color: #fe4365;
+  line-height: 46px;
+  text-align: center;
+  font-size: 18px;
+  border-radius: 9px;
+  margin: 30px auto;
   animation: warn 2s ease-in;
   -webkit-animation: warn 2s ease-in;
   -moz-animation: warn 2s ease-in;
