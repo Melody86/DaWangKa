@@ -99,6 +99,7 @@
 <script>
 import { areaList } from '@/assets/js/addressCode.js'
 import qs from 'qs'
+import _ from 'lodash'
 // axios
 import request from '@/utils/request'
 // user api
@@ -165,18 +166,28 @@ export default {
   mounted() {},
   methods: {
     showAreaBox() {
-      if (this.zfb_address == true) {
-        this.zfb_address = false
-        if (typeof call_address == 'function') {
+      // this.setAddress({
+      //   address: '黄龙国际 不放自提柜 送到家 送到家 送到家 送到家',
+      //   country: '中国',
+      //   prov: '浙江省',
+      //   city: '柳州市',
+      //   area: '高新区',
+      //   street: '西溪路',
+      //   fullname: 'xxx',
+      //   mobilePhone: '158***5632'
+      // })
+      if (typeof call_address == 'function') {
+        if (this.zfb_address == true) {
+          this.zfb_address = false
           call_address(res => {
-            alert(JSON.stringify(res))
-            console.log(res)
+            // alert(JSON.stringify(res))
+            // console.log(res)
             if (res.status == 1) {
               this.setAddress(res.data)
             }
           })
+          return
         }
-        return
       }
       this.showChoiceArea = true
     },
@@ -188,21 +199,40 @@ export default {
       }
       if (county_arr.length > 1) {
         for (let i = 0; i < county_arr.length; i++) {
-          const element = county_arr[i]
-          console.log(element)
+          var element = areaList.city_list[(county_arr[i] + '').slice(0, 4) + '00']
+          if (data.city == element) {
+            console.log(county_arr[i])
+            this.defaultAreaCode = county_arr[i] + ''
+            break
+          }
         }
       }
+      var new_arr = []
+      new_arr.push({
+        code: this.defaultAreaCode.slice(0, 2) + '' + '0000',
+        name: areaList.province_list[parseInt(this.defaultAreaCode.slice(0, 2) + '' + '0000')]
+      })
+      new_arr.push({
+        code: this.defaultAreaCode.slice(0, 4) + '' + '00',
+        name: areaList.city_list[parseInt(this.defaultAreaCode.slice(0, 4) + '' + '00')]
+      })
+      new_arr.push({
+        code: this.defaultAreaCode,
+        name: areaList.county_list[parseInt(this.defaultAreaCode)]
+      })
+      console.log(new_arr)
+      this.choiceArea(new_arr)
 
       // this.defaultAreaCode = '530800'
     },
     searchValue(object, value) {
+      var adw = []
       for (var key in object) {
-        if (object[key] == value) return [key]
-        if (typeof object[key] == 'object') {
-          var temp = this.searchValue(object[key], value)
-          if (temp) return [key, temp].flat()
+        if (object[key] == value) {
+          adw.push(key)
         }
       }
+      return adw
     },
     choiceArea(arr) {
       this.areaList1 = arr
@@ -248,40 +278,58 @@ export default {
       }
       if (this.disable_submit == false) {
         this.disable_submit = true
-
-        var Data = {
-          name: this.nameValue,
-          idcard: this.individualValue,
-          mobile: this.telValue,
-          address: this.detailareaValue,
-          area: this.areaList1,
-          sel_phone: this.chooseNum,
-          smscode: this.verifCode,
-          sel_phone_area: this.numAddress
-        }
-        request({
-          url: 'yidong_submit',
-          method: 'post',
-          // params: qs.stringify(a),
-          data: Data,
-          hideloading: true // 隐藏 loading 组件
-        })
-          .then(res => {
-            if (res.errcode === 0) {
-              this.disable_submit = false
-              this.$toast({
-                message: '提交成功'
-              })
+        if (typeof call_pay == 'function') {
+          call_pay(1, res => {
+            // alert(JSON.stringify(res))
+            if (res.status == 1) {
+              this.submit_order()
             } else {
               this.$toast({
                 message: res.message
               })
+              this.disable_submit = false
             }
           })
-          .catch(() => {
-            console.log(22)
-          })
+        } else {
+          this.submit_order()
+        }
       }
+    },
+    submit_order() {
+      var Data = {
+        name: this.nameValue,
+        idcard: this.individualValue,
+        mobile: this.telValue,
+        address: this.detailareaValue,
+        area: this.areaList1,
+        sel_phone: this.chooseNum,
+        smscode: this.verifCode,
+        sel_phone_area: this.numAddress
+      }
+      request({
+        url: 'yidong_submit',
+        method: 'post',
+        // params: qs.stringify(a),
+        data: Data,
+        hideloading: true // 隐藏 loading 组件
+      })
+        .then(res => {
+          if (res.errcode === 0) {
+            this.disable_submit = false
+            this.$toast({
+              message: '提交成功'
+            })
+            this.disable_submit = false
+          } else {
+            this.$toast({
+              message: res.message
+            })
+            this.disable_submit = false
+          }
+        })
+        .catch(() => {
+          console.log(22)
+        })
     },
     getCode() {
       if (!this.checkTel) {
