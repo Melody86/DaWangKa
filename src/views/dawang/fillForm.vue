@@ -135,7 +135,8 @@ export default {
       count: 60,
       need_sms_code: false,
       disable_submit: false,
-      zfb_address: true
+      zfb_address: true,
+      need_pay: false
     }
   },
   components: {},
@@ -278,7 +279,7 @@ export default {
       }
       if (this.disable_submit == false) {
         this.disable_submit = true
-        if (typeof call_pay == 'function') {
+        if (typeof call_pay == 'function' && this.need_pay == true) {
           call_pay(1, res => {
             // alert(JSON.stringify(res))
             if (res.status == 1) {
