@@ -17,5 +17,11 @@ export const constantRouterMap = [
     name: 'yidong',
     component: () => import('@/views/yidong/index'),
     meta: { title: '电信星卡', keepAlive: false }
+  },
+  {
+    path: '/lingka',
+    name: 'lingka',
+    component: () => import('@/views/lingka/index'),
+    meta: { title: '电信靓卡', keepAlive: false }
   }
 ]
