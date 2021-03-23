@@ -136,7 +136,7 @@ export default {
       need_sms_code: false,
       disable_submit: false,
       zfb_address: true,
-      need_pay: false
+      need_pay: true
     }
   },
   components: {},
