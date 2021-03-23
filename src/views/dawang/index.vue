@@ -59,7 +59,7 @@
           </van-grid>
         </div>
         <p class="icon-text"><i>*</i>靓号名额有限，具体情况以实际为准</p>
-        <div class="agreement">
+        <div class="agreement" v-if="showAgreement">
           <img :src="checkIcon"></img>
           我已阅读并同意
           <span @click="showPrivacy=true">《个人隐私协议》</span>
@@ -149,7 +149,8 @@ export default {
       codeList: [],
       chooseNum: '',
       isLastPage: true,
-      list: []
+      list: [],
+      showAgreement: false
     }
   },
 
