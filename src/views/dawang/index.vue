@@ -184,7 +184,6 @@ export default {
           name: areaList.city_list[parseInt(returnCitySN['cid'])]
         }
       ]
-    } else {
     }
     this.requireData({
       page: 1,
@@ -201,7 +200,7 @@ export default {
 
   methods: {
     selNum(number) {
-      if (this.area == '') {
+      if (this.area === '') {
         this.$toast({
           message: '请选择正确的地址'
         })
@@ -216,7 +215,7 @@ export default {
       this.area = ''
       for (var i = 0; i < arr.length; i++) {
         var a = arr[i].name
-        if (a != this.area) {
+        if (a !== this.area) {
           this.area = this.area + ' ' + a
         }
       }
@@ -262,7 +261,7 @@ export default {
     },
     beforeButton() {
       this.clickButton = true
-      if (this.pageIndex == 1) {
+      if (this.pageIndex === 1) {
         this.$toast({
           message: '已经是第一页了'
         })
