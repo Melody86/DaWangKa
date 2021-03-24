@@ -1,4 +1,4 @@
-export const areaList = {
+const areaList = {
   province_list: {
     '110000': '北京',
     '120000': '天津',
@@ -3433,3 +3433,5 @@ export const areaList = {
     '659011': '沙湾县'
   }
 }
+const NumArea = () => {}
+export { areaList, NumArea }
