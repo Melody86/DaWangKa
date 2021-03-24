@@ -1,103 +1,129 @@
 <template>
-    <div class="ling-ka">
-        <div><img :src="top"></img></div>
-        <div class="form">
-            <div class="swipe">
-                <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white" vertical :show-indicators="false">
-                <van-swipe-item><img :src="laba"></img>1分钟前 赵** 177****9696 领取了此卡</van-swipe-item>
-                <van-swipe-item><img :src="laba"></img>1分钟前 王** 177****7862 领取了此卡</van-swipe-item>
-                <van-swipe-item><img :src="laba"></img>1分钟前 李** 177****5374 领取了此卡</van-swipe-item>
-                <van-swipe-item><img :src="laba"></img>1分钟前 姚* 177****3875 领取了此卡</van-swipe-item>
-                </van-swipe>
+  <div class="ling-ka">
+    <div><img :src="top" /></div>
+    <div class="form">
+      <div class="swipe">
+        <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white" vertical :show-indicators="false">
+          <van-swipe-item><img :src="laba" />1分钟前 赵** 177****9696 领取了此卡</van-swipe-item>
+          <van-swipe-item><img :src="laba" />1分钟前 王** 177****7862 领取了此卡</van-swipe-item>
+          <van-swipe-item><img :src="laba" />1分钟前 李** 177****5374 领取了此卡</van-swipe-item>
+          <van-swipe-item><img :src="laba" />1分钟前 姚* 177****3875 领取了此卡</van-swipe-item>
+        </van-swipe>
+      </div>
+      <div class="choose"><img :src="choose" /></div>
+      <div class="search-list">
+        <div class="content-div">
+          <div class="search-input">
+            <div class="car-search">
+              <div class="search-button" @click="searchNumber">搜一搜</div>
+              <div class="search-text">
+                <input
+                  type="number"
+                  v-model="searchNum"
+                  οninput="if(value.length>5)value=value.slice(0,5)"
+                  placeholder="生日、爱情、幸运数字"
+                />
+              </div>
             </div>
-            <div class="choose"><img :src="choose"></img></div>
-            <div class="search-list">
-                <div class="content-div">
-                    <div class="search-input">
-                        <div class="car-search">
-                            <div class="search-button" @click="searchNumber">搜一搜</div>
-                            <div class="search-text"><input type="number"  v-model="searchNum" οninput="if(value.length>5)value=value.slice(0,5)" placeholder="生日、爱情、幸运数字"></div>
-                        </div>
-                        <div class="next-button" @click="searchNumber">换一换</div>
-                    </div>
-                    <div class="hot-search">
-                        <img :src="zhu"></img>
-                    </div>
-                    <div class="card-list">
-                        <van-grid :column-num="3" :border="false" :gutter="2">
-                            <van-grid-item v-for="(item,index) in list" :key="index" @click="chooseItemNum(item)">
-                                <div>{{item.number}}</div>
-                                <div class="text">限时免费</div>
-                            </van-grid-item>
-                        </van-grid>
-                    </div>
-                </div>
-            </div>
-            <div class="form-list">
-                <img :src="head"></img>
-                <div class="banner">
-                    <div>
-                        <div class="banner-inner">
-                            <div class="banner-form">
-                                <div class="banner-border">
-                                    <span class="banner-text">免费靓号<span>*</span></span>
-                                    <span class="banner-text2"><input class="banner_input" readonly="readonly" placeholder="免费靓号" v-model="chooseNumber"></span>
-                                </div>
-                                <div class="banner-border">
-                                    <span class="banner-text">证件姓名<span>*</span></span>
-                                    <span class="banner-text2"><input class="banner_input"  placeholder="请输入身份证件姓名（已加密）" v-model="nameValue"></span>
-                                </div>
-                                <div class="banner-border">
-                                    <span class="banner-text">联系号码<span>*</span></span>
-                                    <span class="banner-text2"><input class="banner_input"  placeholder="请输入收件人联系电话（已加密）" v-model="telValue"></span>
-                                </div>
-                                <div class="banner-border" v-show="checkName && checkTel">
-                                    <span class="banner-text">身份证号<span>*</span></span>
-                                    <span class="banner-text2"><input class="banner_input"  placeholder="请输入身份证号码（已加密）" v-model="individualValue"></span>
-                                </div>
-                                <div class="banner-border">
-                                    <span class="banner-text">收货省市<span>*</span></span>
-                                    <span class="banner-text2"><input class="banner_input"  placeholder="请选择省/市/区（县）" v-model="cascaderValue" readonly="readonly" @click="showAreaBox"></span>
-                                </div>
-                                <div class="banner-border">
-                                    <span class="banner-text">详细地址<span>*</span></span>
-                                    <span class="banner-text2"><input class="banner_input"  placeholder="请选择省/市/区（县）" v-model="detailareaValue"></span>
-                                </div>
-                            </div>
-                            <div class="formbox-btm">
-                                <van-checkbox v-model="docChecked" shape="square" icon-size="14px"></van-checkbox>
-                                <span class="btm-text">我已阅读并同意:</span>
-                                <div class="policy-name" @click="showPersonal = true">《中国电信入网协议及翼支付服务协议&隐私政策》</div>
-                                <div class="policy-name" @click="showInfo = true">《关于客户个人信息收集、使用规则公告》</div>
-                            </div>
-                            <div class="button-btm" @click="submit">
-                                <img :src="button"></img>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <div class="next-button" @click="searchNumber">换一换</div>
+          </div>
+          <div class="hot-search">
+            <img :src="zhu" />
+          </div>
+          <div class="card-list">
+            <van-grid :column-num="3" :border="false" :gutter="2">
+              <van-grid-item v-for="(item, index) in list" :key="index" @click="chooseItemNum(item)">
+                <div>{{ item.number }}</div>
+                <div class="text">{{ item.feature }}</div>
+              </van-grid-item>
+            </van-grid>
+          </div>
         </div>
-        <div><img :src="middle"></img></div>
-        <div><img :src="bottom"></img></div>
-        <div class="question-tips" @click="showQuestion = true">常见问题</div>
-        <div class="question-tips" @click="showTips = true">温馨提示</div>
-        <div @click="toTop"><img :src="button"></img></div>
-        <van-popup v-model="showChoiceArea" position="bottom">
-            <van-area title="" :area-list="areaList" :value="defaultAreaCode" @confirm="choiceArea" />
-        </van-popup>
-        <van-popup v-model="showPersonal" style="width:90%;height:70%;">
-            <personalAccess></personalAccess>
-        </van-popup>
-        <van-popup v-model="showInfo" style="width:90%;height:70%;">
-            <info></info>
-        </van-popup>
-        <van-popup v-model="showQuestion" style="width:90%;height:70%;border-radius:15px;">
-            <question @closeValue="closeValue"></question>
-        </van-popup><van-popup v-model="showTips" style="width:90%;height:70%;border-radius:15px;">
-            <tips @closeValue1="closeValue1"></tips>
-        </van-popup>
+      </div>
+      <div class="form-list">
+        <img :src="head" />
+        <div class="banner">
+          <div>
+            <div class="banner-inner">
+              <div class="banner-form">
+                <div class="banner-border">
+                  <span class="banner-text">免费靓号<span>*</span></span>
+                  <span class="banner-text2"
+                    ><input class="banner_input" readonly="readonly" placeholder="免费靓号" v-model="chooseNumber"
+                  /></span>
+                </div>
+                <div class="banner-border">
+                  <span class="banner-text">证件姓名<span>*</span></span>
+                  <span class="banner-text2"
+                    ><input class="banner_input" placeholder="请输入身份证件姓名（已加密）" v-model="nameValue"
+                  /></span>
+                </div>
+                <div class="banner-border">
+                  <span class="banner-text">联系号码<span>*</span></span>
+                  <span class="banner-text2"
+                    ><input class="banner_input" placeholder="请输入收件人联系电话（已加密）" v-model="telValue"
+                  /></span>
+                </div>
+                <div class="banner-border" v-show="checkName && checkTel">
+                  <span class="banner-text">身份证号<span>*</span></span>
+                  <span class="banner-text2"
+                    ><input class="banner_input" placeholder="请输入身份证号码（已加密）" v-model="individualValue"
+                  /></span>
+                </div>
+                <div class="banner-border">
+                  <span class="banner-text">收货省市<span>*</span></span>
+                  <span class="banner-text2"
+                    ><input
+                      class="banner_input"
+                      placeholder="请选择省/市/区（县）"
+                      v-model="cascaderValue"
+                      readonly="readonly"
+                      @click="showAreaBox"
+                  /></span>
+                </div>
+                <div class="banner-border">
+                  <span class="banner-text">详细地址<span>*</span></span>
+                  <span class="banner-text2"
+                    ><input class="banner_input" placeholder="请选择省/市/区（县）" v-model="detailareaValue"
+                  /></span>
+                </div>
+              </div>
+              <div class="formbox-btm">
+                <van-checkbox v-model="docChecked" shape="square" icon-size="14px"></van-checkbox>
+                <span class="btm-text">我已阅读并同意:</span>
+                <div class="policy-name" @click="showPersonal = true">
+                  《中国电信入网协议及翼支付服务协议&隐私政策》
+                </div>
+                <div class="policy-name" @click="showInfo = true">《关于客户个人信息收集、使用规则公告》</div>
+              </div>
+              <div class="button-btm" @click="submit">
+                <img :src="button" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+    <div><img :src="middle" /></div>
+    <div><img :src="bottom" /></div>
+    <div class="question-tips" @click="showQuestion = true">常见问题</div>
+    <div class="question-tips" @click="showTips = true">温馨提示</div>
+    <div @click="toTop"><img :src="button" /></div>
+    <van-popup v-model="showChoiceArea" position="bottom">
+      <van-area title="" :area-list="areaList" :value="defaultAreaCode" @confirm="choiceArea" />
+    </van-popup>
+    <van-popup v-model="showPersonal" style="width: 90%; height: 70%">
+      <personalAccess></personalAccess>
+    </van-popup>
+    <van-popup v-model="showInfo" style="width: 90%; height: 70%">
+      <info></info>
+    </van-popup>
+    <van-popup v-model="showQuestion" style="width: 90%; height: 70%; border-radius: 15px">
+      <question @closeValue="closeValue"></question> </van-popup
+    ><van-popup v-model="showTips" style="width: 90%; height: 70%; border-radius: 15px">
+      <tips @closeValue1="closeValue1"></tips>
+    </van-popup>
+  </div>
 </template>
 
 <script>
@@ -128,13 +154,13 @@ export default {
       zhu: require('@/assets/images/lingka/zhu.png'),
       head: require('@/assets/images/lingka/head.png'),
       button: require('@/assets/images/lingka/button.gif'),
-      searchNum: '', //搜索的数字
-      chooseNumber: '', //选中的电话号码
+      searchNum: '', // 搜索的数字
+      chooseNumber: '', // 选中的电话号码
       nameValue: '', // 姓名
-      telValue: '', //电话号码
-      individualValue: '', //身份证号码
-      cascaderValue: '', //选中省市区
-      detailareaValue: '', //详细地址
+      telValue: '', // 电话号码
+      individualValue: '', // 身份证号码
+      cascaderValue: '', // 选中省市区
+      detailareaValue: '', // 详细地址
       docChecked: true,
       checkName: false,
       checkTel: false,
@@ -150,15 +176,15 @@ export default {
       showTips: false,
       area: '',
       list: [
-        { number: 19938330130 },
-        { number: 19938330130 },
-        { number: 19938330130 },
-        { number: 19938330130 },
-        { number: 19938330130 },
-        { number: 19938330130 },
-        { number: 19938330130 },
-        { number: 19938330130 },
-        { number: 19938330130 }
+        { number: 19938330130, feature: '爱情靓号' },
+        { number: 19938330130, feature: '爱情靓号' },
+        { number: 19938330130, feature: '爱情靓号' },
+        { number: 19938330130, feature: '爱情靓号' },
+        { number: 19938330130, feature: '爱情靓号' },
+        { number: 19938330130, feature: '爱情靓号' },
+        { number: 19938330130, feature: '爱情靓号' },
+        { number: 19938330130, feature: '爱情靓号' },
+        { number: 19938330130, feature: '爱情靓号' }
       ]
     }
   },
@@ -227,7 +253,7 @@ export default {
   methods: {
     requireData(a) {
       request({
-        url: '/list2',
+        url: 'webview/phone_list',
         method: 'get',
         // params: qs.stringify(a),
         params: a,
@@ -264,13 +290,13 @@ export default {
       this.chooseNumber = obj.number
     },
     showAreaBox() {
-      if (typeof call_address == 'function') {
-        if (this.zfb_address == true) {
+      if (typeof call_address === 'function') {
+        if (this.zfb_address === true) {
           this.zfb_address = false
           call_address(res => {
             // alert(JSON.stringify(res))
             // console.log(res)
-            if (res.status == 1) {
+            if (res.status === 1) {
               this.setAddress(res.data)
             }
           })
@@ -282,13 +308,13 @@ export default {
     setAddress(data) {
       this.detailareaValue = data.address
       var county_arr = this.searchValue(areaList.county_list, data.area)
-      if (county_arr.length == 1) {
+      if (county_arr.length === 1) {
         this.defaultAreaCode = county_arr[0]
       }
       if (county_arr.length > 1) {
         for (let i = 0; i < county_arr.length; i++) {
           var element = areaList.city_list[(county_arr[i] + '').slice(0, 4) + '00']
-          if (data.city == element) {
+          if (data.city === element) {
             console.log(county_arr[i])
             this.defaultAreaCode = county_arr[i] + ''
             break
@@ -314,7 +340,7 @@ export default {
     searchValue(object, value) {
       var adw = []
       for (var key in object) {
-        if (object[key] == value) {
+        if (object[key] === value) {
           adw.push(key)
         }
       }
@@ -325,7 +351,7 @@ export default {
       this.cascaderValue = ''
       for (var i = 0; i < arr.length; i++) {
         var a = arr[i].name
-        if (a != this.cascaderValue) {
+        if (a !== this.cascaderValue) {
           this.cascaderValue = this.cascaderValue + ' ' + a
         }
       }
@@ -335,7 +361,7 @@ export default {
       var isIndividual = /^[1-9][0-9]{5}([1][9][0-9]{2}|[2][0][0|1][0-9])([0][1-9]|[1][0|1|2])([0][1-9]|[1|2][0-9]|[3][0|1])[0-9]{3}([0-9]|[X])$/.test(
         this.individualValue
       )
-      if (this.chooseNumber == '') {
+      if (this.chooseNumber === '') {
         this.$toast({
           message: '请选取想要的电话号码'
         })
@@ -355,7 +381,7 @@ export default {
           message: '请输入正确的身份证号'
         })
         return
-      } else if (this.cascaderValue == '' || this.detailareaValue == '') {
+      } else if (this.cascaderValue === '' || this.detailareaValue === '') {
         this.$toast({
           message: '请输入正确的地址'
         })
@@ -366,12 +392,12 @@ export default {
         })
         return
       }
-      if (this.disable_submit == false) {
+      if (this.disable_submit === false) {
         this.disable_submit = true
-        if (typeof call_pay == 'function' && this.need_pay == true) {
+        if (typeof call_pay === 'function' && this.need_pay === true) {
           call_pay(1, res => {
             // alert(JSON.stringify(res))
-            if (res.status == 1) {
+            if (res.status === 1) {
               this.submit_order()
             } else {
               this.$toast({
