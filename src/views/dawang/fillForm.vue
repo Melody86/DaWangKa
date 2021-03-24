@@ -136,11 +136,14 @@ export default {
       need_sms_code: false,
       disable_submit: false,
       zfb_address: true,
-      need_pay: false
+      need_pay: false,
+      price: 1
     }
   },
   components: {},
   created() {
+    this.need_pay = process.env.VUE_APP_NEED_PAY
+    this.price = process.env.VUE_APP_PRICE
     if (this.area[1]) {
       this.defaultAreaCode = this.area[1].code
     }
@@ -280,7 +283,7 @@ export default {
       if (this.disable_submit == false) {
         this.disable_submit = true
         if (typeof call_pay == 'function' && this.need_pay == true) {
-          call_pay(1, res => {
+          call_pay(this.price, res => {
             // alert(JSON.stringify(res))
             if (res.status == 1) {
               this.submit_order()
