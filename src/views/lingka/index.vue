@@ -33,7 +33,7 @@
           <div class="card-list">
             <van-grid :column-num="3" :border="false" :gutter="2">
               <van-grid-item v-for="(item, index) in list" :key="index" @click="chooseItemNum(item)">
-                <div>{{ item.number }}</div>
+                <div>{{ item.mdn }}</div>
                 <div class="text">{{ item.feature }}</div>
               </van-grid-item>
             </van-grid>
@@ -110,7 +110,7 @@
     <div class="question-tips" @click="showTips = true">温馨提示</div>
     <div @click="toTop"><img :src="button" /></div>
     <van-popup v-model="showChoiceArea" position="bottom">
-      <van-area title="" :area-list="areaList" :value="defaultAreaCode" @confirm="choiceArea" />
+      <van-picker show-toolbar title="标题" :columns="areaList" @confirm="choiceArea" ref="pickarea" />
     </van-popup>
     <van-popup v-model="showPersonal" style="width: 90%; height: 70%">
       <personalAccess></personalAccess>
@@ -132,6 +132,7 @@ import info from './info'
 import question from './question'
 import tips from './tips'
 import { areaList } from '@/assets/js/addressCode.js'
+import { pick_area } from '@/assets/js/acode.js'
 import qs from 'qs'
 // axios
 import request from '@/utils/request'
@@ -166,7 +167,7 @@ export default {
       checkTel: false,
       showChoiceArea: false,
       defaultAreaCode: '',
-      areaList: areaList,
+      areaList: pick_area,
       areaList1: [],
       zfb_address: true,
       disable_submit: false,
@@ -176,19 +177,20 @@ export default {
       showTips: false,
       area: '',
       list: [
-        { number: 19938330130, feature: '爱情靓号' },
-        { number: 19938330130, feature: '爱情靓号' },
-        { number: 19938330130, feature: '爱情靓号' },
-        { number: 19938330130, feature: '爱情靓号' },
-        { number: 19938330130, feature: '爱情靓号' },
-        { number: 19938330130, feature: '爱情靓号' },
-        { number: 19938330130, feature: '爱情靓号' },
-        { number: 19938330130, feature: '爱情靓号' },
-        { number: 19938330130, feature: '爱情靓号' }
+        { mdn: 19938330130, feature: '爱情靓号' },
+        { mdn: 19938330130, feature: '爱情靓号' },
+        { mdn: 19938330130, feature: '爱情靓号' },
+        { mdn: 19938330130, feature: '爱情靓号' },
+        { mdn: 19938330130, feature: '爱情靓号' },
+        { mdn: 19938330130, feature: '爱情靓号' },
+        { mdn: 19938330130, feature: '爱情靓号' },
+        { mdn: 19938330130, feature: '爱情靓号' },
+        { mdn: 19938330130, feature: '爱情靓号' }
       ]
     }
   },
   created() {
+    console.log(pick_area)
     // if (areaList.city_list[parseInt(returnCitySN['cid'])] === undefined) {
     //     this.area =
     //         areaList.province_list[returnCitySN['cid'].slice(0, 2) + '0000'] +
@@ -224,7 +226,8 @@ export default {
     this.requireData({
       page: 1,
       pagesize: 9,
-      keyword: this.searchNum
+      keyword: this.searchNum,
+      sohuip: returnCitySN
       // area: this.area
     })
   },
@@ -278,7 +281,8 @@ export default {
       this.requireData({
         page: 1,
         pagesize: 9,
-        keyword: this.searchNum
+        keyword: this.searchNum,
+        sohuip: returnCitySN
         // area: this.area
       })
     },
@@ -287,7 +291,7 @@ export default {
     //     this.docChecked = !this.docChecked;
     // },
     chooseItemNum(obj) {
-      this.chooseNumber = obj.number
+      this.chooseNumber = obj.mdn
     },
     showAreaBox() {
       if (typeof call_address === 'function') {
@@ -347,10 +351,19 @@ export default {
       return adw
     },
     choiceArea(arr) {
-      this.areaList1 = arr
+      var arr2 = this.$refs.pickarea.getValues()
+      var carr = []
+      for (var i = 0; i < arr2.length; i++) {
+        carr.push({
+          name: arr2[i].text,
+          code: arr2[i].value
+        })
+      }
+      // console.log(this.$refs.pickarea.getValues())
+      this.areaList1 = carr
       this.cascaderValue = ''
-      for (var i = 0; i < arr.length; i++) {
-        var a = arr[i].name
+      for (var i = 0; i < arr2.length; i++) {
+        var a = arr2[i].text
         if (a !== this.cascaderValue) {
           this.cascaderValue = this.cascaderValue + ' ' + a
         }
@@ -421,7 +434,7 @@ export default {
         sel_phone: this.chooseNumber
       }
       request({
-        url: 'submit2',
+        url: 'webview/submit',
         method: 'post',
         // params: qs.stringify(a),
         data: Data,
