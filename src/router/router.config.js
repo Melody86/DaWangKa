@@ -4,7 +4,7 @@
 export const constantRouterMap = [
   {
     path: '/',
-    redirect: { name: 'lingka' }
+    redirect: { name: process.env.VUE_APP_TEMP }
   },
   {
     path: '/dawang',

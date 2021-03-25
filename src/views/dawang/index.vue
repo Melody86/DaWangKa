@@ -53,13 +53,13 @@
             <van-grid-item v-for="(item,index) in list" :key="index">
               <div class="num-list-item" @click="selNum(item.number)">
                 <div class="num"><span>{{item.number}}</span></div>
-                <div class="num-bottom"><span class="price">{{item.price}}</span><span class="text">限时免费</span></div>
+                <div class="num-bottom"><span class="price">{{item.price}}</span><span class="text" v-if="shenHeStatus==0">限时免费</span></div>
               </div>
             </van-grid-item>
           </van-grid>
         </div>
         <p class="icon-text"><i>*</i>靓号名额有限，具体情况以实际为准</p>
-        <div class="agreement" v-if="showAgreement">
+        <div class="agreement" v-if="showAgreement==0">
           <img :src="checkIcon"></img>
           我已阅读并同意
           <span @click="showPrivacy=true">《个人隐私协议》</span>
@@ -120,11 +120,26 @@ export default {
   },
   data() {
     return {
-      banner: require('@/assets/images/dawang/index29_1/banner2.png'),
-      form1: require('@/assets/images/dawang/index29_1/form1.png'),
-      form2: require('@/assets/images/dawang/index29_1/form2New.png'),
-      form3: require('@/assets/images/dawang/index29_1/form3.png'),
-      form4: require('@/assets/images/dawang/index29_1/form4.png'),
+      banner:
+        process.env.VUE_APP_SHENHE == 0
+          ? require('@/assets/images/dawang/index29_1/banner2.png')
+          : require('@/assets/images/dawang/index29_1/shenhe/banner2.png'),
+      form1:
+        process.env.VUE_APP_SHENHE == 0
+          ? require('@/assets/images/dawang/index29_1/form1.png')
+          : require('@/assets/images/dawang/index29_1/shenhe/form1.png'),
+      form2:
+        process.env.VUE_APP_SHENHE == 0
+          ? require('@/assets/images/dawang/index29_1/form2New.png')
+          : require('@/assets/images/dawang/index29_1/shenhe/form2New.png'),
+      form3:
+        process.env.VUE_APP_SHENHE == 0
+          ? require('@/assets/images/dawang/index29_1/form3.png')
+          : require('@/assets/images/dawang/index29_1/shenhe/form3.png'),
+      form4:
+        process.env.VUE_APP_SHENHE == 0
+          ? require('@/assets/images/dawang/index29_1/form4.png')
+          : require('@/assets/images/dawang/index29_1/form4.png'),
       voice: require('@/assets/images/dawang/index29_1/shengyin.png'),
       address: require('@/assets/images/dawang/index29_1/baijiu-.png'),
       baijiuGray: require('@/assets/images/dawang/index29_1/baijiuGray.png'),
@@ -150,42 +165,38 @@ export default {
       chooseNum: '',
       isLastPage: true,
       list: [],
-      showAgreement: false
+      showAgreement: process.env.VUE_APP_SHENHE,
+      shenHeStatus: process.env.VUE_APP_SHENHE
     }
   },
 
   computed: {},
   created() {
-    if (areaList.city_list[parseInt(returnCitySN['cid'])] === undefined) {
-      this.area =
-        areaList.province_list[returnCitySN['cid'].slice(0, 2) + '0000'] +
-        ' ' +
-        areaList.city_list[parseInt(returnCitySN['cid']) + 100]
+    // returnCitySN['cid'] = '110101'
+    var cid = returnCitySN['cid'] + ''
+    var cityId = cid.slice(0, 4) + '00'
+    var provinceId = cid.slice(0, 2) + '0000'
+    if (areaList.province_list[provinceId] !== undefined) {
+      this.area += areaList.province_list[provinceId] + ' '
       this.codeList.push({
-        code: returnCitySN['cid'].slice(0, 2) + '0000',
-        name: areaList.province_list[returnCitySN['cid'].slice(0, 2) + '0000']
+        code: provinceId,
+        name: areaList.province_list[provinceId]
       })
-      this.codeList.push({
-        code: parseInt(returnCitySN['cid']) + 100 + '',
-        name: areaList.city_list[parseInt(returnCitySN['cid']) + 100]
-      })
-      console.log(this.codeList)
-    } else if (areaList.city_list[returnCitySN['cid']] === undefined) {
-      this.area =
-        areaList.province_list[returnCitySN['cid'].slice(0, 2) + '0000'] +
-        ' ' +
-        areaList.city_list[parseInt(returnCitySN['cid'])]
-      this.codeList = [
-        {
-          code: returnCitySN['cid'].slice(0, 2) + '0000',
-          name: areaList.province_list[parseInt(returnCitySN['cid'].slice(0, 2) + '0000')]
-        },
-        {
-          code: returnCitySN['cid'],
-          name: areaList.city_list[parseInt(returnCitySN['cid'])]
-        }
-      ]
     }
+    if (areaList.city_list[cityId] !== undefined) {
+      this.area += areaList.city_list[cityId]
+      this.codeList.push({
+        code: cityId,
+        name: areaList.city_list[cityId]
+      })
+    } else if (areaList.city_list[parseInt(cityId) + 100 + ''] !== undefined) {
+      this.area += areaList.city_list[parseInt(cityId) + 100 + '']
+      this.codeList.push({
+        code: parseInt(cityId) + 100 + '',
+        name: areaList.city_list[parseInt(cityId) + 100 + '']
+      })
+    }
+    console.log(this.codeList)
     this.requireData({
       page: 1,
       pagesize: 10,

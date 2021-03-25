@@ -104,7 +104,7 @@ import _ from 'lodash'
 import request from '@/utils/request'
 // user api
 export default {
-  name: 'fillForm',
+  name: 'FillForm',
   props: {
     chooseNum: String,
     numAddress: String,
@@ -113,14 +113,14 @@ export default {
   data() {
     return {
       show: false,
-      countyList: {}, //选择地址的地址数据
+      countyList: {}, // 选择地址的地址数据
       checkName: false,
       checkTel: false,
-      nameValue: '', //姓名
-      telValue: '', //电话
-      individualValue: '', //身份证号码
-      cascaderValue: '', //省市区
-      detailareaValue: '', //详细地址
+      nameValue: '', // 姓名
+      telValue: '', // 电话
+      individualValue: '', // 身份证号码
+      cascaderValue: '', // 省市区
+      detailareaValue: '', // 详细地址
       showChoiceArea: false,
       closeImg: require('@/assets/images/dawang/index29_1/cancel2.png'),
       helpImg: require('@/assets/images/dawang/index29_1/help.png'),
@@ -129,7 +129,7 @@ export default {
       areaList: areaList,
       defaultAreaCode: '',
       areaList1: [],
-      verifCodeDisab: false, //是否禁用按钮
+      verifCodeDisab: false, // 是否禁用按钮
       verifCode: '',
       timer: null,
       count: 60,
@@ -180,13 +180,13 @@ export default {
       //   fullname: 'xxx',
       //   mobilePhone: '158***5632'
       // })
-      if (typeof call_address == 'function') {
-        if (this.zfb_address == true) {
+      if (typeof call_address === 'function') {
+        if (this.zfb_address === true) {
           this.zfb_address = false
           call_address(res => {
             // alert(JSON.stringify(res))
             // console.log(res)
-            if (res.status == 1) {
+            if (res.status === 1) {
               this.setAddress(res.data)
             }
           })
@@ -198,13 +198,13 @@ export default {
     setAddress(data) {
       this.detailareaValue = data.address
       var county_arr = this.searchValue(areaList.county_list, data.area)
-      if (county_arr.length == 1) {
+      if (county_arr.length === 1) {
         this.defaultAreaCode = county_arr[0]
       }
       if (county_arr.length > 1) {
         for (let i = 0; i < county_arr.length; i++) {
           var element = areaList.city_list[(county_arr[i] + '').slice(0, 4) + '00']
-          if (data.city == element) {
+          if (data.city === element) {
             console.log(county_arr[i])
             this.defaultAreaCode = county_arr[i] + ''
             break
@@ -232,7 +232,7 @@ export default {
     searchValue(object, value) {
       var adw = []
       for (var key in object) {
-        if (object[key] == value) {
+        if (object[key] === value) {
           adw.push(key)
         }
       }
@@ -269,7 +269,7 @@ export default {
           message: '请输入正确的身份证号'
         })
         return
-      } else if (this.cascaderValue == '' || this.detailareaValue == '') {
+      } else if (this.cascaderValue === '' || this.detailareaValue === '') {
         this.$toast({
           message: '请输入正确的地址'
         })
@@ -280,12 +280,13 @@ export default {
         })
         return
       }
-      if (this.disable_submit == false) {
+      if (this.disable_submit === false) {
         this.disable_submit = true
-        if (typeof call_pay == 'function' && this.need_pay == true) {
+
+        if (typeof call_pay === 'function' && this.need_pay === 'true') {
+          console.log(this.price)
           call_pay(this.price, res => {
-            // alert(JSON.stringify(res))
-            if (res.status == 1) {
+            if (res.status === 1) {
               this.submit_order()
             } else {
               this.$toast({
