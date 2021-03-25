@@ -4,7 +4,7 @@
 export const constantRouterMap = [
   {
     path: '/',
-    redirect: { name: 'dawang' }
+    redirect: { name: 'lingka' }
   },
   {
     path: '/dawang',

@@ -2,12 +2,13 @@ import axios from 'axios'
 import store from '@/store'
 import { Toast } from 'vant'
 // 根据环境不同引入不同api地址
-import { baseApi } from '@/config'
+import { baseApi, APPID } from '@/config'
 // create an axios instance
 const service = axios.create({
   baseURL: baseApi, // url = base api url + request url
   withCredentials: true, // send cookies when cross-domain requests
-  timeout: 5000 // request timeout
+  timeout: 5000, // request timeout
+  headers: { appid: APPID }
 })
 
 // request拦截器 request interceptor
