@@ -312,7 +312,7 @@ export default {
         sel_phone_area: this.numAddress
       }
       request({
-        url: 'yidong_submit',
+        url: 'webview/submit',
         method: 'post',
         // params: qs.stringify(a),
         data: Data,
@@ -325,6 +325,9 @@ export default {
               message: '提交成功'
             })
             this.disable_submit = false
+            if (typeof navigateTo === 'function' && 'true' == process.env.VUE_APP_NAVTO) {
+              navigateTo(process.env.VUE_APP_NAVTO_PATH)
+            }
           } else {
             this.$toast({
               message: res.message

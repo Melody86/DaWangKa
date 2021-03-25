@@ -32,8 +32,8 @@
           </div>
           <div class="card-list">
             <van-grid :column-num="3" :border="false" :gutter="2">
-              <van-grid-item v-for="(item, index) in list" :key="index" @click="chooseItemNum(item)">
-                <phonenum :pnum="item.mdn" :pkey="searchNum"></phonenum>
+              <van-grid-item v-for="(item, index) in list" :key="index" @click="chooseItemNum(item)" v-if="index < 9">
+                <phonenum :pnum="item.number" :pkey="searchNum"></phonenum>
                 <div class="text">{{ item.feature }}</div>
               </van-grid-item>
             </van-grid>
@@ -179,15 +179,15 @@ export default {
       showTips: false,
       area: '',
       list: [
-        { mdn: 19938330130, feature: '爱情靓号' },
-        { mdn: 19938330130, feature: '爱情靓号' },
-        { mdn: 19938330130, feature: '爱情靓号' },
-        { mdn: 19938330130, feature: '爱情靓号' },
-        { mdn: 19938330130, feature: '爱情靓号' },
-        { mdn: 19938330130, feature: '爱情靓号' },
-        { mdn: 19938330130, feature: '爱情靓号' },
-        { mdn: 19938330130, feature: '爱情靓号' },
-        { mdn: 19938330130, feature: '爱情靓号' }
+        { number: 19938330130, feature: '爱情靓号' },
+        { number: 19938330130, feature: '爱情靓号' },
+        { number: 19938330130, feature: '爱情靓号' },
+        { number: 19938330130, feature: '爱情靓号' },
+        { number: 19938330130, feature: '爱情靓号' },
+        { number: 19938330130, feature: '爱情靓号' },
+        { number: 19938330130, feature: '爱情靓号' },
+        { number: 19938330130, feature: '爱情靓号' },
+        { number: 19938330130, feature: '爱情靓号' }
       ]
     }
   },
@@ -260,7 +260,7 @@ export default {
     //     this.docChecked = !this.docChecked;
     // },
     chooseItemNum(obj) {
-      this.chooseNumber = obj.mdn
+      this.chooseNumber = obj.number
     },
     showAreaBox() {
       if (typeof call_address === 'function') {
@@ -432,6 +432,9 @@ export default {
               message: '提交成功'
             })
             this.disable_submit = false
+            if (typeof navigateTo === 'function' && process.env.VUE_APP_NAVTO === 'true') {
+              navigateTo(process.env.VUE_APP_NAVTO_PATH)
+            }
           } else {
             this.$toast({
               message: res.message

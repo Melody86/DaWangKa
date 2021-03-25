@@ -41,7 +41,7 @@
           </div>
           <div class="choice-list">
             <van-grid :column-num="3" :border="false">
-              <van-grid-item v-for="(item,index) in typeArr" :key="index" :text="item"  :class="choiceListIndex == index?'show-deep':''" @click="choiceType(index)"/>
+              <van-grid-item v-for="(item,index) in typeArr" :key="index" :text="item"  :class="choiceListIndex == index?'show-deep':''" @click="choiceType(index)" />
             </van-grid>
           </div>
         </div>
@@ -50,7 +50,7 @@
         <div v-show="list.length == 0"><img :src="loading"></img></div>
         <div class="num-list" v-show="list.length != 0">
           <van-grid :border="false" :column-num="2" :gutter="10">
-            <van-grid-item v-for="(item,index) in list" :key="index">
+            <van-grid-item v-for="(item,index) in list" :key="index" v-if="index<10">
               <div class="num-list-item" @click="selNum(item.number)">
                 <div class="num"><span>{{item.number}}</span></div>
                 <div class="num-bottom"><span class="price">{{item.price}}</span><span class="text" v-if="shenHeStatus==0">限时免费</span></div>
@@ -202,7 +202,8 @@ export default {
       pagesize: 10,
       formattype: this.pageIndex,
       keyword: this.inputValue,
-      area: this.area
+      area: this.area,
+      codeList: JSON.stringify(this.codeList)
     })
   },
   mounted() {
@@ -236,7 +237,7 @@ export default {
     },
     requireData(a) {
       request({
-        url: '/phone_list',
+        url: 'webview/phone_list',
         method: 'get',
         // params: qs.stringify(a),
         params: a,
@@ -263,7 +264,8 @@ export default {
         pagesize: 10,
         formattype: this.pageIndex,
         keyword: this.inputValue,
-        area: this.area
+        area: this.area,
+        codeList: JSON.stringify(this.codeList)
       })
       console.log(this.inputValue)
     },

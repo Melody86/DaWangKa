@@ -8,7 +8,8 @@
     "serve": "vue-cli-service serve --open",
     "build": "vue-cli-service build",
     "stage": "vue-cli-service build --mode staging",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "cbuild": "vue-cli-service build"
   },
   "dependencies": {
     "axios": "^0.19.2",
