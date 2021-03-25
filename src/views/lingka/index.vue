@@ -310,6 +310,7 @@ export default {
       this.showChoiceArea = true
     },
     setAddress(data) {
+      console.log(data)
       this.detailareaValue = data.address
       var county_arr = this.searchValue(areaList.county_list, data.area)
       if (county_arr.length === 1) {
