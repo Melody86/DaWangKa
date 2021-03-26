@@ -52,7 +52,7 @@
           <van-grid :border="false" :column-num="2" :gutter="10">
             <van-grid-item v-for="(item,index) in list" :key="index" v-if="index<10">
               <div class="num-list-item" @click="selNum(item.number)">
-                <div class="num"><span>{{item.number}}</span></div>
+                <div class="num"><phonenum :pnum="item.number" :pkey="inputValue"></phonenum></div>
                 <div class="num-bottom"><span class="price">{{item.price}}</span><span class="text" v-if="shenHeStatus==0">限时免费</span></div>
               </div>
             </van-grid-item>
@@ -106,6 +106,7 @@ import privacyDoc from './privacyDoc'
 import surfNetDoc from './surfNetDoc'
 import fillForm from './fillForm'
 import { areaList } from '@/assets/js/addressCode.js'
+import phonenum from './phonenum'
 import qs from 'qs'
 // axios
 import request from '@/utils/request'
@@ -116,30 +117,31 @@ export default {
   components: {
     privacyDoc,
     surfNetDoc,
-    fillForm
+    fillForm,
+    phonenum
   },
   data() {
     return {
       banner:
-        process.env.VUE_APP_SHENHE == 0
+        parseInt(process.env.VUE_APP_SHENHE) === 0
           ? require('@/assets/images/dawang/index29_1/banner2.png')
           : require('@/assets/images/dawang/index29_1/shenhe/banner2.png'),
       form1:
-        process.env.VUE_APP_SHENHE == 0
+        parseInt(process.env.VUE_APP_SHENHE) === 0
           ? require('@/assets/images/dawang/index29_1/form1.png')
           : require('@/assets/images/dawang/index29_1/shenhe/form1.png'),
       form2:
-        process.env.VUE_APP_SHENHE == 0
+        parseInt(process.env.VUE_APP_SHENHE) === 0
           ? require('@/assets/images/dawang/index29_1/form2New.png')
           : require('@/assets/images/dawang/index29_1/shenhe/form2New.png'),
       form3:
-        process.env.VUE_APP_SHENHE == 0
+        parseInt(process.env.VUE_APP_SHENHE) === 0
           ? require('@/assets/images/dawang/index29_1/form3.png')
           : require('@/assets/images/dawang/index29_1/shenhe/form3.png'),
       form4:
-        process.env.VUE_APP_SHENHE == 0
+        parseInt(process.env.VUE_APP_SHENHE) === 0
           ? require('@/assets/images/dawang/index29_1/form4.png')
-          : require('@/assets/images/dawang/index29_1/form4.png'),
+          : require('@/assets/images/dawang/index29_1/shenhe/form4.png'),
       voice: require('@/assets/images/dawang/index29_1/shengyin.png'),
       address: require('@/assets/images/dawang/index29_1/baijiu-.png'),
       baijiuGray: require('@/assets/images/dawang/index29_1/baijiuGray.png'),
@@ -165,8 +167,8 @@ export default {
       chooseNum: '',
       isLastPage: true,
       list: [],
-      showAgreement: process.env.VUE_APP_SHENHE,
-      shenHeStatus: process.env.VUE_APP_SHENHE
+      showAgreement: parseInt(process.env.VUE_APP_SHENHE),
+      shenHeStatus: parseInt(process.env.VUE_APP_SHENHE)
     }
   },
 
