@@ -7,6 +7,12 @@ export const constantRouterMap = [
     redirect: { name: process.env.VUE_APP_TEMP }
   },
   {
+    path: '/chuangyuan',
+    name: 'chuangyuan',
+    component: () => import('@/views/chuangyuan/index'),
+    meta: { title: '创源', keepAlive: false }
+  },
+  {
     path: '/dawang',
     name: 'dawang',
     component: () => import('@/views/dawang/index'),
