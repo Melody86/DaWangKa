@@ -531,6 +531,7 @@ export default {
 }
 
 .infoFixed .content_btn {
+  color: white;
   width: 80%;
   height: 46px;
   background: #fe4365;
