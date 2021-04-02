@@ -9,7 +9,7 @@
         style="
           border: none;
           background-color: #ffffff;
-          padding-top: 0.4rem;
+          padding-top: 0.2rem;
           padding-bottom: 0.4rem;
           position: relative;
           z-index: 1;
@@ -31,12 +31,17 @@
             <div style="display: flex; width: 100%">
               <li id="delivery" style="display: flex; padding-left: 0.4rem; padding-right: 0.4rem; width: 100%">
                 <div class="p-title" style="font-size: 0.46rem; color: #000000; width: 40%">归属地：</div>
-                <div class="p-content p-select grey newGrey deliveryTitle" style="color: #000000; font-size: 0.46rem">
-                  请选择号码归属地
+                <div
+                  @click="showAreaList = true"
+                  class="p-content p-select grey newGrey deliveryTitle"
+                  style="color: #000000; font-size: 0.46rem"
+                >
+                  <span>{{ area }}</span>
                 </div>
               </li>
             </div>
             <img
+              @click="showAreaList = true"
               src="@/assets/images/chuangyuan/weapp-wk02/images/red19/bannel3.png"
               class="upDiv"
               style="width: 0.45rem; height: 0.7rem; margin-right: 0.4rem"
@@ -46,6 +51,7 @@
 
           <div class="guiDiv" style="margin-top: 0.4rem; overflow: hidden; background-color: #e5e5e5">
             <input
+              v-model="inputValue"
               type="number"
               name=""
               id="search"
@@ -60,7 +66,7 @@
                 background-color: #e5e5e5;
               "
             />
-            <div class="dSuo" id="search-btn">立即搜索</div>
+            <div class="dSuo" id="search-btn" @click="onSearch">立即搜索</div>
           </div>
 
           <div
@@ -68,7 +74,7 @@
               display: flex;
               justify-content: center;
               width: 90%;
-              font-size: 0.45rem;
+              font-size: 0.35rem;
               margin: auto;
               margin-top: 0.35rem;
               height: 1rem;
@@ -80,17 +86,13 @@
             class="wkNum"
           >
             大家都在搜：
-            <span style="display: inline-block; margin-left: 0.2rem; text-decoration: underline" class="clickSuo"
-              >188</span
-            >
-            <span style="display: inline-block; margin-left: 0.2rem; text-decoration: underline" class="clickSuo"
-              >88</span
-            >
-            <span style="display: inline-block; margin-left: 0.2rem; text-decoration: underline" class="clickSuo"
-              >66</span
-            >
-            <span style="display: inline-block; margin-left: 0.2rem; text-decoration: underline" class="clickSuo"
-              >123</span
+            <span
+              v-for="item in searchList"
+              v-bind:key="item"
+              style="display: inline-block; margin-left: 0.2rem; text-decoration: underline"
+              class="clickSuo"
+              @click="selSearchNum"
+              >{{ item }}</span
             >
             <div
               style="
@@ -105,8 +107,9 @@
 
           <!-- 号码 -->
           <div class="haoDiv">
-            <div class="xDiv">
+            <div class="xDiv" v-for="(item, index) in list" v-bind:key="index" v-if="index < 8">
               <div
+                @click="selNum(item.number)"
                 style="
                   width: 100%;
                   height: 100%;
@@ -120,107 +123,21 @@
                   src="@/assets/images/chuangyuan/weapp-wk02/images/bannel5.png"
                   style="width: 0.7rem; height: 0.7rem; position: absolute; top: 0; left: 4%"
                 />
-                <span style="font-size: 0.46rem; color: #000000">13751324427</span>
-                <img
-                  src="@/assets/images/chuangyuan/weapp-wk02/images/bannel6.png"
-                  style="width: 0.7rem; height: 0.7rem; position: absolute; bottom: 0; right: 0; display: none"
-                />
-              </div>
-              <div style="text-align: start; width: 52%">
-                <span
-                  style="
-                    font-size: 0.31rem;
-                    color: #ff0000;
-                    text-decoration: line-through;
-                    display: block;
-                    margin-left: 0.05rem;
-                  "
-                  >靓号费:¥49</span
+                <span style="font-size: 0.4rem; color: #000000; display: inline-block; padding-left: 1rem"
+                  ><phonenum :pnum="item.number" :pkey="inputValue"></phonenum>
+                  <div style="text-align: start; width: 100%">
+                    <span
+                      style="
+                        font-size: 0.31rem;
+                        color: #ff0000;
+                        text-decoration: line-through;
+                        display: block;
+                        margin-left: 0.05rem;
+                      "
+                      >靓号费:¥{{ item.price }}</span
+                    >
+                  </div></span
                 >
-              </div>
-            </div>
-            <div class="xDiv">
-              <div
-                style="
-                  width: 100%;
-                  height: 100%;
-                  position: relative;
-                  display: flex;
-                  justify-content: center;
-                  align-items: center;
-                "
-              >
-                <img
-                  src="@/assets/images/chuangyuan/weapp-wk02/images/bannel5.png"
-                  style="width: 0.7rem; height: 0.7rem; position: absolute; top: 0; left: 4%"
-                />
-                <span style="font-size: 0.46rem; color: #000000">13751324427</span>
-                <img
-                  src="@/assets/images/chuangyuan/weapp-wk02/images/bannel6.png"
-                  style="width: 0.7rem; height: 0.7rem; position: absolute; bottom: 0; right: 0; display: none"
-                />
-              </div>
-            </div>
-            <div class="xDiv">
-              <div
-                style="
-                  width: 100%;
-                  height: 100%;
-                  position: relative;
-                  display: flex;
-                  justify-content: center;
-                  align-items: center;
-                "
-              >
-                <img
-                  src="@/assets/images/chuangyuan/weapp-wk02/images/bannel5.png"
-                  style="width: 0.7rem; height: 0.7rem; position: absolute; top: 0; left: 4%"
-                />
-                <span style="font-size: 0.46rem; color: #000000">13751324427</span>
-                <img
-                  src="@/assets/images/chuangyuan/weapp-wk02/images/bannel6.png"
-                  style="width: 0.7rem; height: 0.7rem; position: absolute; bottom: 0; right: 0; display: none"
-                />
-              </div>
-            </div>
-            <div class="xDiv">
-              <div
-                style="
-                  width: 100%;
-                  height: 100%;
-                  position: relative;
-                  display: flex;
-                  justify-content: center;
-                  align-items: center;
-                "
-              >
-                <img
-                  src="@/assets/images/chuangyuan/weapp-wk02/images/bannel5.png"
-                  style="width: 0.7rem; height: 0.7rem; position: absolute; top: 0; left: 4%"
-                />
-                <span style="font-size: 0.46rem; color: #000000">13751324427</span>
-                <img
-                  src="@/assets/images/chuangyuan/weapp-wk02/images/bannel6.png"
-                  style="width: 0.7rem; height: 0.7rem; position: absolute; bottom: 0; right: 0; display: none"
-                />
-              </div>
-            </div>
-            <div class="xDiv">
-              <div
-                style="
-                  width: 100%;
-                  height: 100%;
-                  position: relative;
-                  display: flex;
-                  justify-content: center;
-                  align-items: center;
-                "
-              >
-                <img
-                  src="@/assets/images/chuangyuan/weapp-wk02/images/bannel5.png"
-                  style="width: 0.7rem; height: 0.7rem; position: absolute; top: 0; left: 4%"
-                />
-                <span style="font-size: 0.46rem; color: #000000">13751324427</span>
                 <img
                   src="@/assets/images/chuangyuan/weapp-wk02/images/bannel6.png"
                   style="width: 0.7rem; height: 0.7rem; position: absolute; bottom: 0; right: 0; display: none"
@@ -229,81 +146,11 @@
             </div>
           </div>
           <div style="display: flex; justify-content: center; margin-top: 0.1rem">
-            <div class="huanDiv" id="number">换一换</div>
+            <div class="huanDiv" id="number" @click="onSearch">换一换</div>
             <!-- <div class="huanDiv" style="margin-left: 1rem;">
 							换一批
 						</div> -->
           </div>
-        </div>
-      </div>
-
-      <div class="center-search">
-        <div class="address">
-          <div class="choice-address" @click="showAreaList = true">
-            <div>
-              归属地(可选择):<span>{{ area }}</span>
-            </div>
-            <img class="address-icon" :src="address" />
-          </div>
-          <div class="tip" v-show="!showAreaList && area == ''">
-            <div class="triangle"></div>
-            <img class="baijiuGray" :src="baijiuGray" />
-            <div class="text">请选择您的归属地哦！</div>
-            <img class="close" :src="close" />
-          </div>
-          <div class="search-input">
-            <van-search
-              v-model="inputValue"
-              show-action
-              label=""
-              placeholder="请输入您喜欢的数字"
-              @search="onSearch"
-              shape="round"
-              left-icon=""
-            >
-              <template #action>
-                <div @click="onSearch" class="search-right"><img :src="searchIcon" />搜索</div>
-              </template>
-            </van-search>
-          </div>
-          <div class="choice-list">
-            <van-grid :column-num="3" :border="false">
-              <van-grid-item
-                v-for="(item, index) in typeArr"
-                :key="index"
-                :text="item"
-                :class="choiceListIndex == index ? 'show-deep' : ''"
-                @click="choiceType(index)"
-              />
-            </van-grid>
-          </div>
-        </div>
-      </div>
-      <div class="show-list">
-        <div v-show="list.length == 0"><img :src="loading" /></div>
-        <div class="num-list" v-show="list.length != 0">
-          <van-grid :border="false" :column-num="2" :gutter="10">
-            <van-grid-item v-for="(item, index) in list" :key="index" v-if="index < 10">
-              <div class="num-list-item" @click="selNum(item.number)">
-                <div class="num"><phonenum :pnum="item.number" :pkey="inputValue"></phonenum></div>
-                <div class="num-bottom">
-                  <span class="price">{{ item.price }}</span
-                  ><span class="text" v-if="shenHeStatus == 0">限时免费</span>
-                </div>
-              </div>
-            </van-grid-item>
-          </van-grid>
-        </div>
-        <p class="icon-text"><i>*</i>靓号名额有限，具体情况以实际为准</p>
-        <div class="agreement" v-if="showAgreement == 0">
-          <img :src="checkIcon" />
-          我已阅读并同意
-          <span @click="showPrivacy = true">《个人隐私协议》</span>
-          <span @click="showSur = true">《入网协议》</span>
-        </div>
-        <div class="list-button">
-          <img :src="before" @click="beforeButton" :class="clickButton ? 'opacity-button' : ''" />
-          <img :src="after" @click="afterButton" :class="clickButton ? '' : 'opacity-button'" />
         </div>
       </div>
     </div>
@@ -348,6 +195,29 @@
     <van-popup v-model="showForm" position="bottom" :style="{ height: '80%' }">
       <fillForm :chooseNum="chooseNum" :numAddress="area" :area="codeList"></fillForm>
     </van-popup>
+    <div
+      v-if="showTopAD"
+      @click="showTopAD = false"
+      style="position: fixed; inset: 0px; z-index: 99999999; background: rgba(0, 0, 0, 0.8)"
+      class="tanDiv"
+    >
+      <img
+        class="tanImg"
+        :src="require('@/assets/images/chuangyuan/topimg.png')"
+        style="
+          position: absolute;
+          width: 78%;
+          left: 50%;
+          top: 50%;
+          height: auto;
+          transform: translate(-50%, -50%);
+          -ms-transform: translate(-50%, -50%);
+          -moz-transform: translate(-50%, -50%);
+          -webkit-transform: translate(-50%, -50%);
+          -o-transform: translate(-50%, -50%);
+        "
+      />
+    </div>
   </div>
 </template>
 
@@ -373,7 +243,7 @@ export default {
     return {
       banner:
         parseInt(process.env.VUE_APP_SHENHE) === 0
-          ? require('@/assets/images/chuangyuan/diybanner1.png')
+          ? require('@/assets/images/chuangyuan/banner.png')
           : require('@/assets/images/dawang/index29_1/shenhe/banner2.png'),
       form1:
         parseInt(process.env.VUE_APP_SHENHE) === 0
@@ -416,6 +286,8 @@ export default {
       chooseNum: '',
       isLastPage: true,
       list: [],
+      searchList: [188, 66, 123, 456, 321],
+      showTopAD: true,
       pneiDList: [
         {
           img: require('@/assets/images/chuangyuan/weapp-wk02/images/top1.jpg'),
@@ -500,6 +372,11 @@ export default {
   },
 
   methods: {
+    selSearchNum(item) {
+      this.inputValue = item.target.outerText
+      this.onSearch()
+      // console.log(item.target.outerText)
+    },
     selNum(number) {
       if (this.area === '') {
         this.$toast({
@@ -646,7 +523,7 @@ export default {
   .dawang-footer {
     width: 94%;
     margin: auto;
-    margin-top: 1.4rem;
+    margin-top: 0rem;
     padding-bottom: 2rem;
     img {
       width: 100%;
@@ -699,7 +576,7 @@ export default {
         }
         .my-swipe {
           height: 20px;
-          padding: 15px 17px;
+          padding: 12px 17px;
           .van-swipe-item {
             color: #fff;
             font-size: 12px;

@@ -85,7 +85,7 @@
         </li>
       </ul>
     </div>
-    <div class="content_btn btnTj scale_div" @click="submit" id="tj_submit">0元领取，包邮到家</div>
+    <div class="content_btn btnTj scale_div" @click="submit" id="tj_submit">填写表单，领卡送豪礼</div>
     <p class="info_text2">
       本活动为阶段性优惠活动，发布数量有限，请保持联系号码畅通，我们可能随时与您联系，电话无人接听或恶意下单，将不予发货。
     </p>
