@@ -162,15 +162,17 @@
         <div style="width: 90%; margin: auto">
           <div style="width: 100%; height: 12.5rem; overflow: hidden">
             <div class="Pinei" style="margin-top: 0.6rem">
-              <div id="autoscroll">
-                <div class="pneiD" v-for="(pd, index) in pneiDList" :key="index">
-                  <img :src="pd.img" style="border-radius: 50%; width: 1rem" />
-                  <p style="color: #000000; font-size: 0.4rem; padding-left: 0.4rem; text-align: left">
-                    {{ pd.name }} <br />
-                    <span style="color: #8a8a8a">{{ pd.desc }}</span>
-                  </p>
+              <vue-seamless-scroll class="warp" :data="pneiDList">
+                <div id="autoscroll">
+                  <div class="pneiD" v-for="(pd, index) in pneiDList" :key="index">
+                    <img :src="pd.img" style="border-radius: 50%; width: 1rem" />
+                    <p style="color: #000000; font-size: 0.4rem; padding-left: 0.4rem; text-align: left">
+                      {{ pd.name }} <br />
+                      <span style="color: #8a8a8a">{{ pd.desc }}</span>
+                    </p>
+                  </div>
                 </div>
-              </div>
+              </vue-seamless-scroll>
             </div>
           </div>
         </div>
@@ -184,7 +186,14 @@
     </div>
     <!-- 地区选择部分 -->
     <van-popup v-model="showAreaList" round position="bottom">
-      <van-area title="" cancel-button-text="" :area-list="areaList" :columns-num="2" @confirm="choiceArea" />
+      <van-area
+        title=""
+        cancel-button-text=""
+        :area-list="areaList"
+        :columns-num="2"
+        @confirm="choiceArea"
+        visible-item-count="15"
+      />
     </van-popup>
     <van-popup v-model="showPrivacy" style="width: 90%; height: 70%">
       <privacyDoc></privacyDoc>
@@ -193,14 +202,9 @@
       <surfNetDoc></surfNetDoc>
     </van-popup>
     <van-popup v-model="showForm" position="bottom" :style="{ height: '80%' }">
-      <fillForm :chooseNum="chooseNum" :numAddress="area" :area="codeList"></fillForm>
+      <fillForm :chooseNum="chooseNum" :numAddress="area" :area="codeList" v-on:closePop="showForm = false"></fillForm>
     </van-popup>
-    <div
-      v-if="showTopAD"
-      @click="showTopAD = false"
-      style="position: fixed; inset: 0px; z-index: 99999999; background: rgba(0, 0, 0, 0.8)"
-      class="tanDiv"
-    >
+    <div v-if="showTopAD" @click="showTopAD = false" class="tanDiv">
       <img
         class="tanImg"
         :src="require('@/assets/images/chuangyuan/topimg.png')"
@@ -296,33 +300,33 @@ export default {
         },
         {
           img: require('@/assets/images/chuangyuan/weapp-wk02/images/top2.jpg'),
-          name: '钱****多',
-          desc: '已经激活了，从下单到现在...'
+          name: 'w***g',
+          desc: '对于宿舍没WiFi的孩子，这是雪中...'
         },
         {
           img: require('@/assets/images/chuangyuan/weapp-wk02/images/top3.jpg'),
-          name: '钱****多',
-          desc: '已经激活了，从下单到现在...'
+          name: 'C****n',
+          desc: '最近知乎也免流啦～哈哈哈哈哈...'
         },
         {
           img: require('@/assets/images/chuangyuan/weapp-wk02/images/top4.jpg'),
-          name: '钱****多',
-          desc: '已经激活了，从下单到现在...'
+          name: '粉***生',
+          desc: '双卡双4g,当副卡来用最划算...'
         },
         {
           img: require('@/assets/images/chuangyuan/weapp-wk02/images/top5.jpg'),
-          name: '钱****多',
-          desc: '已经激活了，从下单到现在...'
+          name: 'w***g',
+          desc: '用了三年了，不用担心没有WiFi...'
         },
         {
           img: require('@/assets/images/chuangyuan/weapp-wk02/images/top6.jpg'),
-          name: '钱****多',
-          desc: '已经激活了，从下单到现在...'
+          name: '见**',
+          desc: '免流随便下，真的爽...'
         },
         {
           img: require('@/assets/images/chuangyuan/weapp-wk02/images/top7.jpg'),
-          name: '钱****多',
-          desc: '已经激活了，从下单到现在...'
+          name: 'D***d',
+          desc: '免去腾讯系的应用流量其实很好..'
         }
       ],
       showAgreement: parseInt(process.env.VUE_APP_SHENHE),
@@ -332,6 +336,7 @@ export default {
 
   computed: {},
   created() {
+    // console.log(this.showTopAD)
     // returnCitySN['cid'] = '110101'
     var cid = returnCitySN['cid'] + ''
     var cityId = cid.slice(0, 4) + '00'
@@ -399,6 +404,7 @@ export default {
       }
       this.codeList = arr
       console.log(this.codeList)
+      this.onSearch()
     },
     requireData(a) {
       request({
@@ -479,6 +485,26 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.warp {
+  height: 100%;
+  width: 360px;
+  margin: 0 auto;
+  overflow: hidden;
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 auto;
+    li,
+    a {
+      display: block;
+      height: 30px;
+      line-height: 30px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 15px;
+    }
+  }
+}
 @keyframes warn {
   from {
     transform: scale(1);
@@ -514,6 +540,16 @@ export default {
 .unicom-index {
   text-align: center;
   background-color: rgb(202, 35, 34);
+  .tanDiv {
+    position: fixed;
+    inset: 0;
+    z-index: 99999999;
+    background: rgba(0, 0, 0, 0.8);
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+  }
   .dawang-banner {
     img {
       width: 100%;
@@ -540,7 +576,7 @@ export default {
       .Pinei {
         width: 100%;
         // margin-top: 0.6rem;
-        height: 380px;
+        height: 100%;
         overflow: hidden;
         .pneiD {
           display: flex;
