@@ -1,7 +1,7 @@
 <!-- 电信星卡-填写表单 -->
 <template>
   <div class="infoFixed">
-    <div class="close_infoFixed"><img :src="closeImg" alt="" /></div>
+    <div class="close_infoFixed" @click="$emit('closePop')"><img :src="closeImg" alt="" /></div>
     <p class="info_text">
       已选择<span>靓号{{ chooseNum || '' }} </span>{{ numAddress }}
     </p>
@@ -91,7 +91,14 @@
     </p>
     <p class="info_text2" style="margin-top: 10px">您的个人信息将受到保护，仅用于此次信息填写</p>
     <van-popup v-model="showChoiceArea" position="bottom">
-      <van-area title="" :area-list="areaList" :value="defaultAreaCode" @confirm="choiceArea" />
+      <van-area
+        title=""
+        :area-list="areaList"
+        :value="defaultAreaCode"
+        @confirm="choiceArea"
+        visible-item-count="10"
+        @cancel="cancelAreaBox"
+      />
     </van-popup>
   </div>
 </template>
@@ -169,6 +176,9 @@ export default {
   },
   mounted() {},
   methods: {
+    cancelAreaBox() {
+      this.showChoiceArea = false
+    },
     showAreaBox() {
       // this.setAddress({
       //   address: '黄龙国际 不放自提柜 送到家 送到家 送到家 送到家',

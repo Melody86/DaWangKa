@@ -192,7 +192,8 @@
         :area-list="areaList"
         :columns-num="2"
         @confirm="choiceArea"
-        visible-item-count="15"
+        @cancel="cancelAreaSel"
+        visible-item-count="10"
       />
     </van-popup>
     <van-popup v-model="showPrivacy" style="width: 90%; height: 70%">
@@ -336,40 +337,50 @@ export default {
 
   computed: {},
   created() {
-    // console.log(this.showTopAD)
-    // returnCitySN['cid'] = '110101'
-    var cid = returnCitySN['cid'] + ''
-    var cityId = cid.slice(0, 4) + '00'
-    var provinceId = cid.slice(0, 2) + '0000'
-    if (areaList.province_list[provinceId] !== undefined) {
-      this.area += areaList.province_list[provinceId] + ' '
-      this.codeList.push({
-        code: provinceId,
-        name: areaList.province_list[provinceId]
-      })
-    }
-    if (areaList.city_list[cityId] !== undefined) {
-      this.area += areaList.city_list[cityId]
-      this.codeList.push({
-        code: cityId,
-        name: areaList.city_list[cityId]
-      })
-    } else if (areaList.city_list[parseInt(cityId) + 100 + ''] !== undefined) {
-      this.area += areaList.city_list[parseInt(cityId) + 100 + '']
-      this.codeList.push({
-        code: parseInt(cityId) + 100 + '',
-        name: areaList.city_list[parseInt(cityId) + 100 + '']
-      })
-    }
-    console.log(this.codeList)
-    this.requireData({
-      page: 1,
-      pagesize: 10,
-      formattype: this.pageIndex,
-      keyword: this.inputValue,
-      area: this.area,
-      codeList: JSON.stringify(this.codeList)
+    request({
+      url: 'webview/location',
+      method: 'post',
+      hideloading: true // 隐藏 loading 组件
     })
+      .then(res => {
+        if (res.errcode === 0) {
+          console.log(res.data.cityCode)
+          var cid = res.data.cityCode
+          var cityId = cid.slice(0, 4) + '00'
+          var provinceId = cid.slice(0, 2) + '0000'
+          if (areaList.province_list[provinceId] !== undefined) {
+            this.area += areaList.province_list[provinceId] + ' '
+            this.codeList.push({
+              code: provinceId,
+              name: areaList.province_list[provinceId]
+            })
+          }
+          if (areaList.city_list[cityId] !== undefined) {
+            this.area += areaList.city_list[cityId]
+            this.codeList.push({
+              code: cityId,
+              name: areaList.city_list[cityId]
+            })
+          } else if (areaList.city_list[parseInt(cityId) + 100 + ''] !== undefined) {
+            this.area += areaList.city_list[parseInt(cityId) + 100 + '']
+            this.codeList.push({
+              code: parseInt(cityId) + 100 + '',
+              name: areaList.city_list[parseInt(cityId) + 100 + '']
+            })
+          }
+          console.log(this.codeList)
+        }
+      })
+      .then(() => {
+        this.requireData({
+          page: 1,
+          pagesize: 10,
+          formattype: this.pageIndex,
+          keyword: this.inputValue,
+          area: this.area,
+          codeList: JSON.stringify(this.codeList)
+        })
+      })
   },
   mounted() {
     // 此处true需要加上，不加滚动事件可能绑定不成功
@@ -405,6 +416,9 @@ export default {
       this.codeList = arr
       console.log(this.codeList)
       this.onSearch()
+    },
+    cancelAreaSel() {
+      this.showAreaList = false
     },
     requireData(a) {
       request({

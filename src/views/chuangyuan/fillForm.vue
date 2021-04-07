@@ -91,7 +91,14 @@
     </p>
     <p class="info_text2" style="margin-top: 10px">您的个人信息将受到保护，仅用于此次信息填写</p>
     <van-popup v-model="showChoiceArea" position="bottom">
-      <van-area title="" :area-list="areaList" :value="defaultAreaCode" @confirm="choiceArea" visible-item-count="15" />
+      <van-area
+        title=""
+        :area-list="areaList"
+        :value="defaultAreaCode"
+        @confirm="choiceArea"
+        visible-item-count="10"
+        @cancel="cancelAreaSel"
+      />
     </van-popup>
   </div>
 </template>
@@ -169,6 +176,9 @@ export default {
   },
   mounted() {},
   methods: {
+    cancelAreaSel() {
+      this.showChoiceArea = false
+    },
     showAreaBox() {
       // this.setAddress({
       //   address: '黄龙国际 不放自提柜 送到家 送到家 送到家 送到家',
@@ -282,12 +292,35 @@ export default {
       }
       if (this.disable_submit === false) {
         this.disable_submit = true
-
-        if (typeof call_pay === 'function' && this.need_pay === 'true') {
-          console.log(this.price)
-          call_pay(this.price, res => {
-            if (res.status === 1) {
-              this.submit_order()
+        this.submit_order()
+          .then(res => {
+            if (res.errcode === 0) {
+              if (typeof call_pay === 'function' && this.need_pay === 'true') {
+                console.log(this.price)
+                call_pay(this.price, res => {
+                  if (res.status === 1) {
+                    this.$toast({
+                      message: '订单提交成功'
+                    })
+                    if (typeof navigateTo === 'function' && 'true' == process.env.VUE_APP_NAVTO) {
+                      navigateTo(process.env.VUE_APP_NAVTO_PATH)
+                    }
+                  } else {
+                    this.$toast({
+                      message: '订单支付失败'
+                    })
+                    this.disable_submit = false
+                  }
+                })
+              } else {
+                this.$toast({
+                  message: '订单提交成功'
+                })
+              }
+              // this.$toast({
+              //   message: '提交成功'
+              // })
+              // this.disable_submit = false
             } else {
               this.$toast({
                 message: res.message
@@ -295,9 +328,13 @@ export default {
               this.disable_submit = false
             }
           })
-        } else {
-          this.submit_order()
-        }
+          .catch(err => {
+            this.disable_submit = false
+            this.$toast({
+              message: '订单提交错误'
+            })
+            console.log(err)
+          })
       }
     },
     submit_order() {
@@ -311,33 +348,13 @@ export default {
         smscode: this.verifCode,
         sel_phone_area: this.numAddress
       }
-      request({
+      return request({
         url: 'webview/submit',
         method: 'post',
         // params: qs.stringify(a),
         data: Data,
         hideloading: true // 隐藏 loading 组件
       })
-        .then(res => {
-          if (res.errcode === 0) {
-            this.disable_submit = false
-            this.$toast({
-              message: '提交成功'
-            })
-            this.disable_submit = false
-            if (typeof navigateTo === 'function' && 'true' == process.env.VUE_APP_NAVTO) {
-              navigateTo(process.env.VUE_APP_NAVTO_PATH)
-            }
-          } else {
-            this.$toast({
-              message: res.message
-            })
-            this.disable_submit = false
-          }
-        })
-        .catch(() => {
-          console.log(22)
-        })
     },
     getCode() {
       if (!this.checkTel) {
