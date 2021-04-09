@@ -195,7 +195,7 @@ export default {
           this.zfb_address = false
           call_address(res => {
             // alert(JSON.stringify(res))
-            // console.log(res)
+            console.log(res)
             if (res.status === 1) {
               this.setAddress(res.data)
             }
@@ -206,6 +206,7 @@ export default {
       this.showChoiceArea = true
     },
     setAddress(data) {
+      this.telValue = data.mobilePhone
       this.detailareaValue = data.address
       var county_arr = this.searchValue(areaList.county_list, data.area)
       if (county_arr.length === 1) {
