@@ -20,6 +20,17 @@ const createRouter = () =>
   })
 
 const router = createRouter()
+// // 仅适用于本页面不作为H5着陆页的情况
+// router.beforeRouteLeave = (to, from, next) => {
+//   console.log(434343)
+
+//   if (true) {
+//     console.log(222222)
+//     next(false)
+//   } else {
+//     next()
+//   }
+// }
 
 // Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
 export function resetRouter() {
