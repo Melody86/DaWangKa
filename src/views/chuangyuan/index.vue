@@ -248,24 +248,24 @@ export default {
     return {
       banner:
         parseInt(process.env.VUE_APP_SHENHE) === 0
-          ? require('@/assets/images/chuangyuan/banner.png')
-          : require('@/assets/images/dawang/index29_1/shenhe/banner2.png'),
+          ? require('@/assets/images/chuangyuan/1.gif')
+          : require('@/assets/images/chuangyuan/shenhe/banner.png'),
       form1:
         parseInt(process.env.VUE_APP_SHENHE) === 0
-          ? require('@/assets/images/chuangyuan/weapp-wk02/images/red19/bannel8.png')
-          : require('@/assets/images/dawang/index29_1/shenhe/form1.png'),
+          ? require('@/assets/images/chuangyuan/weapp-wk02/images/red19/WechatIMG526.jpeg')
+          : require('@/assets/images/chuangyuan/shenhe/weapp-wk02/images/red19/bannel8.png'),
       form2:
         parseInt(process.env.VUE_APP_SHENHE) === 0
           ? require('@/assets/images/chuangyuan/weapp-wk02/images/red19/bannel9.png')
-          : require('@/assets/images/dawang/index29_1/shenhe/form2New.png'),
+          : require('@/assets/images/chuangyuan/shenhe/weapp-wk02/images/red19/bannel9.png'),
       form3:
         parseInt(process.env.VUE_APP_SHENHE) === 0
           ? require('@/assets/images/chuangyuan/weapp-wk02/images/red19/bannel10.png')
-          : require('@/assets/images/dawang/index29_1/shenhe/form3.png'),
+          : require('@/assets/images/chuangyuan/shenhe/weapp-wk02/images/red19/bannel10.png'),
       form4:
         parseInt(process.env.VUE_APP_SHENHE) === 0
           ? require('@/assets/images/chuangyuan/weapp-wk02/images/red19/bannel10.png')
-          : require('@/assets/images/dawang/index29_1/shenhe/form4.png'),
+          : require('@/assets/images/chuangyuan/shenhe/weapp-wk02/images/red19/bannel10.png'),
       voice: require('@/assets/images/dawang/index29_1/shengyin.png'),
       address: require('@/assets/images/dawang/index29_1/baijiu-.png'),
       baijiuGray: require('@/assets/images/dawang/index29_1/baijiuGray.png'),
@@ -274,7 +274,10 @@ export default {
       checkIcon: require('@/assets/images/dawang/num/checkIcon.png'),
       before: require('@/assets/images/dawang/index29_1/lastPage.png'),
       after: require('@/assets/images/dawang/index29_1/nextPage.png'),
-      fixedButton: require('@/assets/images/chuangyuan/weapp-hndxxk/assets/index/banner14.png'),
+      fixedButton:
+        parseInt(process.env.VUE_APP_SHENHE) === 0
+          ? require('@/assets/images/chuangyuan/weapp-hndxxk/assets/index/banner14.png')
+          : require('@/assets/images/chuangyuan/shenhe/weapp-hndxxk/assets/index/banner14.png'),
       loading: require('@/assets/images/dawang/img3_6/loading.gif'),
       areaList: areaList, // 选择地址插件数据
       showAreaList: false, // 是否显示选择地址插件
@@ -292,7 +295,7 @@ export default {
       isLastPage: true,
       list: [],
       searchList: [188, 66, 123, 456, 321],
-      showTopAD: true,
+      showTopAD: parseInt(process.env.VUE_APP_HONGBAO_TANCHUANG),
       pneiDList: [
         {
           img: require('@/assets/images/chuangyuan/weapp-wk02/images/top1.jpg'),
