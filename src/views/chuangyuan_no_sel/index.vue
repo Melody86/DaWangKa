@@ -2,157 +2,9 @@
 <template>
   <div class="unicom-index">
     <div class="dawang-banner"><img :src="banner" /></div>
+
     <div class="dawang-center">
-      <div
-        class="wkDiv"
-        id="boxT"
-        style="
-          border: none;
-          background-color: #ffffff;
-          padding-top: 0.2rem;
-          padding-bottom: 0.4rem;
-          position: relative;
-          z-index: 1;
-          margin-top: -3rem;
-        "
-      >
-        <div class="neiDiv">
-          <div class="swipe">
-            <img :src="voice" class="voice" />
-            <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white" vertical :show-indicators="false">
-              <van-swipe-item><span style="color: red">张**抢得靓号132<span>2999</span>****</span></van-swipe-item>
-              <van-swipe-item><span style="color: red">王**抢得靓号130<span>666</span>****1</span></van-swipe-item>
-              <van-swipe-item><span style="color: red">钟**抢得靓号155<span>999</span>6****</span></van-swipe-item>
-              <van-swipe-item><span style="color: red">潘**抢得靓号1<span>666789</span>****</span></van-swipe-item>
-            </van-swipe>
-          </div>
-
-          <div class="guiDiv guiDiv1" style="margin-top: 0.2rem; background-color: #e5e5e5">
-            <div style="display: flex; width: 100%">
-              <li id="delivery" style="display: flex; padding-left: 0.4rem; padding-right: 0.4rem; width: 100%">
-                <div class="p-title" style="font-size: 0.46rem; color: #000000; width: 40%">归属地：</div>
-                <div
-                  @click="showAreaList = true"
-                  class="p-content p-select grey newGrey deliveryTitle"
-                  style="color: #000000; font-size: 0.46rem"
-                >
-                  <span>{{ area }}</span>
-                </div>
-              </li>
-            </div>
-            <img
-              @click="showAreaList = true"
-              src="@/assets/images/chuangyuan/weapp-wk02/images/red19/bannel3.png"
-              class="upDiv"
-              style="width: 0.45rem; height: 0.7rem; margin-right: 0.4rem"
-              height="100%"
-            />
-          </div>
-
-          <div class="guiDiv" style="margin-top: 0.4rem; overflow: hidden; background-color: #e5e5e5">
-            <input
-              v-model="inputValue"
-              type="number"
-              name=""
-              id="search"
-              value=""
-              placeholder="王上请选择您喜欢的数字"
-              style="
-                height: 100%;
-                padding-left: 0.4rem;
-                width: 70%;
-                border: none;
-                color: #000000;
-                background-color: #e5e5e5;
-              "
-            />
-            <div class="dSuo" id="search-btn" @click="onSearch">立即搜索</div>
-          </div>
-
-          <div
-            style="
-              display: flex;
-              justify-content: center;
-              width: 90%;
-              font-size: 0.35rem;
-              margin: auto;
-              margin-top: 0.35rem;
-              height: 1rem;
-              align-items: center;
-              background-color: #e5e5e5;
-              border-radius: 0.05rem;
-              position: relative;
-            "
-            class="wkNum"
-          >
-            大家都在搜：
-            <span
-              v-for="item in searchList"
-              v-bind:key="item"
-              style="display: inline-block; margin-left: 0.2rem; text-decoration: underline"
-              class="clickSuo"
-              @click="selSearchNum"
-              >{{ item }}</span
-            >
-            <div
-              style="
-                border: 0.3rem solid #e5e5e5;
-                border-color: transparent transparent #e5e5e5 transparent;
-                position: absolute;
-                top: -1rem;
-                left: 0.41rem;
-              "
-            ></div>
-          </div>
-
-          <!-- 号码 -->
-          <div class="haoDiv">
-            <div class="xDiv" v-for="(item, index) in list" v-bind:key="index" v-if="index < 8">
-              <div
-                @click="selNum(item.number)"
-                style="
-                  width: 100%;
-                  height: 100%;
-                  position: relative;
-                  display: flex;
-                  justify-content: center;
-                  align-items: center;
-                "
-              >
-                <img
-                  src="@/assets/images/chuangyuan/weapp-wk02/images/bannel5.gif"
-                  style="width: 1rem; position: absolute; top: 0; left: 4%"
-                />
-                <span style="font-size: 0.4rem; color: #000000; display: inline-block; padding-left: 1rem"
-                  ><phonenum :pnum="item.number" :pkey="inputValue"></phonenum>
-                  <div style="text-align: start; width: 100%">
-                    <span
-                      style="
-                        font-size: 0.41rem;
-                        color: #ff0000;
-                        text-decoration: line-through;
-                        display: block;
-                        margin-left: 0.05rem;
-                      "
-                      >靓号费:¥ <span style="color: black">{{ item.price }}</span></span
-                    >
-                  </div></span
-                >
-                <img
-                  src="@/assets/images/chuangyuan/weapp-wk02/images/bannel6.png"
-                  style="width: 0.7rem; height: 0.7rem; position: absolute; bottom: 0; right: 0; display: none"
-                />
-              </div>
-            </div>
-          </div>
-          <div style="display: flex; justify-content: center; margin-top: 0.1rem">
-            <div class="huanDiv" id="number" @click="onSearch">换一换</div>
-            <!-- <div class="huanDiv" style="margin-left: 1rem;">
-							换一批
-						</div> -->
-          </div>
-        </div>
-      </div>
+      <fillFormNoSel></fillFormNoSel>
     </div>
     <div class="dawang-footer">
       <div style="font-size: 0.4rem; font-weight: bold; color: #ffffff; text-align: center; margin-top: 0.4rem">
@@ -202,9 +54,6 @@
     <van-popup v-model="showSur" style="width: 90%; height: 70%">
       <surfNetDoc></surfNetDoc>
     </van-popup>
-    <van-popup v-model="showForm" position="bottom" :style="{ height: '80%' }">
-      <fillForm :chooseNum="chooseNum" :numAddress="area" :area="codeList" v-on:closePop="showForm = false"></fillForm>
-    </van-popup>
     <div v-if="showTopAD" @click="showTopAD = false" class="tanDiv">
       <img
         class="tanImg"
@@ -229,9 +78,8 @@
 <script>
 import privacyDoc from './privacyDoc'
 import surfNetDoc from './surfNetDoc'
-import fillForm from './fillForm'
+import fillFormNoSel from './fillFormNoSel'
 import { areaList } from '@/assets/js/addressCode.js'
-import phonenum from './phonenum'
 // axios
 import request from '@/utils/request'
 // user api
@@ -241,8 +89,7 @@ export default {
   components: {
     privacyDoc,
     surfNetDoc,
-    fillForm,
-    phonenum
+    fillFormNoSel
   },
   data() {
     return {
@@ -344,52 +191,7 @@ export default {
     // 当页面销毁必须要移除这个事件，vue不刷新页面，不移除会重复执行这个事件
     window.removeEventListener('popstate', this.onBrowserBack, false)
   },
-  created() {
-    request({
-      url: 'webview/location',
-      method: 'post',
-      hideloading: true // 隐藏 loading 组件
-    })
-      .then(res => {
-        if (res.errcode === 0) {
-          console.log(res.data.cityCode)
-          var cid = res.data.cityCode
-          var cityId = cid.slice(0, 4) + '00'
-          var provinceId = cid.slice(0, 2) + '0000'
-          if (areaList.province_list[provinceId] !== undefined) {
-            this.area += areaList.province_list[provinceId] + ' '
-            this.codeList.push({
-              code: provinceId,
-              name: areaList.province_list[provinceId]
-            })
-          }
-          if (areaList.city_list[cityId] !== undefined) {
-            this.area += areaList.city_list[cityId]
-            this.codeList.push({
-              code: cityId,
-              name: areaList.city_list[cityId]
-            })
-          } else if (areaList.city_list[parseInt(cityId) + 100 + ''] !== undefined) {
-            this.area += areaList.city_list[parseInt(cityId) + 100 + '']
-            this.codeList.push({
-              code: parseInt(cityId) + 100 + '',
-              name: areaList.city_list[parseInt(cityId) + 100 + '']
-            })
-          }
-          console.log(this.codeList)
-        }
-      })
-      .then(() => {
-        this.requireData({
-          page: 1,
-          pagesize: 10,
-          formattype: this.pageIndex,
-          keyword: this.inputValue,
-          area: this.area,
-          codeList: JSON.stringify(this.codeList)
-        })
-      })
-  },
+  created() {},
   mounted() {
     // 此处true需要加上，不加滚动事件可能绑定不成功
     window.addEventListener('scroll', this.handleScroll, true)
@@ -627,7 +429,6 @@ export default {
     }
   }
   .dawang-center {
-    padding-left: 18px;
     font-size: 0.4rem;
     .wkDiv {
       width: 95%;
