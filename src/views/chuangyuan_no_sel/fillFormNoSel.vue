@@ -270,9 +270,13 @@ export default {
                   }
                 })
               } else {
-                this.$toast({
-                  message: '订单提交成功'
-                })
+                if (typeof navigateTo === 'function' && 'true' == process.env.VUE_APP_NAVTO) {
+                  navigateTo(process.env.VUE_APP_NAVTO_PATH)
+                } else {
+                  this.$toast({
+                    message: '订单提交成功'
+                  })
+                }
               }
               // this.$toast({
               //   message: '提交成功'
