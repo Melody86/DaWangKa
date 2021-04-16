@@ -94,7 +94,7 @@ export default {
   data() {
     return {
       BannerStyle: {
-        backgroundImage: 'url(' + require('@/assets/images/chuangyuan/1.gif') + ')',
+        backgroundImage: 'url(' + require('@/assets/images/chuangyuan_nosel/1.gif') + ')',
         height: '14rem',
         backgroundSize: '100%'
       },
@@ -318,7 +318,7 @@ export default {
       // 实现滚动效果
       const timeTop = setInterval(() => {
         document.body.scrollTop = document.documentElement.scrollTop = top -= 50
-        if (top <= 0) {
+        if (top <= 120) {
           clearInterval(timeTop)
         }
       }, 10)
