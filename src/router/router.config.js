@@ -13,6 +13,12 @@ export const constantRouterMap = [
     meta: { title: '创源不选号', keepAlive: false }
   },
   {
+    path: '/liandong',
+    name: 'liandong',
+    component: () => import('@/views/liandong/index'),
+    meta: { title: '联动不选号', keepAlive: false }
+  },
+  {
     path: '/chuangyuan',
     name: 'chuangyuan',
     component: () => import('@/views/chuangyuan/index'),
