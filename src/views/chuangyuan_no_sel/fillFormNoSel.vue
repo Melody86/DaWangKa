@@ -1,7 +1,7 @@
 <!-- 电信星卡-填写表单 -->
 <template>
   <div class="fill-form-box">
-    <img src="../../assets/images/yidong/gift50-210.png" />
+    <img src="../../assets/images/yidong/form_top.png" />
 
     <!-- 表单部分 -->
     <div class="form-box-content">
@@ -11,7 +11,7 @@
       <div class="box-content-item" v-show="checkName">
         <span>身份证号：</span><input placeholder="请输入身份证号码（已加密）" v-model="individualValue" />
       </div>
-      <div class="box-content-item">
+      <div class="box-content-item" @click="TelCallAddress">
         <span>联系电话：</span><input placeholder="客服将确认订单请保持畅通（已加密）" v-model="telValue" />
       </div>
       <div class="box-content-item box-content-adderess" @click="callAddress">
@@ -22,18 +22,14 @@
         <span>详细地址：</span><input placeholder="请填写详细街道、小区信息（已加密）" v-model="detailareaValue" />
       </div>
 
-      <div class="box-content-item form-box-doc">
+      <div class="box-content-item form-box-doc" v-if="showPrivacyBox">
         <van-checkbox v-model="docChecked" @click="checkboxClicked" checked-color="#a3783f"></van-checkbox>
         <div class="form-box-doc-link">
           <p>我已阅读并同意<span @click="showXY">《客户入网服务协议》</span></p>
           <p>和<span @click="showGG">《关于客户个人信息收集使用规则公告》</span></p>
         </div>
       </div>
-      <img
-        class="box-content-btn"
-        src="@/assets/images/chuangyuan/weapp-hndxxk/assets/index/banner14.png"
-        @click="submit"
-      />
+      <img class="box-content-btn" src="../../assets/images/yidong/form_bottom.gif" @click="submit" />
     </div>
 
     <!-- 地区选择部分 -->
@@ -72,6 +68,7 @@ export default {
   },
   data() {
     return {
+      showPrivacyBox: false,
       docChecked: false,
       show: false,
       areaList: areaList, //选择地址的地址数据
@@ -120,6 +117,7 @@ export default {
   created() {
     this.need_pay = process.env.VUE_APP_NEED_PAY
     this.price = process.env.VUE_APP_PRICE
+    console.log(this.need_pay)
     // if (this.area[1]) {
     //   this.defaultAreaCode = this.area[1].code
     // }
@@ -134,6 +132,22 @@ export default {
     cancelAreaSel() {
       this.show = false
     },
+    TelCallAddress() {
+      if (typeof call_address === 'function') {
+        if (this.zfb_address === true) {
+          this.zfb_address = false
+          call_address(res => {
+            // alert(JSON.stringify(res))
+            // console.log(res)
+            if (res.status === 1) {
+              this.setAddress(res.data)
+            }
+          })
+          return
+        }
+      }
+    },
+
     callAddress() {
       if (typeof call_address === 'function') {
         if (this.zfb_address === true) {
@@ -338,7 +352,7 @@ export default {
     font-weight: 400;
     display: flex;
     input {
-      color: #01d8ae;
+      color: black;
     }
   }
   .box-content-item input::-webkit-input-placeholder {
@@ -393,8 +407,8 @@ export default {
   .box-content-btn {
     margin-top: 5px;
     margin-bottom: 25px;
-    width: 310px;
-    height: 47.281px;
+    width: 100%;
+    // height: 47.281px;
     text-align: center;
   }
 }

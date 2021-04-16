@@ -1,7 +1,7 @@
 <!-- 联通大王卡 -->
 <template>
   <div class="unicom-index">
-    <div class="dawang-banner"><img :src="banner" /></div>
+    <div class="dawang-banner" :style="BannerStyle"></div>
 
     <div class="dawang-center">
       <fillFormNoSel></fillFormNoSel>
@@ -93,6 +93,11 @@ export default {
   },
   data() {
     return {
+      BannerStyle: {
+        backgroundImage: 'url(' + require('@/assets/images/chuangyuan/1.gif') + ')',
+        height: '14rem',
+        backgroundSize: '100%'
+      },
       banner:
         parseInt(process.env.VUE_APP_SHENHE) === 0
           ? require('@/assets/images/chuangyuan/1.gif')
@@ -123,8 +128,8 @@ export default {
       after: require('@/assets/images/dawang/index29_1/nextPage.png'),
       fixedButton:
         parseInt(process.env.VUE_APP_SHENHE) === 0
-          ? require('@/assets/images/chuangyuan/weapp-hndxxk/assets/index/banner14.png')
-          : require('@/assets/images/chuangyuan/shenhe/weapp-hndxxk/assets/index/banner14.png'),
+          ? require('@/assets/images/yidong/form_bottom.gif')
+          : require('@/assets/images/yidong/form_bottom.gif'),
       loading: require('@/assets/images/dawang/img3_6/loading.gif'),
       areaList: areaList, // 选择地址插件数据
       showAreaList: false, // 是否显示选择地址插件
