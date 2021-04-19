@@ -157,7 +157,48 @@ export default {
       zhu: require('@/assets/images/lingka/zhu.png'),
       head: require('@/assets/images/lingka/head.png'),
       button: require('@/assets/images/lingka/button.gif'),
-      searchNum: Math.floor(Math.random() * 2) === 1 ? '3838' : '3388', // 搜索的数字
+      searchNum: [
+        '000',
+        '111',
+        '222',
+        '333',
+        '444',
+        '555',
+        '666',
+        '777',
+        '888',
+        '999',
+        '520',
+        '3833',
+        '3899',
+        '3838',
+        '3388',
+        '3366',
+        '3399'
+      ][
+        Math.floor(
+          Math.random() *
+            [
+              '000',
+              '111',
+              '222',
+              '333',
+              '444',
+              '555',
+              '666',
+              '777',
+              '888',
+              '999',
+              '520',
+              '3833',
+              '3899',
+              '3838',
+              '3388',
+              '3366',
+              '3399'
+            ].length
+        )
+      ], // 搜索的数字
       chooseNumber: '', // 选中的电话号码
       nameValue: '', // 姓名
       telValue: '', // 电话号码

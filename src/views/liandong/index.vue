@@ -157,14 +157,14 @@ export default {
   },
   data() {
     return {
-      top: require('@/assets/images/lingka/top.png'),
-      middle: require('@/assets/images/lingka/middle.png'),
+      top: require('@/assets/images/liandong/top.jpg'),
+      middle: require('@/assets/images/liandong/middle.png'),
       bottom: require('@/assets/images/lingka/bottom.png'),
       laba: require('@/assets/images/lingka/laba.png'),
       choose: require('@/assets/images/lingka/choose.png'),
       zhu: require('@/assets/images/lingka/zhu.png'),
       head: require('@/assets/images/lingka/head.png'),
-      button: require('@/assets/images/lingka/button.gif'),
+      button: require('@/assets/images/liandong/button.png'),
       searchNum: Math.floor(Math.random() * 2) === 1 ? '3838' : '3388', // 搜索的数字
       chooseNumber: '', // 选中的电话号码
       nameValue: '', // 姓名
