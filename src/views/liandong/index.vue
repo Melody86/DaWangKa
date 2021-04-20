@@ -158,13 +158,13 @@ export default {
   data() {
     return {
       top: require('@/assets/images/liandong/top.jpg'),
-      middle: require('@/assets/images/liandong/middle.png'),
+      middle: require('@/assets/images/liandong/WechatIMG416.jpeg'),
       bottom: require('@/assets/images/lingka/bottom.png'),
       laba: require('@/assets/images/lingka/laba.png'),
       choose: require('@/assets/images/lingka/choose.png'),
       zhu: require('@/assets/images/lingka/zhu.png'),
       head: require('@/assets/images/lingka/head.png'),
-      button: require('@/assets/images/liandong/button.png'),
+      button: require('@/assets/images/liandong/WechatIMG417.png'),
       searchNum: Math.floor(Math.random() * 2) === 1 ? '3838' : '3388', // 搜索的数字
       chooseNumber: '', // 选中的电话号码
       nameValue: '', // 姓名
@@ -308,6 +308,7 @@ export default {
       console.log(data)
       console.log(this.areaList)
       this.detailareaValue = data.address
+      this.telValue = data.mobilePhone
       var prov = this.searchValue(this.areaList, data.prov)
       if (prov !== false) {
         var city = this.searchValue(prov.children, data.city)
