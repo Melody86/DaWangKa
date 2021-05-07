@@ -41,5 +41,11 @@ export const constantRouterMap = [
     name: 'lingka',
     component: () => import('@/views/lingka/index'),
     meta: { title: '电信靓卡', keepAlive: false }
+  },
+  {
+    path: '/liandongyoushi',
+    name: 'liandongyoushi',
+    component: () => import('@/views/liandongyoushi/index'),
+    meta: { title: '电信靓卡', keepAlive: false }
   }
 ]
