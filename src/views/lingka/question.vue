@@ -40,7 +40,7 @@
 // 请求接口
 
 export default {
-  name: 'question',
+  name: 'Question',
   data() {
     return {
       close: require('@/assets/images/lingka/close.gif')
@@ -58,6 +58,7 @@ export default {
 <style lang="scss" scoped>
 .question {
   background-color: #f83057 !important;
+  height: 100%;
   .vip-desc {
     padding: 10px;
     .vip-desc-div {

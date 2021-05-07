@@ -13,7 +13,7 @@
           padding-bottom: 0.4rem;
           position: relative;
           z-index: 1;
-          margin-top: -3rem;
+          margin-top: 0.5rem;
         "
       >
         <div class="neiDiv">
@@ -248,7 +248,7 @@ export default {
     return {
       banner:
         parseInt(process.env.VUE_APP_SHENHE) === 0
-          ? require('@/assets/images/chuangyuan/1.gif')
+          ? require('@/assets/images/chuangyuan/bb33.gif')
           : require('@/assets/images/chuangyuan/shenhe/banner.png'),
       form1:
         parseInt(process.env.VUE_APP_SHENHE) === 0
@@ -276,8 +276,8 @@ export default {
       after: require('@/assets/images/dawang/index29_1/nextPage.png'),
       fixedButton:
         parseInt(process.env.VUE_APP_SHENHE) === 0
-          ? require('@/assets/images/chuangyuan/weapp-hndxxk/assets/index/banner14.png')
-          : require('@/assets/images/chuangyuan/shenhe/weapp-hndxxk/assets/index/banner14.png'),
+          ? require('@/assets/images/chuangyuan/banner14.png')
+          : require('@/assets/images/chuangyuan/shenhe/banner14.png'),
       loading: require('@/assets/images/dawang/img3_6/loading.gif'),
       areaList: areaList, // 选择地址插件数据
       showAreaList: false, // 是否显示选择地址插件

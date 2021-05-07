@@ -1,7 +1,7 @@
 <!-- 电信星卡-填写表单 -->
 <template>
   <div class="fill-form-box">
-    <img src="../../assets/images/chuangyuan_nosel/4.gif" />
+    <!-- <img src="../../assets/images/chuangyuan_nosel/4.gif" /> -->
 
     <!-- 表单部分 -->
     <div class="form-box-content">
@@ -29,7 +29,7 @@
           <p>和<span @click="showGG">《关于客户个人信息收集使用规则公告》</span></p>
         </div>
       </div>
-      <img class="box-content-btn" src="../../assets/images/chuangyuan_nosel/2.gif" @click="submit" />
+      <img class="box-content-btn" src="../../assets/images/chuangyuan_nosel/433.gif" @click="submit" />
     </div>
 
     <!-- 地区选择部分 -->
@@ -342,7 +342,7 @@ export default {
   width: 340px;
   img {
     width: 317.5px;
-    height: 71.984px;
+    // height: 71.984px;
   }
   .box-content-item {
     padding: 0 10px 0 11px;
@@ -411,7 +411,7 @@ export default {
   .box-content-btn {
     margin-top: 5px;
     margin-bottom: 25px;
-    width: 100%;
+    width: 90%;
     // height: 47.281px;
     text-align: center;
   }

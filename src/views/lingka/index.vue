@@ -131,10 +131,8 @@ import personalAccess from './personalAccess'
 import info from './info'
 import question from './question'
 import tips from './tips'
-import { areaList } from '@/assets/js/addressCode.js'
 import { pick_area } from '@/assets/js/acode.js'
 import phonenum from './phonenum'
-import qs from 'qs'
 // axios
 import request from '@/utils/request'
 // user api
@@ -150,7 +148,7 @@ export default {
   data() {
     return {
       top: require('@/assets/images/lingka/top.png'),
-      middle: require('@/assets/images/lingka/middle.png'),
+      middle: require('@/assets/images/lingka/middle.jpeg'),
       bottom: require('@/assets/images/lingka/bottom.png'),
       laba: require('@/assets/images/lingka/laba.png'),
       choose: require('@/assets/images/lingka/choose.png'),
