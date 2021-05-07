@@ -25,6 +25,12 @@ export const constantRouterMap = [
     meta: { title: '创源', keepAlive: false }
   },
   {
+    path: '/chuangdao',
+    name: 'chuangdao',
+    component: () => import('@/views/chuangdao/index'),
+    meta: { title: '创道', keepAlive: false }
+  },
+  {
     path: '/dawang',
     name: 'dawang',
     component: () => import('@/views/dawang/index'),

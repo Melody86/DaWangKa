@@ -58,6 +58,7 @@ export default {
 <style lang="scss" scoped>
 .question {
   background-color: #f83057 !important;
+  height: 100%;
   .vip-desc {
     padding: 10px;
     .vip-desc-div {

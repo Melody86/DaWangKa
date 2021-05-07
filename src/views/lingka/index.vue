@@ -205,7 +205,7 @@ export default {
       individualValue: '', // 身份证号码
       cascaderValue: '', // 选中省市区
       detailareaValue: '', // 详细地址
-      docChecked: true,
+      docChecked: false,
       checkName: false,
       checkTel: false,
       showChoiceArea: false,
