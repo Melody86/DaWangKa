@@ -223,10 +223,12 @@
       />
     </div>
     <div v-if="showTop2" class="tanDiv">
-      <div class="top-num-box">
-        <div class="num-box">{{ luck_num }}</div>
-        <div class="close-box" @click="closeTopLevel"></div>
-        <div class="sub-btn-box" @click="sub_luck_num"></div>
+      <div class="top-box-war">
+        <div class="top-num-box">
+          <div class="num-box"><phonenum :pnum="luck_num" :pkey="inputValue" v-if="luck_num != ''"></phonenum></div>
+          <div class="close-box" @click="closeTopLevel"></div>
+          <div class="sub-btn-box" @click="sub_luck_num"></div>
+        </div>
       </div>
     </div>
   </div>
@@ -288,7 +290,7 @@ export default {
       areaList: areaList, // 选择地址插件数据
       showAreaList: false, // 是否显示选择地址插件
       area: '', // 选择之后的确定值
-      inputValue: '188', // 搜索框内值
+      inputValue: '66', // 搜索框内值
       choiceListIndex: 0, // 号码类型选择序号
       typeArr: ['全部', 'ABC', 'ABAB', 'AABB', '爱情号', '尾号8'],
       pageIndex: 1,
@@ -949,39 +951,45 @@ export default {
       animation-iteration-count: infinite;
     }
   }
+
   .tanDiv {
-    .top-num-box {
-      background-image: url(../../assets/images/chuangdao_tanchuang/tanchu1.png);
-      background-size: 100%;
-      background-repeat: no-repeat;
-      position: absolute;
-      width: 78%;
-      left: 50%;
-      top: 50%;
-      height: 58%;
-      transform: translate(-50%, -50%);
-      -ms-transform: translate(-50%, -50%);
-      -moz-transform: translate(-50%, -50%);
-      -webkit-transform: translate(-50%, -50%);
-      -o-transform: translate(-50%, -50%);
-      .num-box {
-        margin-top: 92%;
-        font-size: 25px;
-        color: red;
-      }
-      .sub-btn-box {
+    .top-box-war {
+      .top-num-box {
+        align-items: center;
+        justify-content: center;
+        background-image: url(../../assets/images/chuangdao_tanchuang/tanchu1.png);
+        background-size: 100%;
+        background-repeat: no-repeat;
         position: absolute;
-        bottom: 68px;
-        left: 0;
-        height: 50px;
-        width: 100%;
-      }
-      .close-box {
-        position: absolute;
-        top: 0;
-        right: 0;
-        height: 50px;
-        width: 50px;
+        width: 78%;
+        height: 70%;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        -moz-transform: translate(-50%, -50%);
+        -webkit-transform: translate(-50%, -50%);
+        -o-transform: translate(-50%, -50%);
+        .num-box {
+          margin-top: 92%;
+          margin-bottom: 72%;
+          font-size: 25px;
+          color: black;
+        }
+        .sub-btn-box {
+          position: absolute;
+          top: 338px;
+          left: 0;
+          height: 70px;
+          width: 100%;
+        }
+        .close-box {
+          position: absolute;
+          top: 0;
+          right: 0;
+          height: 50px;
+          width: 50px;
+        }
       }
     }
   }

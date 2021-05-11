@@ -7,7 +7,7 @@
     </p>
     <p class="info_text2">根据国家手机号卡实名要求，请如实填写以下信息，以便我们及时为您送达。</p>
     <div class="info_write_info" id="info_fill">
-      <div>收货人信息</div>
+      <div>收卡人信息</div>
       <ul>
         <li class="border_none tel_error">
           <div class="fl info_left">联系电话</div>
@@ -63,7 +63,7 @@
       </ul>
     </div>
     <div class="info_write_info">
-      <div>收货地址</div>
+      <div>收卡地址</div>
       <ul>
         <li class="border_none area_error input_text" id="areaInfo" @click="showAreaBox()">
           <div class="arr-DIV">
@@ -87,7 +87,7 @@
       </ul>
     </div>
 
-    <div class="content_btn btnTj scale_div" @click="submit" id="tj_submit">填写表单，领卡送豪礼</div>
+    <div class="content_btn btnTj scale_div" @click="submit" id="tj_submit">免费领取 包邮到家</div>
     <p class="info_text2">
       本活动为阶段性优惠活动，发布数量有限，请保持联系号码畅通，我们可能随时与您联系，电话无人接听或恶意下单，将不予发货。
     </p>
@@ -581,13 +581,22 @@ export default {
   font-size: 18px;
   border-radius: 9px;
   margin: 30px auto;
-  animation: warn 2s ease-in;
-  -webkit-animation: warn 2s ease-in;
-  -moz-animation: warn 2s ease-in;
+  animation: warn 0.5s ease-in;
+  -webkit-animation: warn 0.5s ease-in;
+  -moz-animation: warn 0.5s ease-in;
   /*规定动画无限次播放*/
   -webkit-animation-iteration-count: infinite;
   -moz-animation-iteration-count: infinite;
   animation-iteration-count: infinite;
+}
+
+@keyframes twinkle {
+  0% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 0;
+  }
 }
 </style>
 

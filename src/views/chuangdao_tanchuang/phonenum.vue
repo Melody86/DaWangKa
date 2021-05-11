@@ -7,7 +7,7 @@
 // 请求接口
 
 export default {
-  name: 'phonenum',
+  name: 'Phonenum',
   props: ['pnum', 'pkey'],
   data() {
     return {
@@ -18,13 +18,13 @@ export default {
     }
   },
   computed: {
-    f_data: function () {
+    f_data() {
       return this.SearchHighlight(parseInt(this.pnum) + '', parseInt(this.pkey) + '')
     }
   },
   mounted() {
     // this.f_data = this.SearchHighlight(parseInt(this.pnum) + '', parseInt(this.pkey) + '')
-    console.log(this.f_data)
+    console.log(!isNaN(this.f_data))
   },
   methods: {
     SearchHighlight(phone, searchNum) {
@@ -55,7 +55,6 @@ export default {
 </script>
 <style lang="scss" scoped>
 .number {
-  font-size: 0.4rem;
   margin-bottom: 0.1rem;
 }
 </style>
