@@ -31,6 +31,12 @@ export const constantRouterMap = [
     meta: { title: '创道', keepAlive: false }
   },
   {
+    path: '/chuangdao_tanchuang',
+    name: 'chuangdao_tanchuang',
+    component: () => import('@/views/chuangdao_tanchuang/index'),
+    meta: { title: '创道', keepAlive: false }
+  },
+  {
     path: '/dawang',
     name: 'dawang',
     component: () => import('@/views/dawang/index'),
