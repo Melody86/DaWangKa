@@ -41,7 +41,7 @@
           </div>
           <div class="choice-list">
             <van-grid :column-num="3" :border="false">
-              <van-grid-item v-for="(item,index) in typeArr" :key="index" :text="item"  :class="choiceListIndex == index?'show-deep':''" @click="choiceType(index)"/>
+              <van-grid-item v-for="(item,index) in typeArr" :key="index" :text="item"  :class="choiceListIndex == index?'show-deep':''" @click="choiceType(index)" />
             </van-grid>
           </div>
         </div>
@@ -50,16 +50,16 @@
         <div v-show="list.length == 0"><img :src="loading"></img></div>
         <div class="num-list" v-show="list.length != 0">
           <van-grid :border="false" :column-num="2" :gutter="10">
-            <van-grid-item v-for="(item,index) in list" :key="index">
+            <van-grid-item v-for="(item,index) in list" :key="index" v-if="index<10">
               <div class="num-list-item" @click="selNum(item.number)">
-                <div class="num"><span>{{item.number}}</span></div>
-                <div class="num-bottom"><span class="price">{{item.price}}</span><span class="text">限时免费</span></div>
+                <div class="num"><phonenum :pnum="item.number" :pkey="inputValue"></phonenum></div>
+                <div class="num-bottom"><span class="price">{{item.price}}</span><span class="text" v-if="shenHeStatus==0">限时免费</span></div>
               </div>
             </van-grid-item>
           </van-grid>
         </div>
         <p class="icon-text"><i>*</i>靓号名额有限，具体情况以实际为准</p>
-        <div class="agreement" v-if="showAgreement">
+        <div class="agreement" v-if="showAgreement==0">
           <img :src="checkIcon"></img>
           我已阅读并同意
           <span @click="showPrivacy=true">《个人隐私协议》</span>
@@ -87,7 +87,9 @@
         cancel-button-text=""
         :area-list="areaList"
         :columns-num="2"
-        @confirm="choiceArea"/>
+        @cancel="cancelAreaBox"
+        @confirm="choiceArea"
+        visible-item-count="10" />
     </van-popup>
     <van-popup v-model="showPrivacy" style="width:90%;height:70%;">
       <privacyDoc></privacyDoc>
@@ -96,7 +98,7 @@
       <surfNetDoc></surfNetDoc>
     </van-popup>
     <van-popup v-model="showForm" position="bottom" :style="{ height: '80%' }">
-      <fillForm :chooseNum="chooseNum" :numAddress="area" :area="codeList"></fillForm>
+      <fillForm :chooseNum="chooseNum" :numAddress="area" :area="codeList" v-on:closePop="showForm = false"></fillForm>
     </van-popup>
   </div>
 </template>
@@ -106,6 +108,7 @@ import privacyDoc from './privacyDoc'
 import surfNetDoc from './surfNetDoc'
 import fillForm from './fillForm'
 import { areaList } from '@/assets/js/addressCode.js'
+import phonenum from './phonenum'
 import qs from 'qs'
 // axios
 import request from '@/utils/request'
@@ -116,15 +119,31 @@ export default {
   components: {
     privacyDoc,
     surfNetDoc,
-    fillForm
+    fillForm,
+    phonenum
   },
   data() {
     return {
-      banner: require('@/assets/images/dawang/index29_1/banner2.png'),
-      form1: require('@/assets/images/dawang/index29_1/form1.png'),
-      form2: require('@/assets/images/dawang/index29_1/form2New.png'),
-      form3: require('@/assets/images/dawang/index29_1/form3.png'),
-      form4: require('@/assets/images/dawang/index29_1/form4.png'),
+      banner:
+        parseInt(process.env.VUE_APP_SHENHE) === 0
+          ? require('@/assets/images/dawang/index29_1/banner2.png')
+          : require('@/assets/images/dawang/index29_1/shenhe/banner2.png'),
+      form1:
+        parseInt(process.env.VUE_APP_SHENHE) === 0
+          ? require('@/assets/images/dawang/index29_1/form1.png')
+          : require('@/assets/images/dawang/index29_1/shenhe/form1.png'),
+      form2:
+        parseInt(process.env.VUE_APP_SHENHE) === 0
+          ? require('@/assets/images/dawang/index29_1/form2New.png')
+          : require('@/assets/images/dawang/index29_1/shenhe/form2New.png'),
+      form3:
+        parseInt(process.env.VUE_APP_SHENHE) === 0
+          ? require('@/assets/images/dawang/index29_1/form3.png')
+          : require('@/assets/images/dawang/index29_1/shenhe/form3.png'),
+      form4:
+        parseInt(process.env.VUE_APP_SHENHE) === 0
+          ? require('@/assets/images/dawang/index29_1/form4.png')
+          : require('@/assets/images/dawang/index29_1/shenhe/form4.png'),
       voice: require('@/assets/images/dawang/index29_1/shengyin.png'),
       address: require('@/assets/images/dawang/index29_1/baijiu-.png'),
       baijiuGray: require('@/assets/images/dawang/index29_1/baijiuGray.png'),
@@ -150,56 +169,95 @@ export default {
       chooseNum: '',
       isLastPage: true,
       list: [],
-      showAgreement: false
+      showAgreement: parseInt(process.env.VUE_APP_SHENHE),
+      shenHeStatus: parseInt(process.env.VUE_APP_SHENHE)
     }
   },
 
   computed: {},
   created() {
-    if (areaList.city_list[parseInt(returnCitySN['cid'])] === undefined) {
-      this.area =
-        areaList.province_list[returnCitySN['cid'].slice(0, 2) + '0000'] +
-        ' ' +
-        areaList.city_list[parseInt(returnCitySN['cid']) + 100]
-      this.codeList.push({
-        code: returnCitySN['cid'].slice(0, 2) + '0000',
-        name: areaList.province_list[returnCitySN['cid'].slice(0, 2) + '0000']
-      })
-      this.codeList.push({
-        code: parseInt(returnCitySN['cid']) + 100 + '',
-        name: areaList.city_list[parseInt(returnCitySN['cid']) + 100]
-      })
-      console.log(this.codeList)
-    } else if (areaList.city_list[returnCitySN['cid']] === undefined) {
-      this.area =
-        areaList.province_list[returnCitySN['cid'].slice(0, 2) + '0000'] +
-        ' ' +
-        areaList.city_list[parseInt(returnCitySN['cid'])]
-      this.codeList = [
-        {
-          code: returnCitySN['cid'].slice(0, 2) + '0000',
-          name: areaList.province_list[parseInt(returnCitySN['cid'].slice(0, 2) + '0000')]
-        },
-        {
-          code: returnCitySN['cid'],
-          name: areaList.city_list[parseInt(returnCitySN['cid'])]
-        }
-      ]
-    }
-    this.requireData({
-      page: 1,
-      pagesize: 10,
-      formattype: this.pageIndex,
-      keyword: this.inputValue,
-      area: this.area
+    request({
+      url: 'webview/location',
+      method: 'post',
+      hideloading: true // 隐藏 loading 组件
     })
+      .then(res => {
+        if (res.errcode === 0) {
+          console.log(res.data.cityCode)
+          var cid = res.data.cityCode
+          var cityId = cid.slice(0, 4) + '00'
+          var provinceId = cid.slice(0, 2) + '0000'
+          if (areaList.province_list[provinceId] !== undefined) {
+            this.area += areaList.province_list[provinceId] + ' '
+            this.codeList.push({
+              code: provinceId,
+              name: areaList.province_list[provinceId]
+            })
+          }
+          if (areaList.city_list[cityId] !== undefined) {
+            this.area += areaList.city_list[cityId]
+            this.codeList.push({
+              code: cityId,
+              name: areaList.city_list[cityId]
+            })
+          } else if (areaList.city_list[parseInt(cityId) + 100 + ''] !== undefined) {
+            this.area += areaList.city_list[parseInt(cityId) + 100 + '']
+            this.codeList.push({
+              code: parseInt(cityId) + 100 + '',
+              name: areaList.city_list[parseInt(cityId) + 100 + '']
+            })
+          }
+          console.log(this.codeList)
+        }
+      })
+      .then(() => {
+        this.requireData({
+          page: 1,
+          pagesize: 10,
+          formattype: this.pageIndex,
+          keyword: this.inputValue,
+          area: this.area,
+          codeList: JSON.stringify(this.codeList)
+        })
+      })
   },
   mounted() {
     // 此处true需要加上，不加滚动事件可能绑定不成功
     window.addEventListener('scroll', this.handleScroll, true)
+    // 按需使用：A→B→C就需要页面一进来的时候，就添加一个历史记录
+    window.history.pushState(null, null, document.URL)
+    // 给window添加一个popstate事件，拦截返回键，执行this.onBrowserBack事件，addEventListener需要指向一个方法
+    window.addEventListener('popstate', this.onBrowserBack, false)
+  },
+  destroyed() {
+    // 当页面销毁必须要移除这个事件，vue不刷新页面，不移除会重复执行这个事件
+    window.removeEventListener('popstate', this.onBrowserBack, false)
+  },
+  watch: {
+    // 弹框监听，当弹框显示的时候，pushState添加一个历史，供返回键使用
+    PopupShow: {
+      handler(newVal, oldVal) {
+        if (newVal.Terms === true) {
+          window.history.pushState(null, null, document.URL)
+        }
+      },
+      deep: true
+    }
   },
 
   methods: {
+    onBrowserBack() {
+      if (process.env.VUE_APP_NEED_LANJIE === 'true') {
+        window.location.href = process.env.VUE_APP_RE_GAME_URL
+      }
+
+      console.log(3232323)
+      // 这里写点击返回键时候的事件
+      // 比如判断需求执行back()或者go(-2)或者PopupShow=false隐藏弹框
+    },
+    cancelAreaBox() {
+      this.showAreaList = false
+    },
     selNum(number) {
       if (this.area === '') {
         this.$toast({
@@ -222,10 +280,11 @@ export default {
       }
       this.codeList = arr
       console.log(this.codeList)
+      this.onSearch()
     },
     requireData(a) {
       request({
-        url: '/phone_list',
+        url: 'webview/phone_list',
         method: 'get',
         // params: qs.stringify(a),
         params: a,
@@ -252,7 +311,8 @@ export default {
         pagesize: 10,
         formattype: this.pageIndex,
         keyword: this.inputValue,
-        area: this.area
+        area: this.area,
+        codeList: JSON.stringify(this.codeList)
       })
       console.log(this.inputValue)
     },

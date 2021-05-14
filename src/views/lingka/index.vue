@@ -32,8 +32,8 @@
           </div>
           <div class="card-list">
             <van-grid :column-num="3" :border="false" :gutter="2">
-              <van-grid-item v-for="(item, index) in list" :key="index" @click="chooseItemNum(item)">
-                <div>{{ item.mdn }}</div>
+              <van-grid-item v-for="(item, index) in list" :key="index" @click="chooseItemNum(item)" v-if="index < 9">
+                <phonenum :pnum="item.number" :pkey="searchNum"></phonenum>
                 <div class="text">{{ item.feature }}</div>
               </van-grid-item>
             </van-grid>
@@ -133,6 +133,7 @@ import question from './question'
 import tips from './tips'
 import { areaList } from '@/assets/js/addressCode.js'
 import { pick_area } from '@/assets/js/acode.js'
+import phonenum from './phonenum'
 import qs from 'qs'
 // axios
 import request from '@/utils/request'
@@ -143,7 +144,8 @@ export default {
     personalAccess,
     info,
     question,
-    tips
+    tips,
+    phonenum
   },
   data() {
     return {
@@ -155,14 +157,55 @@ export default {
       zhu: require('@/assets/images/lingka/zhu.png'),
       head: require('@/assets/images/lingka/head.png'),
       button: require('@/assets/images/lingka/button.gif'),
-      searchNum: '', // 搜索的数字
+      searchNum: [
+        '000',
+        '111',
+        '222',
+        '333',
+        '444',
+        '555',
+        '666',
+        '777',
+        '888',
+        '999',
+        '520',
+        '3833',
+        '3899',
+        '3838',
+        '3388',
+        '3366',
+        '3399'
+      ][
+        Math.floor(
+          Math.random() *
+            [
+              '000',
+              '111',
+              '222',
+              '333',
+              '444',
+              '555',
+              '666',
+              '777',
+              '888',
+              '999',
+              '520',
+              '3833',
+              '3899',
+              '3838',
+              '3388',
+              '3366',
+              '3399'
+            ].length
+        )
+      ], // 搜索的数字
       chooseNumber: '', // 选中的电话号码
       nameValue: '', // 姓名
       telValue: '', // 电话号码
       individualValue: '', // 身份证号码
       cascaderValue: '', // 选中省市区
       detailareaValue: '', // 详细地址
-      docChecked: true,
+      docChecked: false,
       checkName: false,
       checkTel: false,
       showChoiceArea: false,
@@ -177,52 +220,19 @@ export default {
       showTips: false,
       area: '',
       list: [
-        { mdn: 19938330130, feature: '爱情靓号' },
-        { mdn: 19938330130, feature: '爱情靓号' },
-        { mdn: 19938330130, feature: '爱情靓号' },
-        { mdn: 19938330130, feature: '爱情靓号' },
-        { mdn: 19938330130, feature: '爱情靓号' },
-        { mdn: 19938330130, feature: '爱情靓号' },
-        { mdn: 19938330130, feature: '爱情靓号' },
-        { mdn: 19938330130, feature: '爱情靓号' },
-        { mdn: 19938330130, feature: '爱情靓号' }
+        { number: 19938330130, feature: '爱情靓号' },
+        { number: 19938330130, feature: '爱情靓号' },
+        { number: 19938330130, feature: '爱情靓号' },
+        { number: 19938330130, feature: '爱情靓号' },
+        { number: 19938330130, feature: '爱情靓号' },
+        { number: 19938330130, feature: '爱情靓号' },
+        { number: 19938330130, feature: '爱情靓号' },
+        { number: 19938330130, feature: '爱情靓号' },
+        { number: 19938330130, feature: '爱情靓号' }
       ]
     }
   },
   created() {
-    console.log(pick_area)
-    // if (areaList.city_list[parseInt(returnCitySN['cid'])] === undefined) {
-    //     this.area =
-    //         areaList.province_list[returnCitySN['cid'].slice(0, 2) + '0000'] +
-    //         ' ' +
-    //         areaList.city_list[parseInt(returnCitySN['cid']) + 100]
-    //     this.codeList.push({
-    //         code: returnCitySN['cid'].slice(0, 2) + '0000',
-    //         name: areaList.province_list[returnCitySN['cid'].slice(0, 2) + '0000']
-    //     })
-    //     this.codeList.push({
-    //         code: parseInt(returnCitySN['cid']) + 100 + '',
-    //         name: areaList.city_list[parseInt(returnCitySN['cid']) + 100]
-    //     })
-    //     console.log(this.codeList)
-    // } else if (areaList.city_list[returnCitySN['cid']] === undefined) {
-    //     this.area =
-    //         areaList.province_list[returnCitySN['cid'].slice(0, 2) + '0000'] +
-    //         ' ' +
-    //         areaList.city_list[parseInt(returnCitySN['cid'])]
-    //     this.codeList = [
-    //         {
-    //         code: returnCitySN['cid'].slice(0, 2) + '0000',
-    //         name: areaList.province_list[parseInt(returnCitySN['cid'].slice(0, 2) + '0000')]
-    //         },
-    //         {
-    //         code: returnCitySN['cid'],
-    //         name: areaList.city_list[parseInt(returnCitySN['cid'])]
-    //         }
-    //     ]
-    // } else {
-
-    // }
     this.requireData({
       page: 1,
       pagesize: 9,
@@ -291,7 +301,7 @@ export default {
     //     this.docChecked = !this.docChecked;
     // },
     chooseItemNum(obj) {
-      this.chooseNumber = obj.mdn
+      this.chooseNumber = obj.number
     },
     showAreaBox() {
       if (typeof call_address === 'function') {
@@ -310,45 +320,50 @@ export default {
       this.showChoiceArea = true
     },
     setAddress(data) {
+      console.log(data)
+      console.log(this.areaList)
       this.detailareaValue = data.address
-      var county_arr = this.searchValue(areaList.county_list, data.area)
-      if (county_arr.length === 1) {
-        this.defaultAreaCode = county_arr[0]
-      }
-      if (county_arr.length > 1) {
-        for (let i = 0; i < county_arr.length; i++) {
-          var element = areaList.city_list[(county_arr[i] + '').slice(0, 4) + '00']
-          if (data.city === element) {
-            console.log(county_arr[i])
-            this.defaultAreaCode = county_arr[i] + ''
-            break
-          }
+      var prov = this.searchValue(this.areaList, data.prov)
+      if (prov !== false) {
+        var city = this.searchValue(prov.children, data.city)
+        if (city !== false) {
+          var country = this.searchValue(city.children, data.area)
+          var new_arr = []
+          new_arr.push({
+            code: prov.value,
+            name: prov.text
+          })
+          new_arr.push({
+            code: city.value,
+            name: city.text
+          })
+          new_arr.push({
+            code: country.value,
+            name: country.text
+          })
+          console.log(new_arr)
+          this.choiceArea2(new_arr)
         }
       }
-      var new_arr = []
-      new_arr.push({
-        code: this.defaultAreaCode.slice(0, 2) + '' + '0000',
-        name: areaList.province_list[parseInt(this.defaultAreaCode.slice(0, 2) + '' + '0000')]
-      })
-      new_arr.push({
-        code: this.defaultAreaCode.slice(0, 4) + '' + '00',
-        name: areaList.city_list[parseInt(this.defaultAreaCode.slice(0, 4) + '' + '00')]
-      })
-      new_arr.push({
-        code: this.defaultAreaCode,
-        name: areaList.county_list[parseInt(this.defaultAreaCode)]
-      })
-      console.log(new_arr)
-      this.choiceArea(new_arr)
+      // if (county_arr.length > 1) {
+      //   for (let i = 0; i < county_arr.length; i++) {
+      //     var element = areaList.city_list[(county_arr[i] + '').slice(0, 4) + '00']
+      //     if (data.city === element) {
+      //       console.log(county_arr[i])
+      //       this.defaultAreaCode = county_arr[i] + ''
+      //       break
+      //     }
+      //   }
+      // }
     },
     searchValue(object, value) {
-      var adw = []
+      // console.log(value.slice(0, 2))
       for (var key in object) {
-        if (object[key] === value) {
-          adw.push(key)
+        if (object[key].text.slice(0, 2) === value.slice(0, 2)) {
+          return object[key]
         }
       }
-      return adw
+      return false
     },
     choiceArea(arr) {
       var arr2 = this.$refs.pickarea.getValues()
@@ -364,6 +379,17 @@ export default {
       this.cascaderValue = ''
       for (var i = 0; i < arr2.length; i++) {
         var a = arr2[i].text
+        if (a !== this.cascaderValue) {
+          this.cascaderValue = this.cascaderValue + ' ' + a
+        }
+      }
+      this.showChoiceArea = false
+    },
+    choiceArea2(arr) {
+      this.areaList1 = arr
+      this.cascaderValue = ''
+      for (var i = 0; i < arr.length; i++) {
+        var a = arr[i].name
         if (a !== this.cascaderValue) {
           this.cascaderValue = this.cascaderValue + ' ' + a
         }
@@ -447,6 +473,9 @@ export default {
               message: '提交成功'
             })
             this.disable_submit = false
+            if (typeof navigateTo === 'function' && process.env.VUE_APP_NAVTO === 'true') {
+              navigateTo(process.env.VUE_APP_NAVTO_PATH)
+            }
           } else {
             this.$toast({
               message: res.message

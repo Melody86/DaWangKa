@@ -4,7 +4,37 @@
 export const constantRouterMap = [
   {
     path: '/',
-    redirect: { name: 'lingka' }
+    redirect: { name: process.env.VUE_APP_TEMP }
+  },
+  {
+    path: '/chuangyuan_no_sel',
+    name: 'chuangyuan_no_sel',
+    component: () => import('@/views/chuangyuan_no_sel/index'),
+    meta: { title: '创源不选号', keepAlive: false }
+  },
+  {
+    path: '/liandong',
+    name: 'liandong',
+    component: () => import('@/views/liandong/index'),
+    meta: { title: '联动不选号', keepAlive: false }
+  },
+  {
+    path: '/chuangyuan',
+    name: 'chuangyuan',
+    component: () => import('@/views/chuangyuan/index'),
+    meta: { title: '创源', keepAlive: false }
+  },
+  {
+    path: '/chuangdao',
+    name: 'chuangdao',
+    component: () => import('@/views/chuangdao/index'),
+    meta: { title: '创道', keepAlive: false }
+  },
+  {
+    path: '/chuangdao_tanchuang',
+    name: 'chuangdao_tanchuang',
+    component: () => import('@/views/chuangdao_tanchuang/index'),
+    meta: { title: '创道', keepAlive: false }
   },
   {
     path: '/dawang',
