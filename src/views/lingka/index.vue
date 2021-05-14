@@ -148,7 +148,7 @@ export default {
   data() {
     return {
       top: require('@/assets/images/lingka/top.png'),
-      middle: require('@/assets/images/lingka/middle.jpeg'),
+      middle: require('@/assets/images/lingka/middle2.jpg'),
       bottom: require('@/assets/images/lingka/bottom.png'),
       laba: require('@/assets/images/lingka/laba.png'),
       choose: require('@/assets/images/lingka/choose.png'),
@@ -203,7 +203,7 @@ export default {
       individualValue: '', // 身份证号码
       cascaderValue: '', // 选中省市区
       detailareaValue: '', // 详细地址
-      docChecked: false,
+      docChecked: true,
       checkName: false,
       checkTel: false,
       showChoiceArea: false,
