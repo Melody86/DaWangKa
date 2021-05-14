@@ -11,7 +11,7 @@
         </van-swipe>
       </div>
       <div class="choose"><img :src="choose" /></div>
-      <div class="search-list">
+      <div class="search-list" v-if="false">
         <div class="content-div">
           <div class="search-input">
             <div class="car-search">
@@ -41,12 +41,12 @@
         </div>
       </div>
       <div class="form-list">
-        <img :src="head" />
+        <img :src="head" v-if="false" />
         <div class="banner">
           <div>
             <div class="banner-inner">
               <div class="banner-form">
-                <div class="banner-border">
+                <div class="banner-border" v-if="false">
                   <span class="banner-text">免费靓号<span>*</span></span>
                   <span class="banner-text2"
                     ><input class="banner_input" readonly="readonly" placeholder="免费靓号" v-model="chooseNumber"
@@ -58,7 +58,7 @@
                     ><input class="banner_input" placeholder="请输入身份证件姓名（已加密）" v-model="nameValue"
                   /></span>
                 </div>
-                <div class="banner-border">
+                <div class="banner-border" @click="callMobile">
                   <span class="banner-text">联系号码<span>*</span></span>
                   <span class="banner-text2"
                     ><input class="banner_input" placeholder="请输入收件人联系电话（已加密）" v-model="telValue"
@@ -88,7 +88,7 @@
                   /></span>
                 </div>
               </div>
-              <div class="formbox-btm">
+              <div class="formbox-btm" v-if="false">
                 <van-checkbox v-model="docChecked" shape="square" icon-size="14px"></van-checkbox>
                 <span class="btm-text">我已阅读并同意:</span>
                 <div class="policy-name" @click="showPersonal = true">
@@ -105,12 +105,19 @@
       </div>
     </div>
     <div><img :src="middle" /></div>
-    <div><img :src="bottom" /></div>
     <div class="question-tips" @click="showQuestion = true">常见问题</div>
     <div class="question-tips" @click="showTips = true">温馨提示</div>
     <div @click="toTop"><img :src="button" /></div>
     <van-popup v-model="showChoiceArea" position="bottom">
-      <van-picker show-toolbar title="标题" :columns="areaList" @confirm="choiceArea" ref="pickarea" />
+      <van-picker
+        show-toolbar
+        title="选择收货地址"
+        :columns="areaList"
+        @confirm="choiceArea"
+        ref="pickarea"
+        visible-item-count="10"
+        @cancel="cancelAreaSel"
+      />
     </van-popup>
     <van-popup v-model="showPersonal" style="width: 90%; height: 70%">
       <personalAccess></personalAccess>
@@ -131,8 +138,10 @@ import personalAccess from './personalAccess'
 import info from './info'
 import question from './question'
 import tips from './tips'
+import { areaList } from '@/assets/js/addressCode.js'
 import { pick_area } from '@/assets/js/acode.js'
 import phonenum from './phonenum'
+import qs from 'qs'
 // axios
 import request from '@/utils/request'
 // user api
@@ -147,63 +156,22 @@ export default {
   },
   data() {
     return {
-      top: require('@/assets/images/lingka/top.png'),
-      middle: require('@/assets/images/lingka/middle.jpeg'),
+      top: require('@/assets/images/liandongyoushi/top2.png'),
+      middle: require('@/assets/images/liandongyoushi/m2.png'),
       bottom: require('@/assets/images/lingka/bottom.png'),
       laba: require('@/assets/images/lingka/laba.png'),
-      choose: require('@/assets/images/lingka/choose.png'),
+      choose: require('@/assets/images/liandongyoushi/btn.png'),
       zhu: require('@/assets/images/lingka/zhu.png'),
       head: require('@/assets/images/lingka/head.png'),
-      button: require('@/assets/images/lingka/button.gif'),
-      searchNum: [
-        '000',
-        '111',
-        '222',
-        '333',
-        '444',
-        '555',
-        '666',
-        '777',
-        '888',
-        '999',
-        '520',
-        '3833',
-        '3899',
-        '3838',
-        '3388',
-        '3366',
-        '3399'
-      ][
-        Math.floor(
-          Math.random() *
-            [
-              '000',
-              '111',
-              '222',
-              '333',
-              '444',
-              '555',
-              '666',
-              '777',
-              '888',
-              '999',
-              '520',
-              '3833',
-              '3899',
-              '3838',
-              '3388',
-              '3366',
-              '3399'
-            ].length
-        )
-      ], // 搜索的数字
+      button: require('@/assets/images/liandongyoushi/button.gif'),
+      searchNum: Math.floor(Math.random() * 2) === 1 ? '3838' : '3388', // 搜索的数字
       chooseNumber: '', // 选中的电话号码
       nameValue: '', // 姓名
       telValue: '', // 电话号码
       individualValue: '', // 身份证号码
       cascaderValue: '', // 选中省市区
       detailareaValue: '', // 详细地址
-      docChecked: false,
+      docChecked: true,
       checkName: false,
       checkTel: false,
       showChoiceArea: false,
@@ -231,13 +199,13 @@ export default {
     }
   },
   created() {
-    this.requireData({
-      page: 1,
-      pagesize: 9,
-      keyword: this.searchNum,
-      sohuip: returnCitySN
-      // area: this.area
-    })
+    // this.requireData({
+    //   page: 1,
+    //   pagesize: 9,
+    //   keyword: this.searchNum,
+    //   sohuip: returnCitySN
+    //   // area: this.area
+    // })
   },
   mounted() {
     // 此处true需要加上，不加滚动事件可能绑定不成功
@@ -262,37 +230,40 @@ export default {
     }
   },
   methods: {
-    requireData(a) {
-      request({
-        url: 'webview/phone_list',
-        method: 'get',
-        // params: qs.stringify(a),
-        params: a,
-        hideloading: true // 隐藏 loading 组件
-      })
-        .then(res => {
-          console.log(res)
-          if (res.errcode === 0) {
-            this.list = res.data.list
-            // this.isLastPage = res.data.next_page
-          } else {
-            this.$toast({
-              message: '没有找到您心仪的号码'
-            })
-          }
-        })
-        .catch(() => {
-          console.log(22)
-        })
+    cancelAreaSel() {
+      this.showChoiceArea = false
     },
+    // requireData(a) {
+    //   request({
+    //     url: 'webview/phone_list',
+    //     method: 'get',
+    //     // params: qs.stringify(a),
+    //     params: a,
+    //     hideloading: true // 隐藏 loading 组件
+    //   })
+    //     .then(res => {
+    //       console.log(res)
+    //       if (res.errcode === 0) {
+    //         this.list = res.data.list
+    //         // this.isLastPage = res.data.next_page
+    //       } else {
+    //         this.$toast({
+    //           message: '没有找到您心仪的号码'
+    //         })
+    //       }
+    //     })
+    //     .catch(() => {
+    //       console.log(22)
+    //     })
+    // },
     searchNumber() {
-      this.requireData({
-        page: 1,
-        pagesize: 9,
-        keyword: this.searchNum,
-        sohuip: returnCitySN
-        // area: this.area
-      })
+      // this.requireData({
+      //   page: 1,
+      //   pagesize: 9,
+      //   keyword: this.searchNum,
+      //   sohuip: returnCitySN
+      //   // area: this.area
+      // })
     },
     // checkboxClicked(){
 
@@ -300,6 +271,21 @@ export default {
     // },
     chooseItemNum(obj) {
       this.chooseNumber = obj.number
+    },
+    callMobile() {
+      if (typeof call_address === 'function') {
+        if (this.zfb_address === true) {
+          this.zfb_address = false
+          call_address(res => {
+            // alert(JSON.stringify(res))
+            // console.log(res)
+            if (res.status === 1) {
+              this.setAddress(res.data)
+            }
+          })
+          return
+        }
+      }
     },
     showAreaBox() {
       if (typeof call_address === 'function') {
@@ -321,6 +307,7 @@ export default {
       console.log(data)
       console.log(this.areaList)
       this.detailareaValue = data.address
+      this.telValue = data.mobilePhone
       var prov = this.searchValue(this.areaList, data.prov)
       if (prov !== false) {
         var city = this.searchValue(prov.children, data.city)
@@ -398,12 +385,13 @@ export default {
       var isIndividual = /^[1-9][0-9]{5}([1][9][0-9]{2}|[2][0][0|1][0-9])([0][1-9]|[1][0|1|2])([0][1-9]|[1|2][0-9]|[3][0|1])[0-9]{3}([0-9]|[X])$/.test(
         this.individualValue
       )
-      if (this.chooseNumber === '') {
-        this.$toast({
-          message: '请选取想要的电话号码'
-        })
-        return
-      } else if (!this.checkName) {
+      // if (this.chooseNumber === '') {
+      //   this.$toast({
+      //     message: '请选取想要的电话号码'
+      //   })
+      //   return
+      // } else
+      if (!this.checkName) {
         this.$toast({
           message: '请输入名字'
         })
@@ -511,13 +499,13 @@ export default {
 
 <style lang="scss" scoped>
 .ling-ka {
-  background-color: #f73955;
+  background-color: #141c53;
   img {
     width: 100%;
     vertical-align: middle;
   }
   .form {
-    background-color: #f73955;
+    background-color: #141c53;
     .swipe {
       font-size: 14px;
       height: 40px;

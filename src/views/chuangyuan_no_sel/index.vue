@@ -30,8 +30,6 @@
         </div>
       </div>
       <img :src="form1" />
-      <img :src="form2" />
-      <img :src="form3" />
     </div>
     <div class="fixed-button">
       <img :src="fixedButton" @click="toTop" />
@@ -94,18 +92,18 @@ export default {
   data() {
     return {
       BannerStyle: {
-        backgroundImage: 'url(' + require('@/assets/images/chuangyuan_nosel/1.gif') + ')',
+        backgroundImage: 'url(' + require('@/assets/images/chuangyuan_nosel/2a.gif') + ')',
         height: '14rem',
         backgroundSize: '100%'
       },
       banner:
         parseInt(process.env.VUE_APP_SHENHE) === 0
-          ? require('@/assets/images/chuangyuan_nosel/1.gif')
-          : require('@/assets/images/chuangyuan_nosel/1.gif'),
+          ? require('@/assets/images/chuangyuan_nosel/2a.gif')
+          : require('@/assets/images/chuangyuan_nosel/2a.gif'),
       form1:
         parseInt(process.env.VUE_APP_SHENHE) === 0
-          ? require('@/assets/images/chuangyuan/weapp-wk02/images/red19/WechatIMG526.jpeg')
-          : require('@/assets/images/chuangyuan/shenhe/weapp-wk02/images/red19/bannel8.png'),
+          ? require('@/assets/images/chuangyuan_nosel/2aa.gif')
+          : require('@/assets/images/chuangyuan_nosel/2aa.gif'),
       form2:
         parseInt(process.env.VUE_APP_SHENHE) === 0
           ? require('@/assets/images/chuangyuan/weapp-wk02/images/red19/bannel9.png')
@@ -128,8 +126,8 @@ export default {
       after: require('@/assets/images/dawang/index29_1/nextPage.png'),
       fixedButton:
         parseInt(process.env.VUE_APP_SHENHE) === 0
-          ? require('@/assets/images/chuangyuan_nosel/2.gif')
-          : require('@/assets/images/chuangyuan_nosel/2.gif'),
+          ? require('@/assets/images/chuangyuan_nosel/433.gif')
+          : require('@/assets/images/chuangyuan_nosel/433.gif'),
       loading: require('@/assets/images/dawang/img3_6/loading.gif'),
       areaList: areaList, // 选择地址插件数据
       showAreaList: false, // 是否显示选择地址插件

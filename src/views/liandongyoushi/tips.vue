@@ -308,13 +308,6 @@
           </p>
         </div>
         <div style="clear: both"></div>
-        <div class="con_div">
-          <p class="w_con"></p>
-          <p class="w_content">
-            （您需注意不得将名下持有的电话卡出租、二次转售、倒卖以及用于违法犯罪活动，若您有上述行为，为防范和打击通讯网络诈骗，我司有权暂停通信服务，将该电话卡登记人列入黑名单管理，限制办理相关通信业务；同时为保障普通客户的购买需求和权益，我司有权对异常订单不予发货，包括但不限于：黑名单用户；相同商品的订单；相同收货地址、联系号码、收件人；收货地址为涉诈高发地等。
-          </p>
-        </div>
-        <div style="clear: both"></div>
         <div class="vip-desc-div1" @click="closePopup">
           <img class="close" :src="close" />
         </div>
@@ -327,7 +320,7 @@
 // 请求接口
 
 export default {
-  name: 'Tips',
+  name: 'tips',
   data() {
     return {
       close: require('@/assets/images/lingka/close.gif')
@@ -345,7 +338,6 @@ export default {
 <style lang="scss" scoped>
 .tips {
   background-color: #f83057 !important;
-  height: 100%;
   .vip-desc {
     padding: 10px;
     .vip-desc-div {
