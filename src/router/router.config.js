@@ -19,6 +19,18 @@ export const constantRouterMap = [
     meta: { title: '联动不选号', keepAlive: false }
   },
   {
+    path: '/liandong_new',
+    name: 'liandong_new',
+    component: () => import('@/views/liandong_new/index'),
+    meta: { title: '联动不选号2', keepAlive: false }
+  },
+  {
+    path: '/liandong_cxdd',
+    name: 'liandong_cxdd',
+    component: () => import('@/views/liandong_new/liandong_cxdd'),
+    meta: { title: '联动订单查询', keepAlive: false }
+  },
+  {
     path: '/chuangyuan',
     name: 'chuangyuan',
     component: () => import('@/views/chuangyuan/index'),
