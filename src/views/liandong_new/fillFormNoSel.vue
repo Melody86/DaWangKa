@@ -86,7 +86,8 @@ export default {
       showPrivacy: false,
       showSur: false,
       defaultAreaCode: '',
-      disable_submit: false
+      disable_submit: false,
+      chooseNum: '15999999999'
     }
   },
   components: {},
@@ -301,11 +302,13 @@ export default {
               this.$toast({
                 message: res.message
               })
+              this.$emit('closeloading')
               this.disable_submit = false
             }
           })
           .catch(err => {
             this.disable_submit = false
+            this.$emit('closeloading')
             this.$toast({
               message: '订单提交错误'
             })
