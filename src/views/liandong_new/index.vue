@@ -2,17 +2,13 @@
   <div class="liandong">
     <div class="cxdd-btn" @click="cxdd">订单查询</div>
     <div class="banner"><img :src="banner1" /></div>
-    <div class="banner"><img :src="banner2" /></div>
     <div class="form"></div>
     <fill-form @showloading="showloading" @closeloading="closeLoading"></fill-form>
-    <div class="gundong"></div>
-    <gun-dong></gun-dong>
+
+    <div class="banner"><img :src="banner2" /></div>
     <div class="banner"><img :src="banner3" /></div>
     <div class="banner"><img :src="banner4" /></div>
     <div class="banner"><img :src="banner5" /></div>
-    <fill-form @showloading="showloading" @closeloading="closeLoading"></fill-form>
-    <gun-dong></gun-dong>
-    <fill-form @showloading="showloading" @closeloading="closeLoading"></fill-form>
     <div class="bottom-btn">免费领卡</div>
     <div class="loading-level" v-show="showPayLoading">
       <div class="top-box">
@@ -42,14 +38,14 @@ export default {
   },
   data() {
     return {
-      banner1: require('../../assets/images/liandong_new/topimg.jpg'),
-      banner2: require('../../assets/images/liandong_new/topimg2.jpg'),
+      banner1: require('../../assets/images/liandong_new/banner2.png'),
+      banner2: require('../../assets/images/liandong_new/form1.png'),
       // banner3: require('../../assets/images/liandong_new/tc.png'),
       // banner4: require('../../assets/images/liandong_new/qy.jpg'),
       // banner5: require('../../assets/images/liandong_new/content.jpg'),
-      banner3: require('../../assets/images/liandong_new/1.jpg'),
-      banner4: require('../../assets/images/liandong_new/2.jpg'),
-      banner5: require('../../assets/images/liandong_new/3.jpg'),
+      banner3: require('../../assets/images/liandong_new/form2New.png'),
+      banner4: require('../../assets/images/liandong_new/form3.png'),
+      banner5: require('../../assets/images/liandong_new/form4.png'),
       showPayLoading: false
     }
   },
