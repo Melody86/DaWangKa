@@ -30,15 +30,18 @@
         订单提交中
       </div>
     </div>
+    <Tan-ceng></Tan-ceng>
   </div>
 </template>
 <script>
 import gunDong from './gundong.vue'
 import fillForm from './fillFormNoSel.vue'
+import TanCeng from './tanceng.vue'
 export default {
   components: {
     gunDong,
-    fillForm
+    fillForm,
+    TanCeng
   },
   data() {
     return {
