@@ -3,7 +3,7 @@
     <div class="lottery-container" v-if="lotteryShow">
       <div class="dialog-box">
         <div class="dialog-main">
-          <img class="cjbj" src="../../assets/images/liandong_new/assets/cjbj.png" />
+          <img class="cjbj" src="../../assets/images/liandong_new/tanceng/cjbj.png" />
           <div class="img-main">
             <div class="img-box">
               <div class="animate-01">
@@ -57,10 +57,10 @@ export default {
       timer: null,
       lotteryShow: true,
       imgsData: [
-        { title: '5', url: require('../../assets/images/liandong_new/assets/5.png') },
-        { title: '10', url: require('../../assets/images/liandong_new/assets/10.png') },
-        { title: '30', url: require('../../assets/images/liandong_new/assets/30.png') },
-        { title: '40', url: require('../../assets/images/liandong_new/assets/40.png') }
+        { title: '5', url: require('../../assets/images/liandong_new/tanceng/5.png') },
+        { title: '10', url: require('../../assets/images/liandong_new/tanceng/10.png') },
+        { title: '30', url: require('../../assets/images/liandong_new/tanceng/30.png') },
+        { title: '40', url: require('../../assets/images/liandong_new/tanceng/40.png') }
       ]
     }
   },
@@ -76,19 +76,19 @@ export default {
         this.isClick = false
         clearInterval(this.timer)
       }, 5000)
-    }, 10000)
+    }, 1000)
     setTimeout(() => {
-      this.imgsData = [{ title: '40', url: require('../../assets/images/liandong_new/assets/40.png') }].concat(
+      this.imgsData = [{ title: '40', url: require('../../assets/images/liandong_new/tanceng/40.png') }].concat(
         this.imgsData
       )
-    }, 20000)
+    }, 2000)
     setTimeout(() => {
       this.giftShow = true
-    }, 40000)
+    }, 4000)
     setTimeout(() => {
       this.giftShow = false
       this.lotteryShow = false
-    }, 700000)
+    }, 9000)
   }
 }
 </script>
@@ -199,7 +199,7 @@ export default {
   .dialog-box {
     position: relative;
     width: 90%;
-    height: 6.03rem;
+    height: 12.03rem;
     background-repeat: no-repeat;
     background-size: 100% 100%;
     background-position-x: 0;
@@ -248,7 +248,7 @@ export default {
       }
     }
     .btn-01 {
-      background: url('../../assets/images/liandong_new/assets/button01.png') no-repeat center center;
+      background: url('../../assets/images/liandong_new/tanceng/button01.png') no-repeat center center;
       background-size: 100% 100%;
       position: absolute;
       left: 0;
@@ -266,18 +266,18 @@ export default {
       z-index: 33;
     }
     .btn-02 {
-      background: url('../../assets/images/liandong_new/assets/button02.png') no-repeat;
+      background: url('../../assets/images/liandong_new/tanceng/button02.png') no-repeat center center;
       background-size: 100% 100%;
       position: absolute;
       left: 0;
       right: 0;
       margin: 0 auto;
-      top: 3.85rem;
-      width: 1.8rem;
-      height: 0.495rem;
+      top: 8.85rem;
+      width: 50%;
+      height: 1rem;
       background-repeat: no-repeat;
       background-size: auto 100%;
-      background-position-x: 0;
+      // background-position-x: 0;
       -webkit-transform: scale(1.35);
       -ms-transform: scale(1.35);
       transform: scale(1.35);
@@ -350,13 +350,13 @@ export default {
   }
   .lottery-container .gift-content .gift-sprite-light {
     position: absolute;
-    top: 1.9rem;
+    top: 5.9rem;
     left: 0;
     right: 0;
     margin: 0 auto;
     width: 1.875rem;
     height: 3.015rem;
-    background-image: url('../../assets/images/liandong_new/assets/light0.png');
+    background-image: url('../../assets/images/liandong_new/tanceng/light0.png');
     background-repeat: no-repeat;
     background-size: auto 100%;
     background-position-x: 0;
@@ -368,13 +368,13 @@ export default {
   }
   .lottery-container .gift-content .gift-light {
     position: absolute;
-    top: 1.3rem;
+    top: 2.3rem;
     left: 0;
     right: 0;
     margin: 0 auto;
-    width: 3.71rem;
-    height: 3.73rem;
-    background-image: url('../../assets/images/liandong_new/assets/light.png');
+    width: 10.71rem;
+    height: 9.73rem;
+    background-image: url('../../assets/images/liandong_new/tanceng/light.png');
     background-repeat: no-repeat;
     background-size: 100% 100%;
     opacity: 0;
@@ -398,9 +398,9 @@ export default {
   }
   .lottery-container .gift-content .gift {
     position: absolute;
-    top: 1.45rem;
-    width: 3.75rem;
-    height: 3.75rem;
+    top: 4.45rem;
+    width: 6.75rem;
+    height: 6.75rem;
     margin: 0 auto;
     left: 0;
     right: 0;
@@ -411,12 +411,12 @@ export default {
   }
   .lottery-container .gift-content .gift-num {
     position: absolute;
-    top: 2.9rem;
+    top: 5.9rem;
     left: 0;
     right: 0;
     margin: 0 auto;
-    width: 2.13rem;
-    height: 0.91rem;
+    width: 3.13rem;
+    height: 2.1rem;
     background-repeat: no-repeat;
     background-size: 100% 100%;
     opacity: 0;
@@ -425,12 +425,12 @@ export default {
   }
   .lottery-container .gift-content .gift-num {
     position: absolute;
-    top: 2.9rem;
+    top: 5.9rem;
     left: 0;
     right: 0;
     margin: 0 auto;
-    width: 2.13rem;
-    height: 0.91rem;
+    width: 3.13rem;
+    height: 2.1rem;
     background-repeat: no-repeat;
     background-size: 100% 100%;
     opacity: 0;
@@ -445,7 +445,7 @@ export default {
   }
   .lottery-container .gift-content .gift-star {
     position: absolute;
-    background-image: url('../../assets/images/liandong_new/assets/star.png');
+    background-image: url('../../assets/images/liandong_new/tanceng/star.png');
     background-repeat: no-repeat;
     background-size: 100% 100%;
     opacity: 0;
@@ -472,9 +472,9 @@ export default {
   }
   .lottery-container .gift-content .gift-btn {
     position: absolute;
-    top: 4.5rem;
-    width: 3.75rem;
-    height: 0.6rem;
+    top: 9rem;
+    width: 8.75rem;
+    height: 1.6rem;
     margin: 0 auto;
     left: 0;
     right: 0;
@@ -486,19 +486,19 @@ export default {
   }
 
   .gift-box2 {
-    background-image: url('../../assets/images/liandong_new/assets/xlgsnxlqcw.png');
+    background-image: url('../../assets/images/liandong_new/tanceng/xlgsnxlqcw.png');
   }
   .gift-box3 {
-    background-image: url('../../assets/images/liandong_new/assets/1ymju6dhoi.png');
+    background-image: url('../../assets/images/liandong_new/tanceng/1ymju6dhoi.png');
   }
   .gift-num {
-    background-image: url('../../assets/images/liandong_new/assets/rarmkpzwjh.png');
+    background-image: url('../../assets/images/liandong_new/tanceng/rarmkpzwjh.png');
   }
   .gift-box1 {
-    background-image: url('../../assets/images/liandong_new/assets/9p6hwuijqd.png');
+    background-image: url('../../assets/images/liandong_new/tanceng/9p6hwuijqd.png');
   }
   .gift-btn {
-    background-image: url('../../assets/images/liandong_new/assets/mj6gedgyzy.png');
+    background-image: url('../../assets/images/liandong_new/tanceng/mj6gedgyzy.png');
   }
 
   @keyframes turn {

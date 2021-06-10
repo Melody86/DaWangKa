@@ -2,7 +2,7 @@
   <div class="liandong">
     <div class="cxdd-btn" @click="cxdd">订单查询</div>
     <div class="banner"><img :src="banner1" /></div>
-    <!-- <div class="banner"><img :src="banner2" /></div> -->
+    <div class="banner"><img :src="banner2" /></div>
     <div class="form"></div>
     <fill-form @showloading="showloading" @closeloading="closeLoading"></fill-form>
     <div class="gundong"></div>
@@ -45,7 +45,7 @@ export default {
   },
   data() {
     return {
-      banner1: require('../../assets/images/liandong_new/dx-topimg.png'),
+      banner1: require('../../assets/images/liandong_new/topimg.jpg'),
       banner2: require('../../assets/images/liandong_new/topimg2.jpg'),
       // banner3: require('../../assets/images/liandong_new/tc.png'),
       // banner4: require('../../assets/images/liandong_new/qy.jpg'),
@@ -89,7 +89,6 @@ export default {
     margin: 0;
     img {
       width: 100%;
-      vertical-align: middle;
     }
   }
   .bottom-btn {
