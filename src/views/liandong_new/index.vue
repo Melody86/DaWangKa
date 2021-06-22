@@ -47,12 +47,12 @@ export default {
     return {
       banner1: require('../../assets/images/liandong_new/dx-topimg.png'),
       banner2: require('../../assets/images/liandong_new/topimg2.jpg'),
-      // banner3: require('../../assets/images/liandong_new/tc.png'),
-      // banner4: require('../../assets/images/liandong_new/qy.jpg'),
-      // banner5: require('../../assets/images/liandong_new/content.jpg'),
-      banner3: require('../../assets/images/liandong_new/1.jpg'),
-      banner4: require('../../assets/images/liandong_new/2.jpg'),
-      banner5: require('../../assets/images/liandong_new/3.jpg'),
+      banner3: require('../../assets/images/liandong_new/tc.png'),
+      banner4: require('../../assets/images/liandong_new/qy.jpg'),
+      banner5: require('../../assets/images/liandong_new/content.jpg'),
+      // banner3: require('../../assets/images/liandong_new/1.jpg'),
+      // banner4: require('../../assets/images/liandong_new/2.jpg'),
+      // banner5: require('../../assets/images/liandong_new/3.jpg'),
       showPayLoading: false
     }
   },
