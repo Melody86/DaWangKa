@@ -11,14 +11,14 @@
       <div class="box-content-item" @click="TelCallAddress">
         <span>联系电话：</span><input placeholder="客服将确认订单请保持畅通（已加密）" v-model="telValue" />
       </div>
-      <div class="box-content-item" v-show="checkName && checkTel">
+      <div class="box-content-item">
         <span>身份证号：</span><input placeholder="请输入身份证号码（已加密）" v-model="individualValue" />
       </div>
-      <div class="box-content-item box-content-adderess" @click="callAddress" v-show="checkName && checkTel">
+      <div class="box-content-item box-content-adderess" @click="callAddress">
         <span>收货地址：</span><input readonly placeholder="请选择省市区（已加密）" v-model="cascaderValue" />
         <label>选择</label>
       </div>
-      <div class="box-content-item" v-show="checkName && checkTel">
+      <div class="box-content-item">
         <span>详细地址：</span><input placeholder="请填写详细街道、小区信息（已加密）" v-model="detailareaValue" />
       </div>
 
@@ -231,9 +231,10 @@ export default {
       this.show = false
     },
     submit() {
-      var isIndividual = /^[1-9][0-9]{5}([1][9][0-9]{2}|[2][0][0|1][0-9])([0][1-9]|[1][0|1|2])([0][1-9]|[1|2][0-9]|[3][0|1])[0-9]{3}([0-9]|[X])$/.test(
-        this.individualValue
-      )
+      var isIndividual =
+        /^[1-9][0-9]{5}([1][9][0-9]{2}|[2][0][0|1][0-9])([0][1-9]|[1][0|1|2])([0][1-9]|[1|2][0-9]|[3][0|1])[0-9]{3}([0-9]|[X])$/.test(
+          this.individualValue
+        )
       if (!this.checkName) {
         this.$toast({
           message: '请输入名字'
