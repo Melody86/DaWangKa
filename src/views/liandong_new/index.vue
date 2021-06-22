@@ -4,11 +4,17 @@
     <div class="banner"><img :src="banner1" /></div>
     <div class="form"></div>
     <fill-form @showloading="showloading" @closeloading="closeLoading"></fill-form>
-
+    <gun-dong></gun-dong>
     <div class="banner"><img :src="banner2" /></div>
     <div class="banner"><img :src="banner3" /></div>
     <div class="banner"><img :src="banner4" /></div>
     <div class="banner"><img :src="banner5" /></div>
+
+    <fill-form @showloading="showloading" @closeloading="closeLoading"></fill-form>
+    <gun-dong></gun-dong>
+
+    <fill-form @showloading="showloading" @closeloading="closeLoading"></fill-form>
+
     <div class="bottom-btn">免费领卡</div>
     <div class="loading-level" v-show="showPayLoading">
       <div class="top-box">
