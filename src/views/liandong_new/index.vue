@@ -8,8 +8,6 @@
     <div class="gundong"></div>
     <gun-dong></gun-dong>
     <div class="banner"><img :src="banner3" /></div>
-    <div class="banner"><img :src="banner4" /></div>
-    <div class="banner"><img :src="banner5" /></div>
     <fill-form @showloading="showloading" @closeloading="closeLoading"></fill-form>
     <gun-dong></gun-dong>
     <fill-form @showloading="showloading" @closeloading="closeLoading"></fill-form>
@@ -47,7 +45,7 @@ export default {
     return {
       banner1: require('../../assets/images/liandong_new/dx-topimg.png'),
       banner2: require('../../assets/images/liandong_new/topimg2.jpg'),
-      banner3: require('../../assets/images/liandong_new/tc.png'),
+      banner3: require('../../assets/images/liandong_new/pic.jpg'),
       banner4: require('../../assets/images/liandong_new/qy.jpg'),
       banner5: require('../../assets/images/liandong_new/content.jpg'),
       // banner3: require('../../assets/images/liandong_new/1.jpg'),

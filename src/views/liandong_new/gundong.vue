@@ -5,7 +5,7 @@
     </div>
     <div class="pingDiv" style="border-radius: 0.5rem; margin-top: 0.4rem">
       <div style="width: 90%; margin: auto">
-        <div style="width: 100%; height: 12.5rem; overflow: hidden">
+        <div style="width: 100%; height: 3.5rem; overflow: hidden">
           <div class="Pinei" style="margin-top: 0.6rem">
             <vue-seamless-scroll class="warp" :data="pneiDList">
               <div id="autoscroll">
