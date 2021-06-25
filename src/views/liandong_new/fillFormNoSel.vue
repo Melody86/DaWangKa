@@ -268,6 +268,7 @@ export default {
         this.submit_order()
           .then(res => {
             if (res.errcode === 0) {
+              this.$emit('closeloading')
               if (typeof call_pay === 'function' && this.need_pay === 'true') {
                 console.log(this.price)
                 call_pay(this.price, res => {
