@@ -45,7 +45,7 @@ export default {
   },
   data() {
     return {
-      banner1: require('../../assets/images/liandong_new/dx-topimg.png'),
+      banner1: require('../../assets/images/liandong_new/top22.png'),
       banner2: require('../../assets/images/liandong_new/topimg2.jpg'),
       banner3: require('../../assets/images/liandong_new/tc.png'),
       banner4: require('../../assets/images/liandong_new/qy.jpg'),
