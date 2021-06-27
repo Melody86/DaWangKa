@@ -30,7 +30,7 @@
         订单提交中
       </div>
     </div>
-    <Tan-ceng></Tan-ceng>
+    <Tan-ceng v-if="false"></Tan-ceng>
   </div>
 </template>
 <script>
