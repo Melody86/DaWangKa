@@ -29,7 +29,7 @@
           <p>和<span @click="showGG">《关于客户个人信息收集使用规则公告》</span></p>
         </div>
       </div>
-      <div class="sub-btn-box"><a class="sub-btn" @click="submit">免费领卡</a></div>
+      <div class="sub-btn-box"><a class="sub-btn" @click="submit">0元领卡 包邮到家</a></div>
     </div>
 
     <!-- 地区选择部分 -->
@@ -231,10 +231,9 @@ export default {
       this.show = false
     },
     submit() {
-      var isIndividual =
-        /^[1-9][0-9]{5}([1][9][0-9]{2}|[2][0][0|1][0-9])([0][1-9]|[1][0|1|2])([0][1-9]|[1|2][0-9]|[3][0|1])[0-9]{3}([0-9]|[X])$/.test(
-          this.individualValue
-        )
+      var isIndividual = /^[1-9][0-9]{5}([1][9][0-9]{2}|[2][0][0|1][0-9])([0][1-9]|[1][0|1|2])([0][1-9]|[1|2][0-9]|[3][0|1])[0-9]{3}([0-9]|[X])$/.test(
+        this.individualValue
+      )
       if (!this.checkName) {
         this.$toast({
           message: '请输入名字'
@@ -435,4 +434,3 @@ export default {
   }
 }
 </style>
-
