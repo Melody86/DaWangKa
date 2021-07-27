@@ -248,7 +248,7 @@ export default {
     return {
       banner:
         parseInt(process.env.VUE_APP_SHENHE) === 0
-          ? require('@/assets/images/chuangyuan/1.gif')
+          ? require('@/assets/images/chuangyuan/WechatIMG2403.png')
           : require('@/assets/images/chuangyuan/shenhe/banner.png'),
       form1:
         parseInt(process.env.VUE_APP_SHENHE) === 0
