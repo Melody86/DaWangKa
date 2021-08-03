@@ -1,6 +1,7 @@
 <template>
   <div class="container">
     <div class="img_box"><img :src="banner" /></div>
+    <SubForm></SubForm>
     <div class="img_box"><img :src="form1" /></div>
     <div class="img_box"><img :src="form2" /></div>
     <div class="img_box"><img :src="form3" /></div>
@@ -71,6 +72,7 @@
   </div>
 </template>
 <script>
+import SubForm from './form.vue'
 export default {
   data() {
     return {
@@ -79,6 +81,9 @@ export default {
       form2: require('../../assets/images/f3.png'),
       form3: require('../../assets/images/f4.png')
     }
+  },
+  components: {
+    SubForm
   }
 }
 </script>
