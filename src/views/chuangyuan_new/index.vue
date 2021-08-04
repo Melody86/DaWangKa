@@ -5,7 +5,13 @@
     <div class="img_box"><img :src="form1" /></div>
     <div class="img_box"><img :src="form2" /></div>
     <div class="img_box"><img :src="form3" /></div>
-    <div class="gdxq">
+    <div class="more" @click="showGDXQ = true" v-show="!showGDXQ">
+      <div style="color:#CEA66B !important;">
+        更多详情
+        <img src="../../assets/images/banner12.png" alt="" style="width:10px;" />
+      </div>
+    </div>
+    <div class="gdxq" v-show="showGDXQ">
       <div class="gdxq_content">
         38元优享卡用户激活后立即生效。首月执行过渡期资费，套餐月基本费按日计扣（入网当日到月底），费用四舍五入到分；套餐内包含国内通用流量首月按天折算，向上取整。<br />
         套餐包含30GB国内流量,30G专属定向免流和300分钟语音通话。用户自激活次月起每月4号开始领取，可领取12次会员权益（多选1），权益须分月连续领取。<br />
@@ -79,7 +85,8 @@ export default {
       banner: require('../../assets/images/banner.png'),
       form1: require('../../assets/images/f2.png'),
       form2: require('../../assets/images/f3.png'),
-      form3: require('../../assets/images/f4.png')
+      form3: require('../../assets/images/f4.png'),
+      showGDXQ: false
     }
   },
   components: {
@@ -96,6 +103,10 @@ export default {
       width: 100%;
       display: block;
     }
+  }
+  .more {
+    text-align: center;
+    padding-bottom: 18px;
   }
   .gdxq {
     width: 94%;

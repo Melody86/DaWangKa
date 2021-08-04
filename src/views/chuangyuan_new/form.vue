@@ -43,18 +43,18 @@
     </div>
     <form class="form_box">
       <!-- 选号 -->
-      <label for="numberPhone" class="numberPhone">
+      <label for="numberPhone" class="numberPhone" @click="showNewTan = true">
         <span>
           <div style="display: inline-block;" class="xing">免费选号</div>
         </span>
-        <input id="numberPhone" type="text" readonly="readonly" placeholder="请选择号码" />
+        <input v-model="chooseNum" type="text" readonly="readonly" placeholder="请选择号码" />
       </label>
       <!-- 姓名 -->
       <label for="username">
         <span>
           <div style="display: inline-block;" class="xing">客户姓名</div>
         </span>
-        <input id="username" type="text" placeholder="请填写办理人真实姓名（已加密）" />
+        <input v-model="nameValue" type="text" placeholder="请填写办理人真实姓名（已加密）" />
       </label>
       <!-- 联系电话 -->
       <label for="usertel">
@@ -62,19 +62,30 @@
           <div style="display: inline-block;" class="xing">手机号</div>
         </span>
 
-        <input id="usertel" type="tel" maxlength="11" placeholder="请输入手机号码（已加密）" />
+        <input v-model="telValue" type="tel" maxlength="11" placeholder="请输入手机号码（已加密）" />
       </label>
 
       <!-- 身份证号 -->
-      <label id="idcardLabel" for="idcard">
+      <label id="idcardLabel" for="idcard" v-show="checkName && checkTel && chooseNum !== ''">
         <span>
           <div style="display: inline-block;" class="xing">身份证</div>
         </span>
-        <input style="  width: 68%;" id="idcard" maxlength="18" type="text" placeholder="请输入身份证号码（已加密）" />
+        <input
+          style="  width: 68%;"
+          v-model="individualValue"
+          maxlength="18"
+          type="text"
+          placeholder="请输入身份证号码（已加密）"
+        />
       </label>
       <!-- 选择号码 -->
 
-      <label for="location" id="xzgsd">
+      <label
+        for="location"
+        id="xzgsd"
+        @click="showChoiceArea = true"
+        v-show="checkName && checkTel && chooseNum !== ''"
+      >
         <span>
           <div style="display: inline-block;" class="xing">收货省市</div>
         </span>
@@ -85,14 +96,15 @@
           style="color:#000000 !important; opacity:1 !important;"
           id="location"
           placeholder="请选择省市区"
+          v-model="cascaderValue"
         />
       </label>
 
-      <label for="detail" id="address">
+      <label for="detail" id="address" v-show="checkName && checkTel && chooseNum !== ''">
         <span>
           <div style="display: inline-block;" class="xing">详细地址</div>
         </span>
-        <input type="text" name="" id="detail" placeholder="请输入收货地址（已加密）" />
+        <input type="text" name="" id="detail" placeholder="请输入收货地址（已加密）" v-model="detailareaValue" />
       </label>
 
       <div class="agreement">
@@ -102,9 +114,53 @@
         <span style="color:#1e96fa;display: none;" id="agreement1">《个人信息收集证明》</span>
       </div>
 
-      <div class="loginchecking">免费领取 全国包邮</div>
+      <div class="loginchecking" @click="submit">免费领取 全国包邮</div>
       <div style="text-align: center;font-size:11px;color:#FF0000;margin-top:5px;">（每位用户限领一张)</div>
     </form>
+    <van-popup v-model="showChoiceArea" position="bottom">
+      <van-area
+        title=""
+        :area-list="areaList"
+        :value="defaultAreaCode"
+        @confirm="choiceArea"
+        visible-item-count="10"
+        @cancel="cancelAreaSel"
+      />
+    </van-popup>
+    <section>
+      <div class="newTan" v-if="showNewTan">
+        <div class="newBox">
+          <img src="../../assets/images/hsp_number.png" style="width:92%;margin:auto;display: block;" />
+          <div class="waiBox">
+            <!-- 搜索 -->
+            <div class="soDiv">
+              <div class="juz">
+                <img src="../../assets/images/so1.png" style="width:25px;height:auto;" />
+                <input class="searchNumber" type="tel" maxlength="4" placeholder="请输入幸运数字（最多4位）" style="" />
+              </div>
+              <span class="huanList">换一批</span>
+            </div>
+
+            <!-- 号码 -->
+            <div class="haoDiv">
+              <p class="wuNei" v-if="haoList.length == 0">哎呦，没有适合您的号码！</p>
+
+              <p
+                class="haoNei "
+                :class="{ xuanBorder: item === chooseNum }"
+                v-for="(item, index) in haoList"
+                v-bind:key="index"
+                @click="ch_num(item)"
+              >
+                {{ item }}
+              </p>
+            </div>
+
+            <div class="xuanYing" v-if="haoList.length > 0" @click="ch_num_final">我选好了</div>
+          </div>
+        </div>
+      </div>
+    </section>
     <div class="modal-bg" id="tishikuang" v-show="showTishiKuang">
       <div class="wrapper">
         <div class="modal-container" id="modal1" v-show="showTishiKuang">
@@ -506,10 +562,236 @@
   </div>
 </template>
 <script>
+import { areaList } from '@/assets/js/addressCode.js'
+import qs from 'qs'
+import _ from 'lodash'
+import request from '@/utils/request'
 export default {
+  props: {
+    chooseNum: String,
+    numAddress: String,
+    area: Array
+  },
   data() {
     return {
-      showTishiKuang: false
+      chooseNum: '',
+      nameValue: '', // 姓名
+      telValue: '', // 电话
+      individualValue: '', // 身份证号码
+      cascaderValue: '', // 省市区
+      detailareaValue: '', // 详细地址
+      showTishiKuang: false,
+      areaList: areaList,
+      showChoiceArea: false,
+      defaultAreaCode: '',
+      showNewTan: false,
+      haoList: ['19158102501', '19158102502', '19158102503', '19158102504'],
+      checkName: false,
+      checkTel: false,
+      disable_submit: false
+    }
+  },
+  watch: {
+    nameValue(newvalue, oldvalue) {
+      var isName = /^[\u4e00-\u9fa5]{2,4}$/.test(newvalue)
+      if (!isName) {
+        this.checkName = false
+      } else {
+        this.checkName = true
+      }
+    },
+    telValue(newValue, oldValue) {
+      var isMob = /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/.test(newValue)
+      if (!isMob) {
+        this.checkTel = false
+      } else {
+        this.checkTel = true
+      }
+    }
+  },
+  methods: {
+    ch_num(num) {
+      this.chooseNum = num
+    },
+    ch_num_final() {
+      this.showNewTan = false
+    },
+
+    cancelAreaSel() {
+      this.showChoiceArea = false
+    },
+    callAddress() {
+      if (typeof call_address === 'function') {
+        if (this.zfb_address === true) {
+          this.zfb_address = false
+          call_address(res => {
+            // alert(JSON.stringify(res))
+            // console.log(res)
+            if (res.status === 1) {
+              this.setAddress(res.data)
+            }
+          })
+          return
+        }
+      }
+      // this.showChoiceArea = true
+    },
+    setAddress(data) {
+      this.detailareaValue = data.address
+      this.telValue = data.mobilePhone
+      var county_arr = this.searchValue(areaList.county_list, data.area)
+      if (county_arr.length === 1) {
+        this.defaultAreaCode = county_arr[0]
+      }
+      if (county_arr.length > 1) {
+        for (let i = 0; i < county_arr.length; i++) {
+          var element = areaList.city_list[(county_arr[i] + '').slice(0, 4) + '00']
+          if (data.city === element) {
+            console.log(county_arr[i])
+            this.defaultAreaCode = county_arr[i] + ''
+            break
+          }
+        }
+      }
+      var new_arr = []
+      new_arr.push({
+        code: this.defaultAreaCode.slice(0, 2) + '' + '0000',
+        name: areaList.province_list[parseInt(this.defaultAreaCode.slice(0, 2) + '' + '0000')]
+      })
+      new_arr.push({
+        code: this.defaultAreaCode.slice(0, 4) + '' + '00',
+        name: areaList.city_list[parseInt(this.defaultAreaCode.slice(0, 4) + '' + '00')]
+      })
+      new_arr.push({
+        code: this.defaultAreaCode,
+        name: areaList.county_list[parseInt(this.defaultAreaCode)]
+      })
+      console.log(new_arr)
+      this.choiceArea(new_arr)
+
+      // this.defaultAreaCode = '530800'
+    },
+    searchValue(object, value) {
+      var adw = []
+      for (var key in object) {
+        if (object[key] === value) {
+          adw.push(key)
+        }
+      }
+      return adw
+    },
+    choiceArea(arr) {
+      this.areaList1 = arr
+      this.show = false
+      this.cascaderValue = ''
+      for (var i = 0; i < arr.length; i++) {
+        var a = arr[i].name
+        if (a != this.cascaderValue) {
+          this.cascaderValue = this.cascaderValue + ' ' + a
+        }
+      }
+      this.showChoiceArea = false
+    },
+    submit() {
+      var isIndividual = /^[1-9][0-9]{5}([1][9][0-9]{2}|[2][0][0|1][0-9])([0][1-9]|[1][0|1|2])([0][1-9]|[1|2][0-9]|[3][0|1])[0-9]{3}([0-9]|[X])$/.test(
+        this.individualValue
+      )
+      if (!this.checkName) {
+        this.$toast({
+          message: '请输入名字'
+        })
+        return
+      } else if (!this.checkTel) {
+        this.$toast({
+          message: '请输入电话号码'
+        })
+        return
+      } else if (!isIndividual) {
+        this.$toast({
+          message: '请输入正确的身份证号'
+        })
+        return
+      } else if (this.cascaderValue === '' || this.detailareaValue === '') {
+        this.$toast({
+          message: '请输入正确的地址'
+        })
+        return
+      }
+      // else if (!/^[0-9]*$/.test(Number(this.verifCode))) {
+      //   this.$toast({
+      //     message: '请输入正确的验证码'
+      //   })
+      //   return
+      // }
+      if (this.disable_submit === false) {
+        this.disable_submit = true
+        this.submit_order()
+          .then(res => {
+            if (res.errcode === 0) {
+              if (typeof call_pay === 'function' && this.need_pay === 'true') {
+                console.log(this.price)
+                call_pay(this.price, res => {
+                  if (res.status === 1) {
+                    this.$toast({
+                      message: '订单提交成功'
+                    })
+                    if (typeof navigateTo === 'function' && 'true' == process.env.VUE_APP_NAVTO) {
+                      navigateTo(process.env.VUE_APP_NAVTO_PATH)
+                    }
+                  } else {
+                    this.$toast({
+                      message: '订单支付失败'
+                    })
+                    this.disable_submit = false
+                  }
+                })
+              } else {
+                if (typeof navigateTo === 'function' && 'true' == process.env.VUE_APP_NAVTO) {
+                  navigateTo(process.env.VUE_APP_NAVTO_PATH)
+                } else {
+                  this.$toast({
+                    message: '订单提交成功'
+                  })
+                }
+              }
+              // this.$toast({
+              //   message: '提交成功'
+              // })
+              // this.disable_submit = false
+            } else {
+              this.$toast({
+                message: res.message
+              })
+              this.disable_submit = false
+            }
+          })
+          .catch(err => {
+            this.disable_submit = false
+            this.$toast({
+              message: '订单提交错误'
+            })
+            console.log(err)
+          })
+      }
+    },
+    submit_order() {
+      var Data = {
+        name: this.nameValue,
+        idcard: this.individualValue,
+        mobile: this.telValue,
+        address: this.detailareaValue,
+        area: this.areaList1,
+        sel_phone: this.chooseNum,
+        smscode: this.verifCode,
+        sel_phone_area: this.numAddress
+      }
+      return request({
+        url: 'webview/submit',
+        method: 'post',
+        // params: qs.stringify(a),
+        data: Data,
+        hideloading: true // 隐藏 loading 组件
+      })
     }
   }
 }
@@ -600,6 +882,133 @@ export default {
     animation: btn 1s ease-in-out 0s infinite;
     animation: breath-kf 1s ease 0s infinite normal none running;
     -webkit-animation: breath-kf 1s ease 0s infinite normal none running;
+  }
+  .newTan {
+    font-size: 0.5rem;
+    height: 812px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 9;
+    .newBox {
+      top: 40%;
+      width: 83%;
+      padding: 0.2rem;
+      border-radius: 0.2rem;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      background-color: #36364e;
+      transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+      -moz-transform: translate(-50%, -50%);
+      -webkit-transform: translate(-50%, -50%);
+      -o-transform: translate(-50%, -50%);
+      .waiBox {
+        width: 100%;
+        margin: auto;
+        margin-top: -34px;
+        .soDiv {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          .huanList {
+            display: inline-block;
+            background: linear-gradient(-90deg, #f8d9ad, #e9b87a);
+            padding: 0.2rem 0.5rem;
+            border-radius: 0.5rem;
+            font-weight: bold;
+            // font-size: 1.1rem;
+            color: #22222e;
+          }
+          .juz {
+            width: 60%;
+            padding: 0 10px;
+            border-radius: 40px;
+            height: 38px;
+            border: 1px solid #e9b87a;
+            display: flex;
+            align-items: center;
+            position: relative;
+            z-index: 9;
+            .searchNumber {
+              font-size: 0.34rem;
+              border: none;
+              margin-left: 6px;
+              width: 86%;
+              height: 90%;
+              line-height: 90%;
+              background-color: #36364e;
+              color: #ffffff;
+            }
+          }
+        }
+        .haoDiv {
+          width: 96%;
+          margin: auto;
+          margin-top: 0.4rem;
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: space-between;
+          .haoNei {
+            width: 47%;
+            height: 1rem;
+            border-radius: 0.8rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 2px solid #474b62;
+            font-size: 0.4rem;
+            color: #dcdddf;
+            margin-bottom: 0.2rem;
+          }
+          .xuanBorder {
+            color: #e9b87a;
+            border: 2px solid #e9b87a;
+            position: relative;
+          }
+          .xuanBorder::after {
+            content: '';
+            width: 40%;
+            height: 60%;
+            position: absolute;
+            top: -32%;
+            left: -4%;
+            background: url(../../assets/images/mianling.png) no-repeat center;
+            animation: breath-kf 1s ease 0s infinite normal none running;
+            -webkit-animation: breath-kf 1s ease 0s infinite normal none running;
+            background-size: 100%;
+          }
+          .wuNei {
+            width: 100%;
+            font-size: 0.6rem;
+            color: #666666;
+            display: flex;
+            justify-content: center;
+            padding: 0.5rem 0;
+            text-align: center;
+            margin: auto;
+          }
+        }
+        .xuanYing {
+          width: 100%;
+          height: 1rem;
+          margin: auto;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-size: 0.6rem;
+          color: #22222e;
+          background: linear-gradient(-90deg, #f8d9ad, #e9b87a);
+          border-radius: 0.9rem;
+          margin-top: 0.3rem;
+          font-weight: bold;
+        }
+      }
+    }
   }
   .modal-bg {
     position: fixed;
