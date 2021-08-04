@@ -136,9 +136,16 @@
             <div class="soDiv">
               <div class="juz">
                 <img src="../../assets/images/so1.png" style="width:25px;height:auto;" />
-                <input class="searchNumber" type="tel" maxlength="4" placeholder="请输入幸运数字（最多4位）" style="" />
+                <input
+                  v-model="inputValue"
+                  class="searchNumber"
+                  type="tel"
+                  maxlength="4"
+                  placeholder="请输入幸运数字（最多4位）"
+                  style=""
+                />
               </div>
-              <span class="huanList">换一批</span>
+              <span class="huanList" @click="onSearch">换一批</span>
             </div>
 
             <!-- 号码 -->
@@ -147,12 +154,12 @@
 
               <p
                 class="haoNei "
-                :class="{ xuanBorder: item === chooseNum }"
+                :class="{ xuanBorder: item.number === chooseNum }"
                 v-for="(item, index) in haoList"
                 v-bind:key="index"
-                @click="ch_num(item)"
+                @click="ch_num(item.number)"
               >
-                {{ item }}
+                {{ item.number }}
               </p>
             </div>
 
@@ -568,7 +575,7 @@ import _ from 'lodash'
 import request from '@/utils/request'
 export default {
   props: {
-    chooseNum: String,
+    // chooseNum: String,
     numAddress: String,
     area: Array
   },
@@ -585,10 +592,11 @@ export default {
       showChoiceArea: false,
       defaultAreaCode: '',
       showNewTan: false,
-      haoList: ['19158102501', '19158102502', '19158102503', '19158102504'],
+      haoList: [],
       checkName: false,
       checkTel: false,
-      disable_submit: false
+      disable_submit: false,
+      inputValue: ''
     }
   },
   watch: {
@@ -610,6 +618,40 @@ export default {
     }
   },
   methods: {
+    requireData(a) {
+      request({
+        url: 'webview/phone_list',
+        method: 'get',
+        // params: qs.stringify(a),
+        params: a,
+        hideloading: true // 隐藏 loading 组件
+      })
+        .then(res => {
+          console.log(res)
+          if (res.errcode === 0) {
+            this.haoList = res.data.list
+            this.isLastPage = res.data.next_page
+          } else {
+            this.$toast({
+              message: '没有找到您心仪的号码'
+            })
+          }
+        })
+        .catch(() => {
+          console.log(22)
+        })
+    },
+    onSearch() {
+      this.requireData({
+        page: this.pageIndex,
+        pagesize: 10,
+        formattype: this.pageIndex,
+        keyword: this.inputValue,
+        area: this.area,
+        codeList: JSON.stringify(this.codeList)
+      })
+      console.log(this.inputValue)
+    },
     ch_num(num) {
       this.chooseNum = num
     },

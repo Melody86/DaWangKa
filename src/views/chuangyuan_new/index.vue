@@ -23,12 +23,6 @@
           （4）通过“湖南电信”微信公众号领取权益（福利-权益中心-权益尊享-权益星卡会员专享）<br />
         </span>
 
-        <div
-          class="more"
-          style="text-align: center; padding-top: 10px; padding-bottom: 18px; color: rgb(255, 255, 255); display: none;"
-        >
-          加载更多…
-        </div>
         <div>
           生效规则<br />
           激活后立即生效。首月执行过渡期资费，订购当月套餐月基本费按日计扣（入网当日到月底），费用四舍五入到分；套餐内容（语音、流量）按照对应流量和分钟数按天折算，向上取整。<br />
@@ -70,10 +64,13 @@
           3、本号卡仅满足用户正常使用通话和流量，对于因受业务及物流限制地区可能产生电信诈骗的归属地我们会进行鉴别并不支持发货，敬请见谅。<br />
           4、未满16周岁，一证五号已满（含正在使用的）国政通不通过，军人，保密单位等职业的身份证属于特殊证件无法网上办理通讯业务，故不发货。<br />
         </div>
-        <div id="company" style="display:none;">
+        <div id="company">
           <div class="company-item"></div>
         </div>
       </div>
+    </div>
+    <div class="dianjibox">
+      <div class="boxDian" @click="goTop" v-show="showBotBot">免费领取 全国包邮</div>
     </div>
   </div>
 </template>
@@ -86,11 +83,40 @@ export default {
       form1: require('../../assets/images/f2.png'),
       form2: require('../../assets/images/f3.png'),
       form3: require('../../assets/images/f4.png'),
-      showGDXQ: false
+      showGDXQ: false,
+      windowTop: 0,
+      showBotBot: false
     }
   },
   components: {
     SubForm
+  },
+  mounted() {
+    window.addEventListener('scroll', this.onScroll, true)
+  },
+  beforeDestroy() {
+    window.removeEventListener('scroll', this.onScroll, true)
+  },
+  computed: {
+    // showBotBot: function() {
+    //   console.log(this.windowTop)
+    //   return window.top.scrollY > 750
+    // }
+  },
+  methods: {
+    goTop() {
+      window.scrollTo(0, 0)
+      // this.showBotBot = false
+    },
+    onScroll(e) {
+      // console.log(e.target.documentElement.scrollTop)
+      this.windowTop = e.target.documentElement.scrollTop
+      if (e.target.documentElement.scrollTop > 750) {
+        this.showBotBot = true
+      } else {
+        this.showBotBot = false
+      }
+    }
   }
 }
 </script>
@@ -106,11 +132,14 @@ export default {
   }
   .more {
     text-align: center;
-    padding-bottom: 18px;
+    padding-top: 10px;
+    padding-bottom: 2.52rem;
+    color: rgb(255, 255, 255);
   }
   .gdxq {
     width: 94%;
     margin-left: 3%;
+    padding-bottom: 2.52rem;
     .gdxq_content {
       width: 92%;
       margin: auto;
@@ -129,6 +158,73 @@ export default {
         margin: 15px auto 0 auto;
         font-size: 13px;
       }
+    }
+  }
+  .dianjibox {
+    width: 84%;
+    height: 2rem;
+    position: fixed;
+    bottom: 0.5rem;
+    left: 50%;
+    transform: translate(-50%, 0px);
+    z-index: 2;
+    display: block;
+    .boxDian {
+      text-decoration: none;
+      display: block;
+      margin: 10px 5% 0px;
+      font-size: 0.6rem;
+      width: 92%;
+      border: 0;
+      height: 0.2rem;
+      line-height: 0.2rem;
+      margin: 0.5rem 5% 0.5rem;
+      padding: 0.8rem 0;
+      border-radius: 2rem;
+      text-align: center;
+      font-family: '思源黑体';
+      font-weight: 600;
+      color: #ffffff;
+      background: url(../../assets/images/banner14.png) no-repeat center;
+      background-size: 100% 100%;
+      animation: btn 1s ease-in-out 0s infinite;
+      animation: breath-kf 1s ease 0s infinite normal none running;
+      -webkit-animation: breath-kf 1s ease 0s infinite normal none running;
+    }
+  }
+
+  @keyframes btn {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(0.9);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+
+  @-webkit-keyframes breath-kf {
+    0% {
+      transform: scale(0.9);
+    }
+    50% {
+      transform: scale(1);
+    }
+    to {
+      transform: scale(0.9);
+    }
+  }
+  @keyframes breath-kf {
+    0% {
+      transform: scale(0.9);
+    }
+    50% {
+      transform: scale(1);
+    }
+    to {
+      transform: scale(0.9);
     }
   }
 }
