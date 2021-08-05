@@ -7,7 +7,7 @@ import { baseApi, APPID } from '@/config'
 const service = axios.create({
   baseURL: baseApi, // url = base api url + request url
   withCredentials: true, // send cookies when cross-domain requests
-  timeout: 5000, // request timeout
+  timeout: 15000, // request timeout
   headers: { appid: APPID }
 })
 

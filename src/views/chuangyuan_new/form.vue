@@ -43,7 +43,7 @@
     </div>
     <form class="form_box">
       <!-- 选号 -->
-      <label for="numberPhone" class="numberPhone" @click="showNewTan = true">
+      <label for="numberPhone" class="numberPhone" @click="showTan()">
         <span>
           <div style="display: inline-block;" class="xing">免费选号</div>
         </span>
@@ -157,7 +157,7 @@
                 :class="{ xuanBorder: item.number === chooseNum }"
                 v-for="(item, index) in haoList"
                 v-bind:key="index"
-                @click="ch_num(item.number)"
+                @click="ch_num(item)"
               >
                 {{ item.number }}
               </p>
@@ -566,6 +566,23 @@
         </div>
       </div>
     </div>
+    <div class="modal-bg" v-if="disable_submit">
+      <div class="topLevel ">
+        <div class="loading-box">
+          <div class="lds-roller">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+          <div>订单提交中 请耐心等待</div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -582,6 +599,7 @@ export default {
   data() {
     return {
       chooseNum: '',
+      numberId: '',
       nameValue: '', // 姓名
       telValue: '', // 电话
       individualValue: '', // 身份证号码
@@ -617,7 +635,12 @@ export default {
       }
     }
   },
+  mounted() {},
   methods: {
+    showTan() {
+      this.showNewTan = true
+      this.onSearch()
+    },
     requireData(a) {
       request({
         url: 'webview/phone_list',
@@ -637,9 +660,7 @@ export default {
             })
           }
         })
-        .catch(() => {
-          console.log(22)
-        })
+        .catch(() => {})
     },
     onSearch() {
       this.requireData({
@@ -653,7 +674,8 @@ export default {
       console.log(this.inputValue)
     },
     ch_num(num) {
-      this.chooseNum = num
+      this.chooseNum = num.number
+      this.numberId = num.numberId
     },
     ch_num_final() {
       this.showNewTan = false
@@ -825,7 +847,9 @@ export default {
         area: this.areaList1,
         sel_phone: this.chooseNum,
         smscode: this.verifCode,
-        sel_phone_area: this.numAddress
+        sel_phone_area: this.numAddress,
+        numberId: this.numberId,
+        fingerNum: murmur
       }
       return request({
         url: 'webview/submit',
@@ -1146,6 +1170,103 @@ export default {
     }
     to {
       transform: scale(0.9);
+    }
+  }
+  .topLevel {
+    width: 100%;
+    height: 100vh;
+    justify-content: center;
+    display: flex;
+    background-color: rgba(0, 0, 0, 0.6);
+    .loading-box {
+      text-align: center;
+      padding-top: 8rem;
+      font-size: 0.8rem;
+      color: white;
+    }
+    .lds-roller {
+      display: inline-block;
+      position: relative;
+      width: 80px;
+      height: 80px;
+    }
+    .lds-roller div {
+      animation: lds-roller 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+      transform-origin: 40px 40px;
+    }
+    .lds-roller div:after {
+      content: ' ';
+      display: block;
+      position: absolute;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #fff;
+      margin: -4px 0 0 -4px;
+    }
+    .lds-roller div:nth-child(1) {
+      animation-delay: -0.036s;
+    }
+    .lds-roller div:nth-child(1):after {
+      top: 63px;
+      left: 63px;
+    }
+    .lds-roller div:nth-child(2) {
+      animation-delay: -0.072s;
+    }
+    .lds-roller div:nth-child(2):after {
+      top: 68px;
+      left: 56px;
+    }
+    .lds-roller div:nth-child(3) {
+      animation-delay: -0.108s;
+    }
+    .lds-roller div:nth-child(3):after {
+      top: 71px;
+      left: 48px;
+    }
+    .lds-roller div:nth-child(4) {
+      animation-delay: -0.144s;
+    }
+    .lds-roller div:nth-child(4):after {
+      top: 72px;
+      left: 40px;
+    }
+    .lds-roller div:nth-child(5) {
+      animation-delay: -0.18s;
+    }
+    .lds-roller div:nth-child(5):after {
+      top: 71px;
+      left: 32px;
+    }
+    .lds-roller div:nth-child(6) {
+      animation-delay: -0.216s;
+    }
+    .lds-roller div:nth-child(6):after {
+      top: 68px;
+      left: 24px;
+    }
+    .lds-roller div:nth-child(7) {
+      animation-delay: -0.252s;
+    }
+    .lds-roller div:nth-child(7):after {
+      top: 63px;
+      left: 17px;
+    }
+    .lds-roller div:nth-child(8) {
+      animation-delay: -0.288s;
+    }
+    .lds-roller div:nth-child(8):after {
+      top: 56px;
+      left: 12px;
+    }
+    @keyframes lds-roller {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
     }
   }
 }
