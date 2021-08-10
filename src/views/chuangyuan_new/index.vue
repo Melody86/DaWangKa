@@ -81,7 +81,7 @@ export default {
     return {
       banner: require('../../assets/images/banner.png'),
       form1: require('../../assets/images/f2.png'),
-      form2: require('../../assets/images/f3.png'),
+      form2: require('../../assets/images/WechatIMG2616.png'),
       form3: require('../../assets/images/f4.png'),
       showGDXQ: false,
       windowTop: 0,

@@ -107,7 +107,7 @@
         <input type="text" name="" id="detail" placeholder="请输入收货地址（已加密）" v-model="detailareaValue" />
       </label>
 
-      <div class="agreement">
+      <div class="agreement" v-if="false">
         <span style="color:#000000">我已阅读并同意</span>
         <span style="color:#1e96fa" @click="showTishiKuang = !showTishiKuang">《入网协议、个人信息收集使用公告》 </span
         ><br />
