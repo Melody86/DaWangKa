@@ -1,0 +1,225 @@
+<template>
+  <div class="container">
+    <div class="img_box"><img :src="banner" /></div>
+    <SubForm></SubForm>
+    <div class="more" @click="showGDXQ = true" v-show="!showGDXQ" v-if="false">
+      <div style="color:#CEA66B !important;">
+        更多详情
+        <img src="../../assets/images/banner12.png" alt="" style="width:10px;" />
+      </div>
+    </div>
+    <div class="gdxq" v-show="showGDXQ">
+      <div class="gdxq_content">
+        38元优享卡用户激活后立即生效。首月执行过渡期资费，套餐月基本费按日计扣（入网当日到月底），费用四舍五入到分；套餐内包含国内通用流量首月按天折算，向上取整。<br />
+        套餐包含30GB国内流量,30G专属定向免流和300分钟语音通话。用户自激活次月起每月4号开始领取，可领取12次会员权益（多选1），权益须分月连续领取。<br />
+        权益领取规则<br />
+        （1）用户激活次月4号起可进行领取12次权益，则自激活次月起连续12个月进行领取，规定时间内未领取，将视为放弃，无法补领（若激活当月参与存50送120，即可立即进行权益领取）<br />
+        （2）领取权益时，手机号码状态须为正常在网状态，如停机、欠费、离网等不可领取。<br />
+        （3）每个手机号码每月仅限领取一次，当月未领取将视为自动放弃，过期无法补领；<br />
+        <span class="showbimg">
+          （4）通过“湖南电信”微信公众号领取权益（福利-权益中心-权益尊享-权益星卡会员专享）<br />
+        </span>
+
+        <div>
+          生效规则<br />
+          激活后立即生效。首月执行过渡期资费，订购当月套餐月基本费按日计扣（入网当日到月底），费用四舍五入到分；套餐内容（语音、流量）按照对应流量和分钟数按天折算，向上取整。<br />
+          专属流量使用说明<br />
+          (一)在电信网络下，使用对应免流APP产生的流量;<br />
+          (二)所使用的APP需升级到最新版本;<br />
+          (三)注册所有APP手机号码需与本机号码一致<br />
+          定向免流介绍<br />
+          套餐内包含：30GB爱奇艺、腾讯视频、优酷视频、西瓜视频、抖音短视频、抖音火山版、快手、网易云音乐等应用定向流量。<br />
+          1.头条系应用包含：今日头条、今日头条lite版、西瓜视频、抖音火山版、抖音短视频、皮皮虾、懂车帝、半次元。<br />
+          2.百度系应用包含：手机百度、百度贴吧、百度地图、百度云盘、百度手机助手、百度百科、秒懂百科、百度知道、百度文库、百度输入法、地图淘金、百度糯米、千千音乐、百度翻译、百度新闻、百度浏览器、好看视频。<br />
+          其中：手机百度、百度网盘、百度手机助手、百度新闻、百度浏览器、好看视频享受免流服务前需先至对应APP进行绑定激活。<br />
+          绑定入口：<br />
+          （1）手机百度：【个人中心】-【免流量特权】-【活动页面】-【激活免流】<br />
+          （2）百度网盘：【更多】-【设置】-【免流量特权】-【活动页面】-【激活免流】（只限百度网盘超级会员绑定激活免流，非会员无法免流）<br />
+          （3）百度手机助手：【管理】-【免流量服务】-【活动页面】-【激活免流】<br />
+          （4）好看视频：【我的】-【免流特权】-【活动页面】-【激活免流】<br />
+          注：以上需绑定激活的应用（除百度网盘APP），在同一手机终端使用时，只需激活其中一款应用，其他应用无需绑定激活即可享受免流服务。<br />
+          3.网易系应用包含：<br />
+          网易系非游戏应用：网易云音乐、网易新闻、网易公开课、网易云阅读、网易云课堂、易信、网易蜗牛阅读、网易100分。<br />
+          网易系游戏应用包含：梦幻西游、大话西游、阴阳师、荒野行动、终结者2、倩女幽魂、率土之滨、镇魔曲、三国如龙传、坦克连、元气战姬学院、迷雾世界、大航海之路、汉王纷争、决战平安京、我的世界、天下、光明大陆、
+          玩具大乱斗、格罗娅传奇。<br />
+          以上应用具体免流范围由发展渠道在用户订购界面、<span class="gzHao">公众号、</span>10000号等界面予以明确。<br />
+          不免流范围<br />
+          1、在无线上网卡、移动WIFI、MIFI、平板电脑（如ipad）等设备使用时；<br />
+          2、将手机号码作为手机热点使用时；<br />
+          3、使用网络加速器、代理服务器、VPN等工具时；<br />
+          4、在国际地区、港澳台使用时；<br />
+          5、通过APP STORE或安卓市场等下载/更新应用时；<br />
+          6、应用内开机广告及第三方广告时产生的流量；<br />
+          7、应用中访问外部链接或转发到外部应用产生的流量；<br />
+          8、APP内直播业务均不免流；<br />
+          9、所有APP内的第三方提供的网页（手机百度搜索跳转的第三方网页除外）视频、图片、广告、应用下载等服务，例如手机新闻网、搜狗、携程、京东等非百度业务。<br />
+
+          <div style="margin-top:25px"></div>
+          购买须知<br />
+          本套餐一个证件只能办理一潘，发货后请使用订购人身份证原件按照随卡寄送的单页说明进行激活，若发货后超过20天未激活，系统将回收处理。<br />
+          根据国家相关规定，未满16周岁的用户将不能在网络渠道办理入网，因年龄问题未能激活的用户，请由您的法定代理人前往营业厅代为办理，详情请咨询10000.<br />
+          3、本号卡仅满足用户正常使用通话和流量，对于因受业务及物流限制地区可能产生电信诈骗的归属地我们会进行鉴别并不支持发货，敬请见谅。<br />
+          4、未满16周岁，一证五号已满（含正在使用的）国政通不通过，军人，保密单位等职业的身份证属于特殊证件无法网上办理通讯业务，故不发货。<br />
+        </div>
+        <div id="company">
+          <div class="company-item"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+<script>
+import SubForm from './form.vue'
+export default {
+  data() {
+    return {
+      banner: require('../../assets/images/lihe/1.jpg'),
+      // form1: require('../../assets/images/f2.png'),
+      // form2: require('../../assets/images/WechatIMG2616.png'),
+      // form3: require('../../assets/images/WechatIMG2652.png'),
+      showGDXQ: false,
+      windowTop: 0,
+      showBotBot: false
+    }
+  },
+  components: {
+    SubForm
+  },
+  mounted() {
+    window.addEventListener('scroll', this.onScroll, true)
+  },
+  beforeDestroy() {
+    window.removeEventListener('scroll', this.onScroll, true)
+  },
+  computed: {
+    // showBotBot: function() {
+    //   console.log(this.windowTop)
+    //   return window.top.scrollY > 750
+    // }
+  },
+  methods: {
+    goTop() {
+      window.scrollTo(0, 0)
+      // this.showBotBot = false
+    },
+    onScroll(e) {
+      // console.log(e.target.documentElement.scrollTop)
+      this.windowTop = e.target.documentElement.scrollTop
+      if (e.target.documentElement.scrollTop > 750) {
+        this.showBotBot = true
+      } else {
+        this.showBotBot = false
+      }
+    }
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+.container {
+  background: rgb(33, 33, 47);
+  .img_box {
+    img {
+      width: 100%;
+      display: block;
+    }
+  }
+  .more {
+    text-align: center;
+    padding-top: 10px;
+    padding-bottom: 2.52rem;
+    color: rgb(255, 255, 255);
+  }
+  .gdxq {
+    width: 94%;
+    margin-left: 3%;
+    padding-bottom: 2.52rem;
+    .gdxq_content {
+      width: 92%;
+      margin: auto;
+      margin-top: 20px;
+      font-size: 12px;
+      color: #ffffff;
+      padding-bottom: 15px;
+      border: 4px solid #d19c69;
+      border-radius: 6px;
+      padding: 10px;
+    }
+    .company {
+      .company-item {
+        text-align: left;
+        width: 90%;
+        margin: 15px auto 0 auto;
+        font-size: 13px;
+      }
+    }
+  }
+  .dianjibox {
+    width: 84%;
+    height: 2rem;
+    position: fixed;
+    bottom: 0.5rem;
+    left: 50%;
+    transform: translate(-50%, 0px);
+    z-index: 2;
+    display: block;
+    .boxDian {
+      text-decoration: none;
+      display: block;
+      margin: 10px 5% 0px;
+      font-size: 0.6rem;
+      width: 92%;
+      border: 0;
+      height: 0.2rem;
+      line-height: 0.2rem;
+      margin: 0.5rem 5% 0.5rem;
+      padding: 0.8rem 0;
+      border-radius: 2rem;
+      text-align: center;
+      font-family: '思源黑体';
+      font-weight: 600;
+      color: #ffffff;
+      background: url(../../assets/images/banner14.png) no-repeat center;
+      background-size: 100% 100%;
+      animation: btn 1s ease-in-out 0s infinite;
+      animation: breath-kf 1s ease 0s infinite normal none running;
+      -webkit-animation: breath-kf 1s ease 0s infinite normal none running;
+    }
+  }
+
+  @keyframes btn {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(0.9);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+
+  @-webkit-keyframes breath-kf {
+    0% {
+      transform: scale(0.9);
+    }
+    50% {
+      transform: scale(1);
+    }
+    to {
+      transform: scale(0.9);
+    }
+  }
+  @keyframes breath-kf {
+    0% {
+      transform: scale(0.9);
+    }
+    50% {
+      transform: scale(1);
+    }
+    to {
+      transform: scale(0.9);
+    }
+  }
+}
+</style>
