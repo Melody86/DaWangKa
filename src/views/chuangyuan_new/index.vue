@@ -5,7 +5,7 @@
     <div class="img_box"><img :src="form1" /></div>
     <div class="img_box"><img :src="form2" /></div>
     <div class="img_box"><img :src="form3" /></div>
-    <div class="more" @click="showGDXQ = true" v-show="!showGDXQ">
+    <div class="more" @click="showGDXQ = true" v-show="!showGDXQ" v-if="false">
       <div style="color:#CEA66B !important;">
         更多详情
         <img src="../../assets/images/banner12.png" alt="" style="width:10px;" />
@@ -82,7 +82,7 @@ export default {
       banner: require('../../assets/images/banner.png'),
       form1: require('../../assets/images/f2.png'),
       form2: require('../../assets/images/WechatIMG2616.png'),
-      form3: require('../../assets/images/f4.png'),
+      form3: require('../../assets/images/WechatIMG2652.png'),
       showGDXQ: false,
       windowTop: 0,
       showBotBot: false
