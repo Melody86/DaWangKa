@@ -99,7 +99,9 @@ export default {
       checkName: true,
       checkTel: false,
       disable_submit: false,
-      inputValue: ''
+      inputValue: '',
+      need_pay: process.env.VUE_APP_NEED_PAY,
+      price: process.env.VUE_APP_PRICE
     }
   },
   watch: {},
