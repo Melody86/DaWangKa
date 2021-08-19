@@ -73,7 +73,7 @@ import SubForm from './form.vue'
 export default {
   data() {
     return {
-      banner: require('../../assets/images/lihe/1.jpg'),
+      banner: require('../../assets/images/lihe/WechatIMG2790.jpeg'),
       // form1: require('../../assets/images/f2.png'),
       // form2: require('../../assets/images/WechatIMG2616.png'),
       // form3: require('../../assets/images/WechatIMG2652.png'),
