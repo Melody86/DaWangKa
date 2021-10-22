@@ -125,19 +125,8 @@
                 />
                 <span style="font-size: 0.4rem; color: #000000; display: inline-block; padding-left: 1rem"
                   ><phonenum :pnum="item.number" :pkey="inputValue"></phonenum>
-                  <div style="text-align: start; width: 100%">
-                    <span
-                      style="
-                        font-size: 0.41rem;
-                        color: #ff0000;
-                        text-decoration: line-through;
-                        display: block;
-                        margin-left: 0.05rem;
-                      "
-                      >靓号费:¥ <span style="color: black">{{ item.price }}</span></span
-                    >
-                  </div></span
-                >
+                  <div style="text-align: start; width: 100%"></div
+                ></span>
                 <img
                   src="@/assets/images/chuangyuan/weapp-wk02/images/bannel6.png"
                   style="width: 0.7rem; height: 0.7rem; position: absolute; bottom: 0; right: 0; display: none"
@@ -248,23 +237,23 @@ export default {
     return {
       banner:
         parseInt(process.env.VUE_APP_SHENHE) === 0
-          ? require('@/assets/images/chuangyuan/bb33.gif')
+          ? require('@/assets/images/xingka/bj_47.png')
           : require('@/assets/images/chuangyuan/shenhe/banner.png'),
       form1:
         parseInt(process.env.VUE_APP_SHENHE) === 0
-          ? require('@/assets/images/chuangyuan/weapp-wk02/images/red19/WechatIMG526.jpeg')
+          ? require('@/assets/images/xingka/mianfei_15.png')
           : require('@/assets/images/chuangyuan/shenhe/weapp-wk02/images/red19/bannel8.png'),
       form2:
         parseInt(process.env.VUE_APP_SHENHE) === 0
-          ? require('@/assets/images/chuangyuan/weapp-wk02/images/red19/bannel9.png')
+          ? require('@/assets/images/xingka/mianfei_16.png')
           : require('@/assets/images/chuangyuan/shenhe/weapp-wk02/images/red19/bannel9.png'),
       form3:
         parseInt(process.env.VUE_APP_SHENHE) === 0
-          ? require('@/assets/images/chuangyuan/weapp-wk02/images/red19/bannel10.png')
+          ? require('@/assets/images/xingka/mianfei_17.png')
           : require('@/assets/images/chuangyuan/shenhe/weapp-wk02/images/red19/bannel10.png'),
       form4:
         parseInt(process.env.VUE_APP_SHENHE) === 0
-          ? require('@/assets/images/chuangyuan/weapp-wk02/images/red19/bannel10.png')
+          ? require('@/assets/images/xingka/mianfei_15.png')
           : require('@/assets/images/chuangyuan/shenhe/weapp-wk02/images/red19/bannel10.png'),
       voice: require('@/assets/images/dawang/index29_1/shengyin.png'),
       address: require('@/assets/images/dawang/index29_1/baijiu-.png'),
@@ -276,7 +265,7 @@ export default {
       after: require('@/assets/images/dawang/index29_1/nextPage.png'),
       fixedButton:
         parseInt(process.env.VUE_APP_SHENHE) === 0
-          ? require('@/assets/images/chuangyuan/banner14.png')
+          ? require('@/assets/images/xingka/btn_pay_4.png')
           : require('@/assets/images/chuangyuan/shenhe/banner14.png'),
       loading: require('@/assets/images/dawang/img3_6/loading.gif'),
       areaList: areaList, // 选择地址插件数据
@@ -574,7 +563,7 @@ export default {
 }
 .unicom-index {
   text-align: center;
-  background-color: rgb(202, 35, 34);
+  background-color: #1b1a17;
   .tanDiv {
     position: fixed;
     inset: 0;
