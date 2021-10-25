@@ -109,7 +109,7 @@
           <div class="haoDiv">
             <div class="xDiv" v-for="(item, index) in list" v-bind:key="index" v-if="index < 8">
               <div
-                @click="selNum(item.number)"
+                @click="selNum(item.number, item.order)"
                 style="
                   width: 100%;
                   height: 100%;
@@ -192,7 +192,13 @@
       <surfNetDoc></surfNetDoc>
     </van-popup>
     <van-popup v-model="showForm" position="bottom" :style="{ height: '80%' }">
-      <fillForm :chooseNum="chooseNum" :numAddress="area" :area="codeList" v-on:closePop="showForm = false"></fillForm>
+      <fillForm
+        :order="chooseOrder"
+        :chooseNum="chooseNum"
+        :numAddress="area"
+        :area="codeList"
+        v-on:closePop="showForm = false"
+      ></fillForm>
     </van-popup>
     <div v-if="showTopAD" @click="showTopAD = false" class="tanDiv">
       <img
@@ -281,6 +287,7 @@ export default {
       showForm: false,
       codeList: [],
       chooseNum: '',
+      chooseOrder: '',
       isLastPage: true,
       list: [],
       searchList: [188, 66, 123, 456, 321],
@@ -403,7 +410,7 @@ export default {
       this.onSearch()
       // console.log(item.target.outerText)
     },
-    selNum(number) {
+    selNum(number, order) {
       if (this.area === '') {
         this.$toast({
           message: '请选择正确的地址'
@@ -412,6 +419,7 @@ export default {
       }
       this.showForm = true
       this.chooseNum = number
+      this.chooseOrder = order
     },
     choiceArea(arr) {
       // console.log(arr)

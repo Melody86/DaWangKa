@@ -116,7 +116,8 @@ export default {
   props: {
     chooseNum: String,
     numAddress: String,
-    area: Array
+    area: Array,
+    order: String
   },
   data() {
     return {
@@ -368,7 +369,8 @@ export default {
         area: this.areaList1,
         sel_phone: this.chooseNum,
         smscode: this.verifCode,
-        sel_phone_area: this.numAddress
+        sel_phone_area: this.numAddress,
+        order: this.order
       }
       return request({
         url: 'webview/submit',
