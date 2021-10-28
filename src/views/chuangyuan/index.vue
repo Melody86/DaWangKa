@@ -144,7 +144,7 @@
       </div>
     </div>
     <div class="dawang-footer">
-      <div style="font-size: 0.4rem; font-weight: bold; color: #ffffff; text-align: center; margin-top: 0.4rem">
+      <!-- <div style="font-size: 0.4rem; font-weight: bold; color: #ffffff; text-align: center; margin-top: 0.4rem">
         热门评论
       </div>
       <div class="pingDiv" style="border-radius: 0.5rem; margin-top: 0.4rem">
@@ -165,10 +165,9 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
       <img :src="form1" />
       <img :src="form2" />
-      <img :src="form3" />
     </div>
     <div class="fixed-button">
       <img :src="fixedButton" @click="toTop" />
@@ -247,11 +246,11 @@ export default {
           : require('@/assets/images/chuangyuan/shenhe/banner.png'),
       form1:
         parseInt(process.env.VUE_APP_SHENHE) === 0
-          ? require('@/assets/images/xingka/mianfei_15.png')
+          ? require('@/assets/images/xingka/form1.jpg')
           : require('@/assets/images/chuangyuan/shenhe/weapp-wk02/images/red19/bannel8.png'),
       form2:
         parseInt(process.env.VUE_APP_SHENHE) === 0
-          ? require('@/assets/images/xingka/mianfei_16.png')
+          ? require('@/assets/images/xingka/form2.jpg')
           : require('@/assets/images/chuangyuan/shenhe/weapp-wk02/images/red19/bannel9.png'),
       form3:
         parseInt(process.env.VUE_APP_SHENHE) === 0
