@@ -246,11 +246,11 @@ export default {
           : require('@/assets/images/chuangyuan/shenhe/banner.png'),
       form1:
         parseInt(process.env.VUE_APP_SHENHE) === 0
-          ? require('@/assets/images/xingka/form1.jpg')
+          ? require('@/assets/images/xingka/dianxin_02.jpg')
           : require('@/assets/images/chuangyuan/shenhe/weapp-wk02/images/red19/bannel8.png'),
       form2:
         parseInt(process.env.VUE_APP_SHENHE) === 0
-          ? require('@/assets/images/xingka/form2.jpg')
+          ? require('@/assets/images/xingka/dianxin_03.jpg')
           : require('@/assets/images/chuangyuan/shenhe/weapp-wk02/images/red19/bannel9.png'),
       form3:
         parseInt(process.env.VUE_APP_SHENHE) === 0
