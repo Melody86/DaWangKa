@@ -7,28 +7,6 @@
       <fillFormNoSel></fillFormNoSel>
     </div>
     <div class="dawang-footer">
-      <div style="font-size: 0.4rem; font-weight: bold; color: #ffffff; text-align: center; margin-top: 0.4rem">
-        热门评论
-      </div>
-      <div class="pingDiv" style="border-radius: 0.5rem; margin-top: 0.4rem">
-        <div style="width: 90%; margin: auto">
-          <div style="width: 100%; height: 12.5rem; overflow: hidden">
-            <div class="Pinei" style="margin-top: 0.6rem">
-              <vue-seamless-scroll class="warp" :data="pneiDList">
-                <div id="autoscroll">
-                  <div class="pneiD" v-for="(pd, index) in pneiDList" :key="index">
-                    <img :src="pd.img" style="border-radius: 50%; width: 1rem" />
-                    <p style="color: #000000; font-size: 0.4rem; padding-left: 0.4rem; text-align: left">
-                      {{ pd.name }} <br />
-                      <span style="color: #8a8a8a">{{ pd.desc }}</span>
-                    </p>
-                  </div>
-                </div>
-              </vue-seamless-scroll>
-            </div>
-          </div>
-        </div>
-      </div>
       <img :src="form1" />
     </div>
     <div class="fixed-button">
@@ -92,18 +70,18 @@ export default {
   data() {
     return {
       BannerStyle: {
-        backgroundImage: 'url(' + require('@/assets/images/chuangyuan_nosel/2a.gif') + ')',
-        height: '14rem',
+        backgroundImage: 'url(' + require('@/assets/images/chuangyuan_nosel/f_01.png') + ')',
+        height: '12rem',
         backgroundSize: '100%'
       },
       banner:
         parseInt(process.env.VUE_APP_SHENHE) === 0
-          ? require('@/assets/images/chuangyuan_nosel/2a.gif')
-          : require('@/assets/images/chuangyuan_nosel/2a.gif'),
+          ? require('@/assets/images/chuangyuan_nosel/f_01.png')
+          : require('@/assets/images/chuangyuan_nosel/f_01.png'),
       form1:
         parseInt(process.env.VUE_APP_SHENHE) === 0
-          ? require('@/assets/images/chuangyuan_nosel/2aa.gif')
-          : require('@/assets/images/chuangyuan_nosel/2aa.gif'),
+          ? require('@/assets/images/chuangyuan_nosel/f_02.png')
+          : require('@/assets/images/chuangyuan_nosel/f_02.png'),
       form2:
         parseInt(process.env.VUE_APP_SHENHE) === 0
           ? require('@/assets/images/chuangyuan/weapp-wk02/images/red19/bannel9.png')
@@ -126,8 +104,8 @@ export default {
       after: require('@/assets/images/dawang/index29_1/nextPage.png'),
       fixedButton:
         parseInt(process.env.VUE_APP_SHENHE) === 0
-          ? require('@/assets/images/chuangyuan_nosel/433.gif')
-          : require('@/assets/images/chuangyuan_nosel/433.gif'),
+          ? require('@/assets/images/chuangyuan_nosel/2.png')
+          : require('@/assets/images/chuangyuan_nosel/2.png'),
       loading: require('@/assets/images/dawang/img3_6/loading.gif'),
       areaList: areaList, // 选择地址插件数据
       showAreaList: false, // 是否显示选择地址插件
@@ -379,7 +357,7 @@ export default {
 }
 .unicom-index {
   text-align: center;
-  background-color: rgb(202, 35, 34);
+  background-color: #1f43b0;
   .tanDiv {
     position: fixed;
     inset: 0;
@@ -397,7 +375,7 @@ export default {
     }
   }
   .dawang-footer {
-    width: 94%;
+    width: 100%;
     margin: auto;
     margin-top: 0rem;
     padding-bottom: 2rem;

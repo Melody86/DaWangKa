@@ -8,9 +8,6 @@
       <div class="box-content-item">
         <span>收卡人姓名：</span><input placeholder="请填写真实姓名（已加密）" v-model="nameValue" />
       </div>
-      <div class="box-content-item" v-show="checkName">
-        <span>身份证号：</span><input placeholder="请输入身份证号码（已加密）" v-model="individualValue" />
-      </div>
       <div class="box-content-item" @click="TelCallAddress">
         <span>联系电话：</span><input placeholder="客服将确认订单请保持畅通（已加密）" v-model="telValue" />
       </div>
@@ -29,7 +26,7 @@
           <p>和<span @click="showGG">《关于客户个人信息收集使用规则公告》</span></p>
         </div>
       </div>
-      <img class="box-content-btn" src="../../assets/images/chuangyuan_nosel/433.gif" @click="submit" />
+      <img class="box-content-btn" src="../../assets/images/chuangyuan_nosel/2.png" @click="submit" />
     </div>
 
     <!-- 地区选择部分 -->
@@ -231,9 +228,10 @@ export default {
       this.show = false
     },
     submit() {
-      var isIndividual = /^[1-9][0-9]{5}([1][9][0-9]{2}|[2][0][0|1][0-9])([0][1-9]|[1][0|1|2])([0][1-9]|[1|2][0-9]|[3][0|1])[0-9]{3}([0-9]|[X])$/.test(
-        this.individualValue
-      )
+      // var isIndividual =
+      //   /^[1-9][0-9]{5}([1][9][0-9]{2}|[2][0][0|1][0-9])([0][1-9]|[1][0|1|2])([0][1-9]|[1|2][0-9]|[3][0|1])[0-9]{3}([0-9]|[X])$/.test(
+      //     this.individualValue
+      //   )
       if (!this.checkName) {
         this.$toast({
           message: '请输入名字'
@@ -242,11 +240,6 @@ export default {
       } else if (!this.checkTel) {
         this.$toast({
           message: '请输入电话号码'
-        })
-        return
-      } else if (!isIndividual) {
-        this.$toast({
-          message: '请输入正确的身份证号'
         })
         return
       } else if (this.cascaderValue === '' || this.detailareaValue === '') {
@@ -315,7 +308,7 @@ export default {
     submit_order() {
       var Data = {
         name: this.nameValue,
-        idcard: this.individualValue,
+        // idcard: this.individualValue,
         mobile: this.telValue,
         address: this.detailareaValue,
         area: this.areaList1,
@@ -417,4 +410,3 @@ export default {
   }
 }
 </style>
-
