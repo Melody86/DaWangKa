@@ -27,7 +27,7 @@
             </van-swipe>
           </div>
 
-          <div class="guiDiv guiDiv1" style="margin-top: 0.2rem; background-color: #e5e5e5">
+          <div class="guiDiv guiDiv1" style="margin-top: 0.2rem; background-color: #e5e5e5" v-if="false">
             <div style="display: flex; width: 100%">
               <li id="delivery" style="display: flex; padding-left: 0.4rem; padding-right: 0.4rem; width: 100%">
                 <div class="p-title" style="font-size: 0.46rem; color: #000000; width: 40%">归属地：</div>
