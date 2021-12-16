@@ -3,7 +3,7 @@
   <div class="infoFixed">
     <div class="close_infoFixed" @click="$emit('closePop')"><img :src="closeImg" alt="" /></div>
     <p class="info_text">
-      已选择<span>靓号{{ chooseNum || '' }} </span>{{ numAddress }}
+      已选择<span>靓号{{ chooseNum || '' }} </span> <span v-if="false">{{ numAddress }}</span>
     </p>
     <p class="info_text2">根据国家手机号卡实名要求，请如实填写以下信息，以便我们及时为您送达。</p>
     <div class="info_write_info">
