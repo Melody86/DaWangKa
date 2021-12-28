@@ -276,7 +276,7 @@ export default {
       areaList: areaList, // 选择地址插件数据
       showAreaList: false, // 是否显示选择地址插件
       area: '', // 选择之后的确定值
-      inputValue: '188', // 搜索框内值
+      inputValue: '', // 搜索框内值
       choiceListIndex: 0, // 号码类型选择序号
       typeArr: ['全部', 'ABC', 'ABAB', 'AABB', '爱情号', '尾号8'],
       pageIndex: 1,
