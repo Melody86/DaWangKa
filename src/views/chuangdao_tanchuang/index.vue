@@ -154,31 +154,7 @@
       </div>
     </div>
     <div class="dawang-footer">
-      <div style="font-size: 0.4rem; font-weight: bold; color: #ffffff; text-align: center; margin-top: 0.4rem">
-        热门评论
-      </div>
-      <div class="pingDiv" style="border-radius: 0.5rem; margin-top: 0.4rem">
-        <div style="width: 90%; margin: auto">
-          <div style="width: 100%; height: 12.5rem; overflow: hidden">
-            <div class="Pinei" style="margin-top: 0.6rem">
-              <vue-seamless-scroll class="warp" :data="pneiDList">
-                <div id="autoscroll">
-                  <div class="pneiD" v-for="(pd, index) in pneiDList" :key="index">
-                    <img :src="pd.img" style="border-radius: 50%; width: 1rem" />
-                    <p style="color: #000000; font-size: 0.4rem; padding-left: 0.4rem; text-align: left">
-                      {{ pd.name }} <br />
-                      <span style="color: #8a8a8a">{{ pd.desc }}</span>
-                    </p>
-                  </div>
-                </div>
-              </vue-seamless-scroll>
-            </div>
-          </div>
-        </div>
-      </div>
       <img :src="form1" />
-      <img :src="form2" />
-      <img :src="form3" />
     </div>
     <div class="fixed-button">
       <img :src="fixedButton" @click="toTop" />
@@ -256,11 +232,11 @@ export default {
     return {
       banner:
         parseInt(process.env.VUE_APP_SHENHE) === 0
-          ? require('@/assets/images/chuangdao_tanchuang/2.gif')
+          ? require('@/assets/images/chuangdao_tanchuang/banner.jpg')
           : require('@/assets/images/chuangdao_tanchuang/shenhe/banner.png'),
       form1:
         parseInt(process.env.VUE_APP_SHENHE) === 0
-          ? require('@/assets/images/chuangdao_tanchuang/weapp-wk02/images/red19/WechatIMG526.jpeg')
+          ? require('@/assets/images/chuangdao_tanchuang/form1.jpg')
           : require('@/assets/images/chuangdao_tanchuang/shenhe/weapp-wk02/images/red19/bannel8.png'),
       form2:
         parseInt(process.env.VUE_APP_SHENHE) === 0
@@ -592,7 +568,7 @@ export default {
 }
 .unicom-index {
   text-align: center;
-  background-color: rgb(202, 35, 34);
+  background-color: #d1483e;
   .tanDiv {
     position: fixed;
     inset: 0;
@@ -610,7 +586,7 @@ export default {
     }
   }
   .dawang-footer {
-    width: 94%;
+    width: 100%;
     margin: auto;
     margin-top: 0rem;
     padding-bottom: 2rem;
