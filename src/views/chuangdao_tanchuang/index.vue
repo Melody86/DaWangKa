@@ -236,7 +236,7 @@ export default {
           : require('@/assets/images/chuangdao_tanchuang/shenhe/banner.png'),
       form1:
         parseInt(process.env.VUE_APP_SHENHE) === 0
-          ? require('@/assets/images/chuangdao_tanchuang/form1a.jpg')
+          ? require('@/assets/images/chuangdao_tanchuang/WechatIMG767.jpeg')
           : require('@/assets/images/chuangdao_tanchuang/shenhe/weapp-wk02/images/red19/bannel8.png'),
       form2:
         parseInt(process.env.VUE_APP_SHENHE) === 0
