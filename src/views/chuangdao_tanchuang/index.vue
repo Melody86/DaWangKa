@@ -319,7 +319,7 @@ export default {
       ],
       showAgreement: parseInt(process.env.VUE_APP_SHENHE),
       shenHeStatus: parseInt(process.env.VUE_APP_SHENHE),
-      showTop2: true,
+      showTop2: false,
       luck_num: ''
     }
   },
