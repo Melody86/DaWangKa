@@ -155,6 +155,9 @@
     </div>
     <div class="dawang-footer">
       <img :src="form1" />
+      <img :src="form2" />
+      <img :src="form3" />
+      <img :src="form4" />
     </div>
     <div class="fixed-button">
       <img :src="fixedButton" @click="toTop" />
@@ -232,23 +235,23 @@ export default {
     return {
       banner:
         parseInt(process.env.VUE_APP_SHENHE) === 0
-          ? require('@/assets/images/chuangdao_tanchuang/banner1.jpg')
+          ? require('@/assets/images/toutiao/b1.jpeg')
           : require('@/assets/images/chuangdao_tanchuang/shenhe/banner.png'),
       form1:
         parseInt(process.env.VUE_APP_SHENHE) === 0
-          ? require('@/assets/images/chuangdao_tanchuang/WechatIMG767.jpeg')
+          ? require('@/assets/images/toutiao/b2.jpeg')
           : require('@/assets/images/chuangdao_tanchuang/shenhe/weapp-wk02/images/red19/bannel8.png'),
       form2:
         parseInt(process.env.VUE_APP_SHENHE) === 0
-          ? require('@/assets/images/chuangdao_tanchuang/weapp-wk02/images/red19/bannel9.png')
+          ? require('@/assets/images/toutiao/b3.jpeg')
           : require('@/assets/images/chuangdao_tanchuang/shenhe/weapp-wk02/images/red19/bannel9.png'),
       form3:
         parseInt(process.env.VUE_APP_SHENHE) === 0
-          ? require('@/assets/images/chuangdao_tanchuang/weapp-wk02/images/red19/bannel10.png')
+          ? require('@/assets/images/toutiao/b4.jpeg')
           : require('@/assets/images/chuangdao_tanchuang/shenhe/weapp-wk02/images/red19/bannel10.png'),
       form4:
         parseInt(process.env.VUE_APP_SHENHE) === 0
-          ? require('@/assets/images/chuangdao_tanchuang/weapp-wk02/images/red19/bannel10.png')
+          ? require('@/assets/images/toutiao/b5.jpeg')
           : require('@/assets/images/chuangdao_tanchuang/shenhe/weapp-wk02/images/red19/bannel10.png'),
       voice: require('@/assets/images/dawang/index29_1/shengyin.png'),
       address: require('@/assets/images/dawang/index29_1/baijiu-.png'),
@@ -568,7 +571,7 @@ export default {
 }
 .unicom-index {
   text-align: center;
-  background-color: #d1483e;
+  background-color: #f5810e;
   .tanDiv {
     position: fixed;
     inset: 0;
