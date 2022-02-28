@@ -107,8 +107,6 @@
 
 <script>
 import { areaList } from '@/assets/js/addressCode.js'
-import qs from 'qs'
-import _ from 'lodash'
 // axios
 import request from '@/utils/request'
 // user api
@@ -146,7 +144,8 @@ export default {
       disable_submit: false,
       zfb_address: true,
       need_pay: false,
-      price: 1
+      price: 1,
+      assets_id: process.env.VUE_APP_ASSETSID
     }
   },
   components: {},
@@ -313,7 +312,13 @@ export default {
         this.submit_order()
           .then(res => {
             if (res.errcode === 0) {
-              _baq.track('form', { assets_id: '1725970543551491', product_name: '联通卡号', product_price: '' })
+              _baq.track('form', { assets_id: this.assets_id, product_name: '联通王卡', product_price: 100 })
+              // _baq.track('customer_effective', {
+              //   assets_id: '1725970543551491',
+              //   product_name: '联通王卡',
+              //   product_price: 100
+              // })
+
               if (typeof call_pay === 'function' && this.need_pay === 'true') {
                 console.log(this.price)
                 call_pay(this.price, res => {
