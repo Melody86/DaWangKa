@@ -176,7 +176,6 @@ export default {
       }
     }
   },
-  mounted() {},
   methods: {
     cancelAreaSel() {
       this.showChoiceArea = false
@@ -314,6 +313,7 @@ export default {
         this.submit_order()
           .then(res => {
             if (res.errcode === 0) {
+              _baq.track('form', { assets_id: '1725970543551491', product_name: '联通卡号', product_price: '' })
               if (typeof call_pay === 'function' && this.need_pay === 'true') {
                 console.log(this.price)
                 call_pay(this.price, res => {
@@ -321,7 +321,7 @@ export default {
                     this.$toast({
                       message: '订单提交成功'
                     })
-                    if (typeof navigateTo === 'function' && 'true' == process.env.VUE_APP_NAVTO) {
+                    if (typeof navigateTo === 'function' && process.env.VUE_APP_NAVTO == 'true') {
                       navigateTo(process.env.VUE_APP_NAVTO_PATH)
                     }
                   } else {
@@ -332,7 +332,7 @@ export default {
                   }
                 })
               } else {
-                if (typeof navigateTo === 'function' && 'true' == process.env.VUE_APP_NAVTO) {
+                if (typeof navigateTo === 'function' && process.env.VUE_APP_NAVTO == 'true') {
                   navigateTo(process.env.VUE_APP_NAVTO_PATH)
                 } else {
                   this.$toast({
@@ -418,8 +418,7 @@ export default {
   }
 }
 </script>
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>
 <style lang="scss" scoped>
 @keyframes warn {
   from {
@@ -599,4 +598,3 @@ export default {
   }
 }
 </style>
-
