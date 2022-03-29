@@ -418,7 +418,7 @@ export default {
         return
       }
       this.showForm = true
-      this.chooseNum = number
+      this.chooseNum = number.toString()
     },
     choiceArea(arr) {
       // console.log(arr)
