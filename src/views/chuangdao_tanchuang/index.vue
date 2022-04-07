@@ -251,7 +251,7 @@ export default {
           : require('@/assets/images/chuangdao_tanchuang/shenhe/weapp-wk02/images/red19/bannel10.png'),
       form4:
         parseInt(process.env.VUE_APP_SHENHE) === 0
-          ? require('@/assets/images/toutiao/b5.jpeg')
+          ? require('@/assets/images/toutiao/b5.png')
           : require('@/assets/images/chuangdao_tanchuang/shenhe/weapp-wk02/images/red19/bannel10.png'),
       voice: require('@/assets/images/dawang/index29_1/shengyin.png'),
       address: require('@/assets/images/dawang/index29_1/baijiu-.png'),

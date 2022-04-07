@@ -90,8 +90,10 @@
     <div class="content_btn btnTj scale_div" @click="submit" id="tj_submit">免费领取 包邮到家</div>
 
     <div class="xieyi_box">
-      <a @click="ruwang_show = true">《入网服务及业务协议》</a
-      ><a @click="baohu_show = true">《个人信息授权及保护声明》</a>
+      <van-checkbox v-model="checked"
+        ><a @click="ruwang_show = true">《入网服务及业务协议》</a
+        ><a @click="baohu_show = true">《个人信息授权及保护声明》</a></van-checkbox
+      >
     </div>
     <p class="info_text2">
       本活动为阶段性优惠活动，发布数量有限，请保持联系号码畅通，我们可能随时与您联系，电话无人接听或恶意下单，将不予发货。
@@ -2007,6 +2009,7 @@ export default {
   },
   data() {
     return {
+      checked: false,
       ruwang_show: false,
       baohu_show: false,
       show: false,
@@ -2181,6 +2184,11 @@ export default {
           message: '请输入电话号码'
         })
         return
+      } else if (!this.checked) {
+        this.$toast({
+          message: '请同意协议信息'
+        })
+        return
       } else if (!isIndividual) {
         this.$toast({
           message: '请输入正确的身份证号'
@@ -2337,6 +2345,9 @@ export default {
 
 .xieyi_box {
   color: #4a6dfe;
+  width: 90%;
+  margin-left: 5%;
+  font-size: 90%;
 }
 
 .xieyi_content {
