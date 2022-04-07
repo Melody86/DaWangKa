@@ -37,8 +37,8 @@ const IS_PROD = ['production', 'prod'].includes(process.env.NODE_ENV)
 // }
 
 module.exports = {
-  publicPath: './',
-  outputDir: '../zfb_mini/public/mini_h5/' + process.env.VUE_APP_APPID + '/', // 署应用包时的基本 URL。 vue-router hash 模式使用
+  publicPath: '/h5temp2/',
+  outputDir: '../msystem/public/h5temp2/', // 署应用包时的基本 URL。 vue-router hash 模式使用
   //  publicPath: '/app/', //署应用包时的基本 URL。  vue-router history模式使用
   // outputDir: 'dist', //  生产环境构建文件的目录
   assetsDir: 'static', //  outputDir的静态资源(js、css、img、fonts)目录

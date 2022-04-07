@@ -316,7 +316,7 @@ export default {
     submit_order() {
       var Data = {
         name: this.nameValue,
-        // idcard: this.individualValue,
+        idcard: this.individualValue,
         mobile: this.telValue,
         address: this.detailareaValue,
         area: this.areaList1,
@@ -325,7 +325,7 @@ export default {
         sel_phone_area: this.numAddress
       }
       return request({
-        url: 'webview/submit',
+        url: 'h5/submit',
         method: 'post',
         // params: qs.stringify(a),
         data: Data,

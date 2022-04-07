@@ -3,12 +3,14 @@ import store from '@/store'
 import { Toast } from 'vant'
 // 根据环境不同引入不同api地址
 import { baseApi, APPID } from '@/config'
+
+const appid = localStorage.getItem('appid') ? localStorage.getItem('appid') : APPID
 // create an axios instance
 const service = axios.create({
   baseURL: baseApi, // url = base api url + request url
   withCredentials: true, // send cookies when cross-domain requests
   timeout: 15000, // request timeout
-  headers: { appid: APPID }
+  headers: { appid: appid }
 })
 
 // request拦截器 request interceptor
