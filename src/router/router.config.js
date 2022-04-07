@@ -4,72 +4,14 @@
 export const constantRouterMap = [
   {
     path: '/',
-    redirect: { name: process.env.VUE_APP_TEMP }
+    // redirect: { name: process.env.VUE_APP_TEMP }
+    component: () => import('@/views/chuangyuan_no_sel/index'),
+    meta: { title: '创源不选号', keepAlive: false }
   },
   {
     path: '/chuangyuan_no_sel',
     name: 'chuangyuan_no_sel',
     component: () => import('@/views/chuangyuan_no_sel/index'),
     meta: { title: '创源不选号', keepAlive: false }
-  },
-  {
-    path: '/liandong',
-    name: 'liandong',
-    component: () => import('@/views/liandong/index'),
-    meta: { title: '联动不选号', keepAlive: false }
-  },
-  {
-    path: '/liandong_new',
-    name: 'liandong_new',
-    component: () => import('@/views/liandong_new/index'),
-    meta: { title: '联动不选号2', keepAlive: false }
-  },
-  {
-    path: '/liandong_cxdd',
-    name: 'liandong_cxdd',
-    component: () => import('@/views/liandong_new/liandong_cxdd'),
-    meta: { title: '联动订单查询', keepAlive: false }
-  },
-  {
-    path: '/chuangyuan',
-    name: 'chuangyuan',
-    component: () => import('@/views/chuangyuan/index'),
-    meta: { title: '创源', keepAlive: false }
-  },
-  {
-    path: '/chuangdao',
-    name: 'chuangdao',
-    component: () => import('@/views/chuangdao/index'),
-    meta: { title: '创道', keepAlive: false }
-  },
-  {
-    path: '/chuangdao_tanchuang',
-    name: 'chuangdao_tanchuang',
-    component: () => import('@/views/chuangdao_tanchuang/index'),
-    meta: { title: '创道', keepAlive: false }
-  },
-  {
-    path: '/dawang',
-    name: 'dawang',
-    component: () => import('@/views/dawang/index'),
-    meta: { title: '联通大王卡', keepAlive: false }
-  },
-  {
-    path: '/yidong',
-    name: 'yidong',
-    component: () => import('@/views/yidong/index'),
-    meta: { title: '电信星卡', keepAlive: false }
-  },
-  {
-    path: '/lingka',
-    name: 'lingka',
-    component: () => import('@/views/lingka/index'),
-    meta: { title: '电信靓卡', keepAlive: false }
-  },
-  {
-    path: '/liandongyoushi',
-    name: 'liandongyoushi',
-    component: () => import('@/views/liandongyoushi/index'),
-    meta: { title: '电信靓卡', keepAlive: false }
   }
 ]

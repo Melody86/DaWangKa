@@ -7,7 +7,9 @@
       <fillFormNoSel></fillFormNoSel>
     </div>
     <div class="dawang-footer">
-      <img :src="form1" />
+      <img :src="form2" />
+      <img :src="form3" />
+      <img :src="form4" />
     </div>
     <div class="fixed-button">
       <img :src="fixedButton" @click="toTop" />
@@ -70,7 +72,7 @@ export default {
   data() {
     return {
       BannerStyle: {
-        backgroundImage: 'url(' + require('@/assets/images/chuangyuan_nosel/f_01.png') + ')',
+        backgroundImage: 'url(' + require('@/assets/images/xin_nosel/1.jpeg') + ')',
         height: '12rem',
         backgroundSize: '100%'
       },
@@ -80,20 +82,20 @@ export default {
           : require('@/assets/images/chuangyuan_nosel/f_01.png'),
       form1:
         parseInt(process.env.VUE_APP_SHENHE) === 0
-          ? require('@/assets/images/chuangyuan_nosel/f_02.png')
-          : require('@/assets/images/chuangyuan_nosel/f_02.png'),
+          ? require('@/assets/images/xin_nosel/1.jpeg')
+          : require('@/assets/images/xin_nosel/1.jpeg'),
       form2:
         parseInt(process.env.VUE_APP_SHENHE) === 0
-          ? require('@/assets/images/chuangyuan/weapp-wk02/images/red19/bannel9.png')
-          : require('@/assets/images/chuangyuan/shenhe/weapp-wk02/images/red19/bannel9.png'),
+          ? require('@/assets/images/xin_nosel/2.jpeg')
+          : require('@/assets/images/xin_nosel/2.jpeg'),
       form3:
         parseInt(process.env.VUE_APP_SHENHE) === 0
-          ? require('@/assets/images/chuangyuan/weapp-wk02/images/red19/bannel10.png')
-          : require('@/assets/images/chuangyuan/shenhe/weapp-wk02/images/red19/bannel10.png'),
+          ? require('@/assets/images/xin_nosel/3.jpeg')
+          : require('@/assets/images/xin_nosel/3.jpeg'),
       form4:
         parseInt(process.env.VUE_APP_SHENHE) === 0
-          ? require('@/assets/images/chuangyuan/weapp-wk02/images/red19/bannel10.png')
-          : require('@/assets/images/chuangyuan/shenhe/weapp-wk02/images/red19/bannel10.png'),
+          ? require('@/assets/images/xin_nosel/4.jpeg')
+          : require('@/assets/images/xin_nosel/4.jpeg'),
       voice: require('@/assets/images/dawang/index29_1/shengyin.png'),
       address: require('@/assets/images/dawang/index29_1/baijiu-.png'),
       baijiuGray: require('@/assets/images/dawang/index29_1/baijiuGray.png'),
@@ -357,7 +359,7 @@ export default {
 }
 .unicom-index {
   text-align: center;
-  background-color: #1f43b0;
+  background-color: #ea6b02;
   .tanDiv {
     position: fixed;
     inset: 0;
@@ -382,7 +384,7 @@ export default {
     img {
       width: 100%;
       vertical-align: middle;
-      padding-top: 0.5rem;
+      // padding-top: 0.5rem;
     }
     .pingDiv {
       width: 100%;
