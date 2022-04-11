@@ -291,6 +291,7 @@ export default {
                   this.$toast({
                     message: '订单提交成功'
                   })
+                  window.location.href = './success.html'
                 }
               }
               // this.$toast({
