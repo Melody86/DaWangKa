@@ -167,7 +167,6 @@
         </div>
       </div> -->
       <img :src="form1" />
-      <img :src="form2" />
     </div>
     <div class="fixed-button">
       <img :src="fixedButton" @click="toTop" />
@@ -242,12 +241,12 @@ export default {
     return {
       banner:
         parseInt(process.env.VUE_APP_SHENHE) === 0
-          ? require('@/assets/images/xingka/bj_47.png')
-          : require('@/assets/images/chuangyuan/shenhe/banner.png'),
+          ? require('@/assets/images/chuangyuan/20220430/banner.jpg')
+          : require('@/assets/images/chuangyuan/20220430/banner.jpg'),
       form1:
         parseInt(process.env.VUE_APP_SHENHE) === 0
-          ? require('@/assets/images/xingka/dianxin_02.jpg')
-          : require('@/assets/images/chuangyuan/shenhe/weapp-wk02/images/red19/bannel8.png'),
+          ? require('@/assets/images/chuangyuan/20220430/form.png')
+          : require('@/assets/images/chuangyuan/20220430/form.png'),
       form2:
         parseInt(process.env.VUE_APP_SHENHE) === 0
           ? require('@/assets/images/xingka/dianxin_03.jpg')
@@ -270,8 +269,8 @@ export default {
       after: require('@/assets/images/dawang/index29_1/nextPage.png'),
       fixedButton:
         parseInt(process.env.VUE_APP_SHENHE) === 0
-          ? require('@/assets/images/xingka/btn_pay_4.png')
-          : require('@/assets/images/chuangyuan/shenhe/banner14.png'),
+          ? require('@/assets/images/chuangyuan/20220430/btn_pay_42.png')
+          : require('@/assets/images/chuangyuan/20220430/btn_pay_42.png'),
       loading: require('@/assets/images/dawang/img3_6/loading.gif'),
       areaList: areaList, // 选择地址插件数据
       showAreaList: false, // 是否显示选择地址插件
@@ -570,7 +569,7 @@ export default {
 }
 .unicom-index {
   text-align: center;
-  background-color: #1b1a17;
+  background-color: #fe4517;
   .tanDiv {
     position: fixed;
     inset: 0;
@@ -588,7 +587,7 @@ export default {
     }
   }
   .dawang-footer {
-    width: 94%;
+    width: 100%;
     margin: auto;
     margin-top: 0rem;
     padding-bottom: 2rem;
