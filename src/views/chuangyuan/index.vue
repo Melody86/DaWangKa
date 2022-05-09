@@ -27,7 +27,7 @@
             </van-swipe>
           </div>
 
-          <div class="guiDiv guiDiv1" style="margin-top: 0.2rem; background-color: #e5e5e5" v-if="false">
+          <div class="guiDiv guiDiv1" style="margin-top: 0.2rem; background-color: #e5e5e5" v-if="true">
             <div style="display: flex; width: 100%">
               <li id="delivery" style="display: flex; padding-left: 0.4rem; padding-right: 0.4rem; width: 100%">
                 <div class="p-title" style="font-size: 0.46rem; color: #000000; width: 40%">归属地：</div>
@@ -241,12 +241,12 @@ export default {
     return {
       banner:
         parseInt(process.env.VUE_APP_SHENHE) === 0
-          ? require('@/assets/images/chuangyuan/20220430/banner.jpg')
-          : require('@/assets/images/chuangyuan/20220430/banner.jpg'),
+          ? require('@/assets/images/chuangyuan/20220430/banner2.jpg')
+          : require('@/assets/images/chuangyuan/20220430/banner2.jpg'),
       form1:
         parseInt(process.env.VUE_APP_SHENHE) === 0
-          ? require('@/assets/images/chuangyuan/20220430/form.png')
-          : require('@/assets/images/chuangyuan/20220430/form.png'),
+          ? require('@/assets/images/chuangyuan/20220430/form2.jpg')
+          : require('@/assets/images/chuangyuan/20220430/form2.jpg'),
       form2:
         parseInt(process.env.VUE_APP_SHENHE) === 0
           ? require('@/assets/images/xingka/dianxin_03.jpg')
@@ -275,7 +275,7 @@ export default {
       areaList: areaList, // 选择地址插件数据
       showAreaList: false, // 是否显示选择地址插件
       area: '', // 选择之后的确定值
-      inputValue: '', // 搜索框内值
+      inputValue: '66', // 搜索框内值
       choiceListIndex: 0, // 号码类型选择序号
       typeArr: ['全部', 'ABC', 'ABAB', 'AABB', '爱情号', '尾号8'],
       pageIndex: 1,
@@ -569,7 +569,7 @@ export default {
 }
 .unicom-index {
   text-align: center;
-  background-color: #fe4517;
+  background-color: #97dfb9;
   .tanDiv {
     position: fixed;
     inset: 0;
