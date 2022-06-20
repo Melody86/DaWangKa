@@ -241,12 +241,12 @@ export default {
     return {
       banner:
         parseInt(process.env.VUE_APP_SHENHE) === 0
-          ? require('@/assets/images/chuangyuan/20220430/banner2.jpg')
-          : require('@/assets/images/chuangyuan/20220430/banner2.jpg'),
+          ? require('@/assets/images/chuangyuan/20220620/banner3.jpg')
+          : require('@/assets/images/chuangyuan/20220620/banner3.jpg'),
       form1:
         parseInt(process.env.VUE_APP_SHENHE) === 0
-          ? require('@/assets/images/chuangyuan/20220430/form2.jpg')
-          : require('@/assets/images/chuangyuan/20220430/form2.jpg'),
+          ? require('@/assets/images/chuangyuan/20220620/form1.jpg')
+          : require('@/assets/images/chuangyuan/20220620/form1.jpg'),
       form2:
         parseInt(process.env.VUE_APP_SHENHE) === 0
           ? require('@/assets/images/xingka/dianxin_03.jpg')
@@ -569,7 +569,7 @@ export default {
 }
 .unicom-index {
   text-align: center;
-  background-color: #97dfb9;
+  background-color: #ff133b;
   .tanDiv {
     position: fixed;
     inset: 0;
