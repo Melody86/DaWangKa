@@ -1,19 +1,21 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <script>
+      function setCity(obj) {
+        localStorage.setItem('city', obj.city)
+      }
+    </script>
+    <script
+      src="https://whois.pconline.com.cn/ipJson.jsp?callback=setCity"
+      referrerpolicy="no-referrer"
+    ></script>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-    <!-- <% for (var i in
-      htmlWebpackPlugin.options.cdn&&htmlWebpackPlugin.options.cdn.css) { %>
-      <link href="<%= htmlWebpackPlugin.options.cdn.css[i] %>" rel="preload" as="style" />
-      <link href="<%= htmlWebpackPlugin.options.cdn.css[i] %>" rel="stylesheet" />
-	  <% } %> -->
     <title><%= VUE_APP_TITLE %></title>
-    <script src="https://pv.sohu.com/cityjson?ie=utf-8"></script>
-    <script src="https://alxcx.51chongguan.com/js/mini.js?<%= Date.now() %>"></script>
-  </head>
+    </head>
   <body>
     <noscript>
       <strong>We're sorry but <%= VUE_APP_TITLE %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>

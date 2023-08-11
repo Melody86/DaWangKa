@@ -233,7 +233,6 @@ export default {
       ]
     }
   },
-  components: {},
   mounted() {
     // 此处true需要加上，不加滚动事件可能绑定不成功
     window.addEventListener('scroll', this.handleScroll, true)
@@ -256,7 +255,6 @@ export default {
       }
     }
   },
-  mounted() {},
   created() {
     this.need_pay = process.env.VUE_APP_NEED_PAY
     this.price = process.env.VUE_APP_PRICE
@@ -375,7 +373,7 @@ export default {
     },
     submit() {
       var isIndividual = /^[1-9][0-9]{5}([1][9][0-9]{2}|[2][0][0|1][0-9])([0][1-9]|[1][0|1|2])([0][1-9]|[1|2][0-9]|[3][0|1])[0-9]{3}([0-9]|[X])$/.test(
-        this.individualValue
+        this.individualValue.trim()
       )
       if (!this.checkName) {
         this.$toast({
@@ -409,36 +407,13 @@ export default {
         this.submit_order()
           .then(res => {
             if (res.errcode === 0) {
-              if (typeof call_pay === 'function' && this.need_pay === 'true') {
-                console.log(this.price)
-                call_pay(this.price, res => {
-                  if (res.status === 1) {
-                    this.$toast({
-                      message: '订单提交成功'
-                    })
-                    if (typeof navigateTo === 'function' && process.env.VUE_APP_NAVTO == 'true') {
-                      navigateTo(process.env.VUE_APP_NAVTO_PATH)
-                    }
-                  } else {
-                    this.$toast({
-                      message: '订单支付失败'
-                    })
-                    this.disable_submit = false
-                  }
-                })
-              } else {
-                if (typeof navigateTo === 'function' && process.env.VUE_APP_NAVTO == 'true') {
-                  navigateTo(process.env.VUE_APP_NAVTO_PATH)
-                } else {
-                  this.$toast({
-                    message: '订单提交成功'
-                  })
+              this.$toast({
+                message: '订单提交成功',
+                onClose: () => {
+                  this.$router.push({ name: 'success' })
                 }
-              }
-              // this.$toast({
-              //   message: '提交成功'
-              // })
-              // this.disable_submit = false
+              })
+              this.$router.push({ name: 'success' })
             } else {
               this.$toast({
                 message: res.message
@@ -451,6 +426,7 @@ export default {
             this.$toast({
               message: '订单提交错误'
             })
+
             console.log(err)
           })
       }

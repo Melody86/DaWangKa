@@ -7,5 +7,11 @@ export const constantRouterMap = [
     name: '20230811',
     component: () => import('@/views/20230811/index'),
     meta: { title: '创源', keepAlive: false }
+  },
+  {
+    path: '/success',
+    name: 'success',
+    component: () => import('@/views/20230811/success'),
+    meta: { title: '成功页', keepAlive: false }
   }
 ]

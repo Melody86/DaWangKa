@@ -167,7 +167,8 @@ export default {
       // showTopAD: parseInt(process.env.VUE_APP_HONGBAO_TANCHUANG),
 
       showAgreement: parseInt(process.env.VUE_APP_SHENHE),
-      shenHeStatus: parseInt(process.env.VUE_APP_SHENHE)
+      shenHeStatus: parseInt(process.env.VUE_APP_SHENHE),
+      langjie: false
     }
   },
 
@@ -177,7 +178,9 @@ export default {
     // 当页面销毁必须要移除这个事件，vue不刷新页面，不移除会重复执行这个事件
     window.removeEventListener('popstate', this.onBrowserBack, false)
   },
-  created() {},
+  created() {
+    this.isLanjieArea()
+  },
   mounted() {
     // 此处true需要加上，不加滚动事件可能绑定不成功
     window.addEventListener('scroll', this.handleScroll, true)
@@ -188,14 +191,18 @@ export default {
   },
 
   methods: {
+    isLanjieArea() {
+      console.log(localStorage.getItem('city'))
+      var city = localStorage.getItem('city')
+      if (city.search('北京') === -1 && city.search('杭州') === -1) {
+        this.langjie = true
+      }
+      console.log('langjie', this.langjie)
+    },
     onBrowserBack() {
-      if (process.env.VUE_APP_NEED_LANJIE === 'true') {
+      if (this.langjie) {
         window.location.href = process.env.VUE_APP_RE_GAME_URL
       }
-
-      console.log(3232323)
-      // 这里写点击返回键时候的事件
-      // 比如判断需求执行back()或者go(-2)或者PopupShow=false隐藏弹框
     },
     selSearchNum(item) {
       this.inputValue = item.target.outerText
