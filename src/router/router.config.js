@@ -4,8 +4,8 @@
 export const constantRouterMap = [
   {
     path: '/',
-    name: 'chuangyuan',
-    component: () => import('@/views/chuangyuan/index'),
+    name: '20230811',
+    component: () => import('@/views/20230811/index'),
     meta: { title: '创源', keepAlive: false }
   }
 ]

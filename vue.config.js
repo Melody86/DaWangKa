@@ -38,15 +38,17 @@ const IS_PROD = ['production', 'prod'].includes(process.env.NODE_ENV)
 
 module.exports = {
   publicPath: './',
-  outputDir: '../zfb_mini/public/mini_h5/' + process.env.VUE_APP_APPID + '/', // 署应用包时的基本 URL。 vue-router hash 模式使用
-  //  publicPath: '/app/', //署应用包时的基本 URL。  vue-router history模式使用
-  // outputDir: 'dist', //  生产环境构建文件的目录
+  // outputDir: '../zfb_mini/public/mini_h5/' + process.env.VUE_APP_APPID + '/', // 署应用包时的基本 URL。 vue-router hash 模式使用
+  // publicPath: '/app/', //署应用包时的基本 URL。  vue-router history模式使用
+  outputDir: 'dist', //  生产环境构建文件的目录
   assetsDir: 'static', //  outputDir的静态资源(js、css、img、fonts)目录
   lintOnSave: !IS_PROD,
   productionSourceMap: false, // 如果你不需要生产环境的 source map，可以将其设置为 false 以加速生产环境构建。
   devServer: {
     port: 8000, // 端口
     open: false, // 启动后打开浏览器
+    host: '0.0.0.0',
+    public: '0.0.0.0:8000',
     disableHostCheck: true,
     overlay: {
       //  当出现编译器错误或警告时，在浏览器中显示全屏覆盖层
@@ -82,6 +84,16 @@ module.exports = {
   },
   configureWebpack: config => {
     config.name = name
+
+    // config.module.rules = [
+    //   {
+    //     test: /\.(png|jpe?g|gif|svg|svga)(\?.*)?$/,
+    //     loader: 'url-loader',
+    //     options: {
+    //       limit: 10000
+    //     }
+    //   }
+    // ]
 
     // 为生产环境修改配置...
     // if (IS_PROD) {
@@ -125,6 +137,13 @@ module.exports = {
         options.compilerOptions.preserveWhitespace = true
         return options
       })
+      .end()
+
+    config.module
+      .rule('svga')
+      .test(/\.svga$/)
+      .use('url-loader')
+      .loader('url-loader')
       .end()
     /**
      * 打包分析
