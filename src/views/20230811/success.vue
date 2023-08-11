@@ -53,7 +53,7 @@ export default {
     window.addEventListener('popstate', this.onBrowserBack, false)
     setTimeout(() => {
       this.goAdUrl()
-      console.log(232323)
+      // console.log(232323)
     }, 3000)
   },
   methods: {
