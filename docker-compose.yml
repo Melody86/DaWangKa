@@ -1,0 +1,15 @@
+version: "3.4"
+services:
+  my_dawangka:
+    container_name: my_dawangka
+    image: node:12-alpine
+    working_dir: /var/www/html/app/
+    entrypoint: /bin/sh
+    ports:
+      - "8000:8000"
+    expose:
+      - 8000
+    volumes:
+      - ./:/var/www/html/app
+    tty: true
+# docker compose exec my_dawangka  /bin/sh
