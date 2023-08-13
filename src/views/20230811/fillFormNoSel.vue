@@ -16,19 +16,13 @@
           <input placeholder="请填写真实姓名（已加密）" v-model="nameValue" />
         </div>
 
-        <div class="box-content-item" v-show="checkName">
-          <span>身份证号：</span>
-
-          <input placeholder="请输入身份证号码（已加密）" v-model="individualValue" />
-        </div>
-
         <div class="box-content-item" @click="TelCallAddress">
           <span>联系电话：</span>
 
           <input placeholder="客服将确认订单请保持畅通（已加密）" v-model="telValue" />
         </div>
 
-        <div class="box-content-item box-content-adderess" @click="callAddress">
+        <div class="box-content-item box-content-adderess" @click="callAddress" v-show="checkTel && checkName">
           <span>收货地址：</span>
 
           <input readonly placeholder="请选择省市区（已加密）" v-model="cascaderValue" />
@@ -36,29 +30,30 @@
           <label>选择</label>
         </div>
 
-        <div class="box-content-item">
+        <div class="box-content-item" v-show="checkTel && checkName">
           <span>详细地址：</span>
 
           <input placeholder="请填写详细街道、小区信息（已加密）" v-model="detailareaValue" />
         </div>
+
+        <div class="box-content-item" v-show="checkTel && checkName && checkAddress">
+          <span>身份证号：</span>
+
+          <input placeholder="请输入身份证号码（已加密）" v-model="individualValue" />
+        </div>
+
+        <button class="sb-btn" @click="submit">免费领卡</button>
 
         <div class="box-content-item form-box-doc" v-if="showPrivacyBox">
           <van-checkbox v-model="docChecked" @click="checkboxClicked" checked-color="#a3783f"></van-checkbox>
 
           <div class="form-box-doc-link">
             <p>
-              我已阅读并同意
-              <span @click="showXY">《客户入网服务协议》</span>
-            </p>
-
-            <p>
-              和
-              <span @click="showGG">《关于客户个人信息收集使用规则公告》</span>
+              提交已视为阅读并同意
+              <span @click="showXY">《个人信息授权与保护声明》</span>
             </p>
           </div>
         </div>
-
-        <button class="sb-btn" @click="submit">免费领卡</button>
       </div>
 
       <!-- 地区选择部分 -->
@@ -129,11 +124,12 @@ export default {
   },
   data() {
     return {
-      showPrivacyBox: false,
-      docChecked: false,
+      showPrivacyBox: true,
+      docChecked: true,
       show: false,
       areaList: areaList, // 选择地址的地址数据
       checkName: false,
+      checkAddress: false,
       checkTel: false,
       nameValue: '', // 姓名
       telValue: '', // 电话
@@ -149,6 +145,9 @@ export default {
       showSur: false,
       defaultAreaCode: '',
       disable_submit: false,
+      chooseNum: '',
+      numAddress: '',
+      verifCode: '',
       pneiDList: [
         {
           img: require('@/assets/images/chuangyuan/weapp-wk02/images/top1.jpg'),
@@ -194,7 +193,7 @@ export default {
   },
   watch: {
     nameValue(newvalue, oldvalue) {
-      var isName = /^[\u4e00-\u9fa5]{2,4}$/.test(newvalue)
+      var isName = /^[\u4e00-\u9fa5]{2,4}$/.test(newvalue.trim())
       if (!isName) {
         this.checkName = false
       } else {
@@ -202,11 +201,19 @@ export default {
       }
     },
     telValue(newValue, oldValue) {
-      var isMob = /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/.test(newValue)
+      var isMob = /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/.test(newValue.trim())
       if (!isMob) {
         this.checkTel = false
       } else {
         this.checkTel = true
+      }
+    },
+    detailareaValue(newValue, oldValue) {
+      var isDetailarea = /^[\u4e00-\u9fa5|a-z|A-Z|0-9|\ ]{2,40}$/.test(newValue.trim())
+      if (!isDetailarea) {
+        this.checkAddress = false
+      } else {
+        this.checkAddress = true
       }
     }
   },
@@ -340,14 +347,19 @@ export default {
           message: '请输入电话号码'
         })
         return
+      } else if (this.cascaderValue === '' || this.detailareaValue === '') {
+        this.$toast({
+          message: '请输入正确的地址'
+        })
+        return
       } else if (!isIndividual) {
         this.$toast({
           message: '请输入正确的身份证号'
         })
         return
-      } else if (this.cascaderValue === '' || this.detailareaValue === '') {
+      } else if (!this.docChecked) {
         this.$toast({
-          message: '请输入正确的地址'
+          message: '请勾选下方协议和隐私政策'
         })
         return
       }
@@ -388,17 +400,17 @@ export default {
     },
     submit_order() {
       var Data = {
-        name: this.nameValue,
-        idcard: this.individualValue,
-        mobile: this.telValue,
-        address: this.detailareaValue,
+        name: this.nameValue.trim(),
+        idcard: this.individualValue.trim(),
+        mobile: this.telValue.trim(),
+        address: this.detailareaValue.trim(),
         area: this.areaList1,
-        sel_phone: this.chooseNum,
-        smscode: this.verifCode,
-        sel_phone_area: this.numAddress
+        sel_phone: this.chooseNum.trim(),
+        smscode: this.verifCode.trim(),
+        sel_phone_area: this.numAddress.trim()
       }
       return request({
-        url: 'webview/submit',
+        url: 'h5/submit',
         method: 'post',
         // params: qs.stringify(a),
         data: Data,
@@ -501,6 +513,7 @@ export default {
         margin: 0;
         height: 18px;
         margin-left: 7.5px;
+        font-size: 10px;
         span {
           color: #a3783f;
         }

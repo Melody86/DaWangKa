@@ -1,27 +1,22 @@
 <template>
   <div style="">
-    <div class="mm-bg"></div>
-
-    <div>
-      <!-- <svga :src="svgimg" class="mm-main" ref="svga" :options="option" /> -->
-
+    <div style="position: relative;" v-show="showMM">
+      <img src="../../assets/images/20230811/light_190805.png" alt="" style="width: 100%;opacity:0;" />
+      <div class="mm-bg"></div>
       <canvas id="canvas" class="mm-main"></canvas>
     </div>
   </div>
 </template>
 
 <script>
-// import SVGA from 'svgaplayerweb'
-// import { svga } from 'vue-svga'
 import { Parser, Player } from 'svga'
-// import simg from '../../assets/images/20230811/1682242491.svga'
-// import simg from '../../assets/images/20230811/svga/matteRect.svga'
 export default {
   components: {
     // svga
   },
   data() {
     return {
+      showMM: false,
       parser: new Parser(),
       player: null,
       svgimg: require('../../assets/images/20230811/1682242491.svga')
@@ -36,18 +31,8 @@ export default {
       this.player.start()
     },
     async initMachineSVGA() {
-      // console.log('1', simg)
-      // const parser = new Parser()
-      // console.log('2', this.parser)
       const svga = await this.parser.load(this.svgimg)
-      // console.log('3', svga)
-      // console.log(svga)
-      // console.log(svga)
 
-      // const player = new Player({
-      //   container: document.getElementById('canvas'),
-      //   loop: 0
-      // })
       this.player = new Player({
         container: document.getElementById('canvas'),
         loop: 1
@@ -64,10 +49,8 @@ export default {
       this.player.onEnd = () => {
         this.$emit('closeAd')
       }
+      this.showMM = true
       this.player.start()
-      // this.$refs.svga.onStart = () => console.log('onStart')
-      // this.$refs.svga.onStop = () => console.log('onStop')
-      // this.$refs.svga.start()
     }
   }
 }
@@ -79,11 +62,13 @@ export default {
   background-repeat: no-repeat;
   background-size: 100%;
   position: absolute;
-  width: 365px;
-  left: 2%;
-  top: 16%;
-  height: 365px;
+  width: 100%;
+
+  height: 100%;
   animation: rotate 5s linear infinite;
+  background-position-y: center;
+  background-position-x: left;
+  top: 15vh;
 }
 .mm-main {
   width: 100%;
