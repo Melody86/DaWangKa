@@ -1,91 +1,69 @@
 <!-- 电信星卡-填写表单 -->
 
 <template>
-
   <div style="background-color: #f4f4f4;">
-
     <img src="../../assets/images/20230811/4b3ddjeolp.gif" style="width: 100%;" />
 
     <div class="fill-form-box">
-
       <!-- <img src="../../assets/images/chuangyuan_nosel/4.gif" /> -->
 
       <!-- 表单部分 -->
 
       <div class="form-box-content">
-
         <div class="box-content-item">
-
           <span>收卡人姓名：</span>
 
           <input placeholder="请填写真实姓名（已加密）" v-model="nameValue" />
-
         </div>
 
         <div class="box-content-item" v-show="checkName">
-
           <span>身份证号：</span>
 
           <input placeholder="请输入身份证号码（已加密）" v-model="individualValue" />
-
         </div>
 
         <div class="box-content-item" @click="TelCallAddress">
-
           <span>联系电话：</span>
 
           <input placeholder="客服将确认订单请保持畅通（已加密）" v-model="telValue" />
-
         </div>
 
         <div class="box-content-item box-content-adderess" @click="callAddress">
-
           <span>收货地址：</span>
 
           <input readonly placeholder="请选择省市区（已加密）" v-model="cascaderValue" />
 
           <label>选择</label>
-
         </div>
 
         <div class="box-content-item">
-
           <span>详细地址：</span>
 
           <input placeholder="请填写详细街道、小区信息（已加密）" v-model="detailareaValue" />
-
         </div>
 
         <div class="box-content-item form-box-doc" v-if="showPrivacyBox">
-
           <van-checkbox v-model="docChecked" @click="checkboxClicked" checked-color="#a3783f"></van-checkbox>
 
           <div class="form-box-doc-link">
-
             <p>
-               我已阅读并同意
+              我已阅读并同意
               <span @click="showXY">《客户入网服务协议》</span>
-
             </p>
 
             <p>
-               和
+              和
               <span @click="showGG">《关于客户个人信息收集使用规则公告》</span>
-
             </p>
-
           </div>
-
         </div>
 
         <button class="sb-btn" @click="submit">免费领卡</button>
-
       </div>
 
       <!-- 地区选择部分 -->
 
       <van-popup v-model="show" round position="bottom">
-
         <van-area
           title=""
           :area-list="areaList"
@@ -94,69 +72,46 @@
           visible-item-count="10"
           @cancel="cancelAreaSel"
         />
-
       </van-popup>
 
       <van-popup v-model="showPrivacy" style="width: 90%; height: 70%">
-
         <privacyDoc></privacyDoc>
-
       </van-popup>
 
       <van-popup v-model="showSur" style="width: 90%; height: 70%">
-
         <surfNetDoc></surfNetDoc>
-
       </van-popup>
-
     </div>
 
     <div
       style="background-color: white;font-size: 0.5rem; font-weight: bold; text-align: center; margin-top: 0.4rem;padding:0.5rem;border-bottom: solid 1px #c8c8c8;"
     >
-       成交记录
+      成交记录
     </div>
 
     <div class="pingDiv" style="margin-top: 0rem;">
-
       <div style="width: 90%; margin: auto">
-
         <div style="width: 100%; height: 12.5rem; overflow: hidden">
-
           <div class="Pinei" style="margin-top: 0rem">
-
             <vue-seamless-scroll class="warp" :data="pneiDList">
-
               <div id="autoscroll">
-
                 <div class="pneiD" v-for="(pd, index) in pneiDList" :key="index">
-
                   <img :src="pd.img" style="border-radius: 50%; width: 1rem" />
 
                   <p style="color: #000000; font-size: 0.4rem; padding-left: 0.4rem; text-align: left">
-                     {{ pd.name }}
+                    {{ pd.name }}
                     <br />
 
                     <span style="color: #8a8a8a">{{ pd.desc }}</span>
-
                   </p>
-
                 </div>
-
               </div>
-
             </vue-seamless-scroll>
-
           </div>
-
         </div>
-
       </div>
-
     </div>
-
   </div>
-
 </template>
 
 <script>
@@ -258,7 +213,7 @@ export default {
   created() {
     this.need_pay = process.env.VUE_APP_NEED_PAY
     this.price = process.env.VUE_APP_PRICE
-    console.log(this.need_pay)
+    // console.log(this.need_pay)
     // if (this.area[1]) {
     //   this.defaultAreaCode = this.area[1].code
     // }
@@ -572,4 +527,3 @@ export default {
   }
 }
 </style>
-

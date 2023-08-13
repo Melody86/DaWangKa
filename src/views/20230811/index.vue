@@ -1,59 +1,44 @@
 <!-- 联通大王卡 -->
 
 <template>
-
   <div class="unicom-index">
-
     <div class="dawang-banner">
-
       <img src="../../assets/images/20230811/fcihr3l3k6.webp" style="width: 100%;" />
-
     </div>
 
     <div class="dawang-center">
-
       <fillFormNoSel></fillFormNoSel>
-
     </div>
 
     <div class="dawang-footer">
-
       <img :src="form1" />
 
       <img :src="form2" />
 
       <img :src="form3" />
-
     </div>
 
     <div class="dawang-center">
-
       <fillFormNoSel></fillFormNoSel>
-
     </div>
 
     <div class="footer-box">
-
       <div class="company">
-         由杭州推啊网络科技有限公司提供技术支持
+        由杭州推啊网络科技有限公司提供技术支持
         <br />
-         电话：0571-22930370
+        电话：0571-22930370
       </div>
 
       <div class="icp"><a href="https://beian.miit.gov.cn/">ICP0222220000000</a></div>
-
     </div>
 
     <div class="fixed-button">
-
       <button class="sb-btn" @click="toTop">免费领卡</button>
-
     </div>
 
     <!-- 地区选择部分 -->
 
     <van-popup v-model="showAreaList" round position="bottom">
-
       <van-area
         title=""
         cancel-button-text=""
@@ -63,29 +48,20 @@
         @cancel="cancelAreaSel"
         visible-item-count="10"
       />
-
     </van-popup>
 
     <van-popup v-model="showPrivacy" style="width: 90%; height: 70%">
-
       <privacyDoc></privacyDoc>
-
     </van-popup>
 
     <van-popup v-model="showSur" style="width: 90%; height: 70%">
-
       <surfNetDoc></surfNetDoc>
-
     </van-popup>
 
     <div v-show="showTopAD" @click="showTopAD = false" class="tanDiv">
-
       <AdBox v-on:closeAd="showTopAD = false"></AdBox>
-
     </div>
-
   </div>
-
 </template>
 
 <script>
@@ -727,4 +703,3 @@ export default {
   }
 }
 </style>
-

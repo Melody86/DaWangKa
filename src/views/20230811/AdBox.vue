@@ -1,57 +1,70 @@
 <template>
-
   <div style="">
-
-    <div class="ad-bg"> </div>
+    <div class="mm-bg"></div>
 
     <div>
+      <!-- <svga :src="svgimg" class="mm-main" ref="svga" :options="option" /> -->
 
-      <!-- <svga :src="svgimg" class="ad-main" ref="svga" :options="option" /> -->
-
-      <canvas id="canvas" class="ad-main"></canvas>
-
+      <canvas id="canvas" class="mm-main"></canvas>
     </div>
-
   </div>
-
 </template>
 
 <script>
 // import SVGA from 'svgaplayerweb'
 // import { svga } from 'vue-svga'
 import { Parser, Player } from 'svga'
+// import simg from '../../assets/images/20230811/1682242491.svga'
+// import simg from '../../assets/images/20230811/svga/matteRect.svga'
 export default {
   components: {
     // svga
   },
   data() {
     return {
+      parser: new Parser(),
+      player: null,
       svgimg: require('../../assets/images/20230811/1682242491.svga')
     }
   },
   mounted() {
+    // console.log('mounted', simg)
     this.initMachineSVGA()
   },
   methods: {
+    startAAA() {
+      this.player.start()
+    },
     async initMachineSVGA() {
-      const parser = new Parser()
-      const svga = await parser.load(this.svgimg)
+      // console.log('1', simg)
+      // const parser = new Parser()
+      // console.log('2', this.parser)
+      const svga = await this.parser.load(this.svgimg)
+      // console.log('3', svga)
+      // console.log(svga)
+      // console.log(svga)
 
-      const player = new Player({
+      // const player = new Player({
+      //   container: document.getElementById('canvas'),
+      //   loop: 0
+      // })
+      this.player = new Player({
         container: document.getElementById('canvas'),
         loop: 1
       })
-      await player.mount(svga)
+      // console.log('4', this.player)
+      await this.player.mount(svga)
+      // console.log('5', this.player)
 
-      player.onStart = () => console.log('onStart')
-      // player.onResume = () => console.log('onResume')
-      // player.onPause = () => console.log('onPause')
-      // player.onStop = () => console.log('onStop')
-      // player.onProcess = () => console.log('onProcess', player.progress)
-      player.onEnd = () => {
+      this.player.onStart = () => console.log('onStart')
+      this.player.onResume = () => console.log('onResume')
+      this.player.onPause = () => console.log('onPause')
+      this.player.onStop = () => console.log('onStop')
+      // this.player.onProcess = () => console.log('onProcess', this.player.progress)
+      this.player.onEnd = () => {
         this.$emit('closeAd')
       }
-      player.start()
+      this.player.start()
       // this.$refs.svga.onStart = () => console.log('onStart')
       // this.$refs.svga.onStop = () => console.log('onStop')
       // this.$refs.svga.start()
@@ -61,7 +74,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.ad-bg {
+.mm-bg {
   background-image: url(../../assets/images/20230811/light_190805.png);
   background-repeat: no-repeat;
   background-size: 100%;
@@ -72,7 +85,7 @@ export default {
   height: 365px;
   animation: rotate 5s linear infinite;
 }
-.ad-main {
+.mm-main {
   width: 100%;
   position: fixed;
   left: 0;
@@ -90,4 +103,3 @@ export default {
   }
 }
 </style>
-
