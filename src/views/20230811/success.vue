@@ -21,12 +21,12 @@
     <div class="footer-box">
 
       <div class="company">
-         由杭州推啊网络科技有限公司提供技术支持
+         北京氧联科技有限公司
         <br />
-         电话：0571-22930370
+         电话：4008632859
       </div>
 
-      <div class="icp"><a href="https://beian.miit.gov.cn/">ICP0222220000000</a></div>
+      <div class="icp"><a href="https://beian.miit.gov.cn/">京ICP备18016888号-1</a></div>
 
     </div>
 
@@ -71,7 +71,7 @@ export default {
       }
     },
     goAdUrl() {
-      window.location.href = process.env.VUE_APP_RE_GAME_URL
+      // window.location.href = process.env.VUE_APP_RE_GAME_URL
     }
   }
 }
