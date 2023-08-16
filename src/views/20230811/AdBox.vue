@@ -1,11 +1,21 @@
 <template>
+
   <div style="">
+
     <div style="position: relative;" v-show="showMM">
+
       <img src="../../assets/images/20230811/light_190805.png" alt="" style="width: 100%;opacity:0;" />
+
       <div class="mm-bg"></div>
+
       <canvas id="canvas" class="mm-main"></canvas>
+
+      <div class="mm-btn" @click="closeMM">立即领取</div>
+
     </div>
+
   </div>
+
 </template>
 
 <script>
@@ -27,6 +37,9 @@ export default {
     this.initMachineSVGA()
   },
   methods: {
+    closeMM() {
+      this.$emit('closeAd')
+    },
     startAAA() {
       this.player.start()
     },
@@ -35,7 +48,7 @@ export default {
 
       this.player = new Player({
         container: document.getElementById('canvas'),
-        loop: 1
+        loop: 0
       })
       // console.log('4', this.player)
       await this.player.mount(svga)
@@ -57,6 +70,18 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.mm-btn {
+  width: 80%;
+  line-height: 40px;
+  background-color: #e20101;
+  border-radius: 5px;
+  margin: 50px auto;
+  z-index: 100;
+  position: relative;
+  font-size: 25px;
+  font-weight: 900;
+  color: white;
+}
 .mm-bg {
   background-image: url(../../assets/images/20230811/light_190805.png);
   background-repeat: no-repeat;
@@ -88,3 +113,4 @@ export default {
   }
 }
 </style>
+

@@ -78,9 +78,9 @@
 
     </van-popup>
 
-    <div v-show="showTopAD" @click="showTopAD = false" class="tanDiv">
+    <div v-show="showTopAD" @click="closeMM" class="tanDiv">
 
-      <AdBox v-on:closeAd="showTopAD = false"></AdBox>
+      <AdBox v-on:closeAd="closeMM"></AdBox>
 
     </div>
 
@@ -168,7 +168,7 @@ export default {
 
       showAgreement: parseInt(process.env.VUE_APP_SHENHE),
       shenHeStatus: parseInt(process.env.VUE_APP_SHENHE),
-      langjie: false
+      langjie: parseInt(localStorage.getItem('lanjie')) === 1
     }
   },
 
@@ -191,17 +191,26 @@ export default {
   },
 
   methods: {
+    closeMM() {
+      this.showTopAD = false
+      // 按需使用：A→B→C就需要页面一进来的时候，就添加一个历史记录
+      window.history.pushState(null, null, document.URL)
+      // 给window添加一个popstate事件，拦截返回键，执行this.onBrowserBack事件，addEventListener需要指向一个方法
+      window.addEventListener('popstate', this.onBrowserBack, false)
+    },
     isLanjieArea() {
       console.log(localStorage.getItem('city'))
       var city = localStorage.getItem('city')
-      if (city.search('北京') === -1 && city.search('杭州') === -1) {
-        this.langjie = true
+      // if (city.search('北京') === -1 && city.search('杭州') === -1) {
+      if (city.search('杭州') !== -1) {
+        this.langjie = false
       }
       console.log('langjie', this.langjie)
     },
     onBrowserBack() {
       if (this.langjie) {
-        // window.location.href = process.env.VUE_APP_RE_GAME_URL
+        console.log(localStorage.getItem('lanjie_url'))
+        window.location.href = localStorage.getItem('lanjie_url')
       }
     },
     selSearchNum(item) {

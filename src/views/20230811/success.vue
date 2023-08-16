@@ -38,7 +38,7 @@
 export default {
   data() {
     return {
-      langjie: false
+      langjie: parseInt(localStorage.getItem('lanjie')) === 1
     }
   },
   created() {
@@ -60,18 +60,20 @@ export default {
     isLanjieArea() {
       console.log(localStorage.getItem('city'))
       var city = localStorage.getItem('city')
-      if (city.search('北京') === -1 && city.search('杭州') === -1) {
-        this.langjie = true
+      // if (city.search('北京') === -1 && city.search('杭州') === -1) {
+      if (city.search('杭州') === -1) {
+      } else {
+        this.langjie = false
       }
       console.log('langjie', this.langjie)
     },
     onBrowserBack() {
       if (this.langjie) {
-        this.goAdUrl()
+        window.location.href = localStorage.getItem('lanjie_url')
       }
     },
     goAdUrl() {
-      // window.location.href = process.env.VUE_APP_RE_GAME_URL
+      window.location.href = localStorage.getItem('succ_url')
     }
   }
 }
