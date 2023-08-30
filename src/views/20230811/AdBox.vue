@@ -1,21 +1,15 @@
 <template>
-
   <div style="">
-
-    <div style="position: relative;" v-show="showMM">
-
-      <img src="../../assets/images/20230811/light_190805.png" alt="" style="width: 100%;opacity:0;" />
+    <div style="position: relative" v-show="showMM">
+      <img src="../../assets/images/20230811/light_190805.png" alt="" style="width: 100%; opacity: 0" />
 
       <div class="mm-bg"></div>
 
       <canvas id="canvas" class="mm-main"></canvas>
 
       <div class="mm-btn" @click="closeMM">立即领取</div>
-
     </div>
-
   </div>
-
 </template>
 
 <script>
@@ -113,4 +107,3 @@ export default {
   }
 }
 </style>
-

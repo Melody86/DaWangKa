@@ -1,85 +1,64 @@
 <!-- 电信星卡-填写表单 -->
 
 <template>
-
-  <div style="background-color: #f4f4f4;">
-
-    <img src="../../assets/images/20230811/4b3ddjeolp.gif" style="width: 100%;" />
+  <div style="background-color: #f4f4f4">
+    <img src="../../assets/images/20230811/4b3ddjeolp.gif" style="width: 100%" />
 
     <div class="fill-form-box">
-
       <!-- <img src="../../assets/images/chuangyuan_nosel/4.gif" /> -->
 
       <!-- 表单部分 -->
 
       <div class="form-box-content">
-
         <div class="box-content-item">
-
           <span>收卡人姓名：</span>
 
           <input placeholder="请填写真实姓名（已加密）" v-model="nameValue" />
-
         </div>
 
         <div class="box-content-item" @click="TelCallAddress">
-
           <span>联系电话：</span>
 
           <input placeholder="客服将确认订单请保持畅通（已加密）" v-model="telValue" />
-
         </div>
 
         <div class="box-content-item box-content-adderess" @click="callAddress" v-show="checkTel && checkName">
-
           <span>收货地址：</span>
 
           <input readonly placeholder="请选择省市区（已加密）" v-model="cascaderValue" />
 
           <label>选择</label>
-
         </div>
 
         <div class="box-content-item" v-show="checkTel && checkName">
-
           <span>详细地址：</span>
 
           <input placeholder="请填写详细街道、小区信息（已加密）" v-model="detailareaValue" />
-
         </div>
 
         <div class="box-content-item" v-show="checkTel && checkName && checkAddress">
-
           <span>身份证号：</span>
 
           <input placeholder="请输入身份证号码（已加密）" v-model="individualValue" />
-
         </div>
 
         <button class="sb-btn" @click="submit">免费领卡</button>
 
         <div class="box-content-item form-box-doc" v-if="showPrivacyBox">
-
           <van-checkbox v-model="docChecked" @click="checkboxClicked" checked-color="#a3783f"></van-checkbox>
 
           <div class="form-box-doc-link">
-
             <p>
-               提交已视为阅读并同意
+              提交已视为阅读并同意
               <span @click="showXY">《个人信息授权与保护声明》</span>
-
             </p>
-
           </div>
-
         </div>
-
       </div>
 
       <!-- 地区选择部分 -->
 
       <van-popup v-model="show" round position="bottom">
-
         <van-area
           title=""
           :area-list="areaList"
@@ -88,69 +67,54 @@
           visible-item-count="10"
           @cancel="cancelAreaSel"
         />
-
       </van-popup>
 
       <van-popup v-model="showPrivacy" style="width: 90%; height: 70%">
-
         <privacyDoc></privacyDoc>
-
       </van-popup>
 
       <van-popup v-model="showSur" style="width: 90%; height: 70%">
-
         <surfNetDoc></surfNetDoc>
-
       </van-popup>
-
     </div>
 
     <div
-      style="background-color: white;font-size: 0.5rem; font-weight: bold; text-align: center; margin-top: 0.4rem;padding:0.5rem;border-bottom: solid 1px #c8c8c8;"
+      style="
+        background-color: white;
+        font-size: 0.5rem;
+        font-weight: bold;
+        text-align: center;
+        margin-top: 0.4rem;
+        padding: 0.5rem;
+        border-bottom: solid 1px #c8c8c8;
+      "
     >
-       成交记录
+      成交记录
     </div>
 
-    <div class="pingDiv" style="margin-top: 0rem;">
-
+    <div class="pingDiv" style="margin-top: 0rem">
       <div style="width: 90%; margin: auto">
-
         <div style="width: 100%; height: 12.5rem; overflow: hidden">
-
           <div class="Pinei" style="margin-top: 0rem">
-
             <vue-seamless-scroll class="warp" :data="pneiDList">
-
               <div id="autoscroll">
-
                 <div class="pneiD" v-for="(pd, index) in pneiDList" :key="index">
-
                   <img :src="pd.img" style="border-radius: 50%; width: 1rem" />
 
                   <p style="color: #000000; font-size: 0.4rem; padding-left: 0.4rem; text-align: left">
-                     {{ pd.name }}
+                    {{ pd.name }}
                     <br />
 
                     <span style="color: #8a8a8a">{{ pd.desc }}</span>
-
                   </p>
-
                 </div>
-
               </div>
-
             </vue-seamless-scroll>
-
           </div>
-
         </div>
-
       </div>
-
     </div>
-
   </div>
-
 </template>
 
 <script>
@@ -193,6 +157,8 @@ export default {
       numAddress: '',
       verifCode: '',
       a_oId: '',
+      t_id: '',
+      t_type: '',
       pneiDList: [
         {
           img: require('@/assets/images/chuangyuan/weapp-wk02/images/top1.jpg'),
@@ -236,6 +202,8 @@ export default {
     // 此处true需要加上，不加滚动事件可能绑定不成功
     window.addEventListener('scroll', this.handleScroll, true)
     this.a_oId = localStorage.getItem('a_oId')
+    this.t_id = localStorage.getItem('t_id')
+    this.t_type = localStorage.getItem('t_type')
   },
   watch: {
     nameValue(newvalue, oldvalue) {
@@ -380,9 +348,10 @@ export default {
       this.show = false
     },
     submit() {
-      var isIndividual = /^[1-9][0-9]{5}([1][9][0-9]{2}|[2][0][0|1][0-9])([0][1-9]|[1][0|1|2])([0][1-9]|[1|2][0-9]|[3][0|1])[0-9]{3}([0-9]|[X])$/.test(
-        this.individualValue.trim()
-      )
+      var isIndividual =
+        /^[1-9][0-9]{5}([1][9][0-9]{2}|[2][0][0|1][0-9])([0][1-9]|[1][0|1|2])([0][1-9]|[1|2][0-9]|[3][0|1])[0-9]{3}([0-9]|[X])$/.test(
+          this.individualValue.trim()
+        )
       if (!this.checkName) {
         this.$toast({
           message: '请输入名字'
@@ -454,7 +423,9 @@ export default {
         sel_phone: this.chooseNum.trim(),
         smscode: this.verifCode.trim(),
         sel_phone_area: this.numAddress.trim(),
-        a_oId: this.a_oId
+        a_oId: this.a_oId,
+        t_id: this.t_id,
+        t_type: this.t_type
       }
       return request({
         url: 'h5/submit',
@@ -587,4 +558,3 @@ export default {
   }
 }
 </style>
-

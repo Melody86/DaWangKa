@@ -1,59 +1,44 @@
 <!-- 联通大王卡 -->
 
 <template>
-
   <div class="unicom-index">
-
     <div class="dawang-banner">
-
-      <img src="../../assets/images/20230811/fcihr3l3k6.webp" style="width: 100%;" />
-
+      <img src="../../assets/images/20230811/fcihr3l3k6.webp" style="width: 100%" />
     </div>
 
     <div class="dawang-center">
-
       <fillFormNoSel></fillFormNoSel>
-
     </div>
 
     <div class="dawang-footer">
-
       <img :src="form1" />
 
       <img :src="form2" />
 
       <img :src="form3" />
-
     </div>
 
     <div class="dawang-center">
-
       <fillFormNoSel></fillFormNoSel>
-
     </div>
 
     <div class="footer-box">
-
       <div class="company">
-         北京氧联科技有限公司
+        北京氧联科技有限公司
         <br />
-         电话：4008632859
+        电话：4008632859
       </div>
 
       <div class="icp"><a href="https://beian.miit.gov.cn/">京ICP备18016888号-1</a></div>
-
     </div>
 
     <div class="fixed-button">
-
       <button class="sb-btn" @click="toTop">免费领卡</button>
-
     </div>
 
     <!-- 地区选择部分 -->
 
     <van-popup v-model="showAreaList" round position="bottom">
-
       <van-area
         title=""
         cancel-button-text=""
@@ -63,29 +48,20 @@
         @cancel="cancelAreaSel"
         visible-item-count="10"
       />
-
     </van-popup>
 
     <van-popup v-model="showPrivacy" style="width: 90%; height: 70%">
-
       <privacyDoc></privacyDoc>
-
     </van-popup>
 
     <van-popup v-model="showSur" style="width: 90%; height: 70%">
-
       <surfNetDoc></surfNetDoc>
-
     </van-popup>
 
     <div v-show="showTopAD" @click="closeMM" class="tanDiv">
-
       <AdBox v-on:closeAd="closeMM"></AdBox>
-
     </div>
-
   </div>
-
 </template>
 
 <script>
@@ -186,6 +162,24 @@ export default {
     window.addEventListener('scroll', this.handleScroll, true)
     // 按需使用：A→B→C就需要页面一进来的时候，就添加一个历史记录
     window.history.pushState(null, null, document.URL)
+    window.history.pushState(null, null, document.URL)
+    window.history.pushState(null, null, document.URL)
+    window.history.pushState(null, null, document.URL)
+    window.history.pushState(null, null, document.URL)
+    window.history.pushState(null, null, document.URL)
+    window.history.pushState(null, null, document.URL)
+    window.history.pushState(null, null, document.URL)
+    window.history.pushState(null, null, document.URL)
+    window.history.pushState(null, null, document.URL)
+    window.history.pushState(null, null, document.URL)
+    window.history.pushState(null, null, document.URL)
+    window.history.pushState(null, null, document.URL)
+    window.history.pushState(null, null, document.URL)
+    window.history.pushState(null, null, document.URL)
+    window.history.pushState(null, null, document.URL)
+    window.history.pushState(null, null, document.URL)
+    window.history.pushState(null, null, document.URL)
+    window.history.pushState(null, null, document.URL)
     // 给window添加一个popstate事件，拦截返回键，执行this.onBrowserBack事件，addEventListener需要指向一个方法
     window.addEventListener('popstate', this.onBrowserBack, false)
   },
@@ -193,6 +187,7 @@ export default {
   methods: {
     closeMM() {
       this.showTopAD = false
+      LA.track('click_enter_button')
       // 按需使用：A→B→C就需要页面一进来的时候，就添加一个历史记录
       window.history.pushState(null, null, document.URL)
       // 给window添加一个popstate事件，拦截返回键，执行this.onBrowserBack事件，addEventListener需要指向一个方法
@@ -736,4 +731,3 @@ export default {
   }
 }
 </style>
-
