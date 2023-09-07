@@ -16,6 +16,7 @@ import {
   Checkbox,
   CheckboxGroup,
   Popup,
+  Dialog,
   Toast
 } from 'vant'
 Vue.use(Button)
@@ -33,3 +34,4 @@ Vue.use(CheckboxGroup)
 Vue.use(Popup)
 Vue.use(Toast)
 Vue.use(Picker)
+Vue.use(Dialog)

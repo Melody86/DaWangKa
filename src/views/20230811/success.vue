@@ -1,37 +1,19 @@
 <template>
-
   <div class="unicom-index">
-
     <div class="pic-box">
-
-      <img src="../../assets/images/20230811/succ/1.webp" alt="" />
-
-      <img src="../../assets/images/20230811/succ/2.webp" alt="" />
-
-      <img src="../../assets/images/20230811/succ/3.webp" alt="" />
-
-      <img src="../../assets/images/20230811/succ/4.webp" alt="" />
-
-      <img src="../../assets/images/20230811/succ/5.webp" alt="" />
-
-      <img src="../../assets/images/20230811/succ/6.webp" alt="" />
-
+      <img src="../../assets/images/hhua/succ.jpeg" alt="" />
     </div>
 
     <div class="footer-box">
-
       <div class="company">
-         北京氧联科技有限公司
+        北京氧联科技有限公司
         <br />
-         电话：4008632859
+        电话：4008632859
       </div>
 
       <div class="icp"><a href="https://beian.miit.gov.cn/">京ICP备18016888号-1</a></div>
-
     </div>
-
   </div>
-
 </template>
 
 <script>
@@ -51,10 +33,10 @@ export default {
     window.history.pushState(null, null, document.URL)
     // 给window添加一个popstate事件，拦截返回键，执行this.onBrowserBack事件，addEventListener需要指向一个方法
     window.addEventListener('popstate', this.onBrowserBack, false)
-    setTimeout(() => {
-      this.goAdUrl()
-      // console.log(232323)
-    }, 3000)
+    // setTimeout(() => {
+    //   this.goAdUrl()
+    //   // console.log(232323)
+    // }, 3000)
   },
   methods: {
     isLanjieArea() {
@@ -114,4 +96,3 @@ export default {
   }
 }
 </style>
-

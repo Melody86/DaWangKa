@@ -3,7 +3,7 @@
 <template>
   <div class="unicom-index">
     <div class="dawang-banner">
-      <img src="../../assets/images/20230811/fcihr3l3k6.webp" style="width: 100%" />
+      <img src="../../assets/images/hhua/1.webp" style="width: 100%" />
     </div>
 
     <div class="dawang-center">
@@ -12,10 +12,14 @@
 
     <div class="dawang-footer">
       <img :src="form1" />
-
       <img :src="form2" />
-
       <img :src="form3" />
+      <img :src="form4" />
+      <img :src="form5" />
+      <img :src="form6" />
+      <img :src="form7" />
+      <img :src="form8" />
+      <img :src="form9" />
     </div>
 
     <div class="dawang-center">
@@ -33,7 +37,7 @@
     </div>
 
     <div class="fixed-button">
-      <button class="sb-btn" @click="toTop">免费领卡</button>
+      <button class="sb-btn" @click="toTop">立即下单</button>
     </div>
 
     <!-- 地区选择部分 -->
@@ -94,22 +98,16 @@ export default {
         parseInt(process.env.VUE_APP_SHENHE) === 0
           ? require('@/assets/images/chuangyuan_nosel/2a.gif')
           : require('@/assets/images/chuangyuan_nosel/2a.gif'),
-      form1:
-        parseInt(process.env.VUE_APP_SHENHE) === 0
-          ? require('@/assets/images/20230811/a6m1h1x2ke.webp')
-          : require('@/assets/images/chuangyuan_nosel/2aa.gif'),
-      form2:
-        parseInt(process.env.VUE_APP_SHENHE) === 0
-          ? require('@/assets/images/20230811/plv3i1gybm.webp')
-          : require('@/assets/images/chuangyuan/shenhe/weapp-wk02/images/red19/bannel9.png'),
-      form3:
-        parseInt(process.env.VUE_APP_SHENHE) === 0
-          ? require('@/assets/images/20230811/ncwb9n992t.webp')
-          : require('@/assets/images/chuangyuan/shenhe/weapp-wk02/images/red19/bannel10.png'),
-      form4:
-        parseInt(process.env.VUE_APP_SHENHE) === 0
-          ? require('@/assets/images/20230811/fcihr3l3k6.webp')
-          : require('@/assets/images/chuangyuan/shenhe/weapp-wk02/images/red19/bannel10.png'),
+
+      form1: require('@/assets/images/hhua/2.webp'),
+      form2: require('@/assets/images/hhua/3.webp'),
+      form3: require('@/assets/images/hhua/4.webp'),
+      form4: require('@/assets/images/hhua/5.webp'),
+      form5: require('@/assets/images/hhua/6.webp'),
+      form6: require('@/assets/images/hhua/7.webp'),
+      form7: require('@/assets/images/hhua/8.webp'),
+      form8: require('@/assets/images/hhua/9.webp'),
+      form9: require('@/assets/images/hhua/9.webp'),
       voice: require('@/assets/images/dawang/index29_1/shengyin.png'),
       address: require('@/assets/images/dawang/index29_1/baijiu-.png'),
       baijiuGray: require('@/assets/images/dawang/index29_1/baijiuGray.png'),
@@ -139,7 +137,7 @@ export default {
       isLastPage: true,
       list: [],
       searchList: [188, 66, 123, 456, 321],
-      showTopAD: true,
+      showTopAD: false,
       // showTopAD: parseInt(process.env.VUE_APP_HONGBAO_TANCHUANG),
 
       showAgreement: parseInt(process.env.VUE_APP_SHENHE),

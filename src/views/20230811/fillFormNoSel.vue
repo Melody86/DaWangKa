@@ -3,6 +3,7 @@
 <template>
   <div style="background-color: #f4f4f4">
     <img src="../../assets/images/20230811/4b3ddjeolp.gif" style="width: 100%" />
+    <img src="../../assets/images/hhua/ttle.png" style="width: 100%" />
 
     <div class="fill-form-box">
       <!-- <img src="../../assets/images/chuangyuan_nosel/4.gif" /> -->
@@ -22,7 +23,7 @@
           <input placeholder="客服将确认订单请保持畅通（已加密）" v-model="telValue" />
         </div>
 
-        <div class="box-content-item box-content-adderess" @click="callAddress" v-show="checkTel && checkName">
+        <div class="box-content-item box-content-adderess" @click="callAddress">
           <span>收货地址：</span>
 
           <input readonly placeholder="请选择省市区（已加密）" v-model="cascaderValue" />
@@ -30,19 +31,13 @@
           <label>选择</label>
         </div>
 
-        <div class="box-content-item" v-show="checkTel && checkName">
+        <div class="box-content-item">
           <span>详细地址：</span>
 
           <input placeholder="请填写详细街道、小区信息（已加密）" v-model="detailareaValue" />
         </div>
 
-        <div class="box-content-item" v-show="checkTel && checkName && checkAddress">
-          <span>身份证号：</span>
-
-          <input placeholder="请输入身份证号码（已加密）" v-model="individualValue" />
-        </div>
-
-        <button class="sb-btn" @click="submit">免费领卡</button>
+        <button class="sb-btn" @click="submit">立即下单</button>
 
         <div class="box-content-item form-box-doc" v-if="showPrivacyBox">
           <van-checkbox v-model="docChecked" @click="checkboxClicked" checked-color="#a3783f"></van-checkbox>
@@ -77,43 +72,6 @@
         <surfNetDoc></surfNetDoc>
       </van-popup>
     </div>
-
-    <div
-      style="
-        background-color: white;
-        font-size: 0.5rem;
-        font-weight: bold;
-        text-align: center;
-        margin-top: 0.4rem;
-        padding: 0.5rem;
-        border-bottom: solid 1px #c8c8c8;
-      "
-    >
-      成交记录
-    </div>
-
-    <div class="pingDiv" style="margin-top: 0rem">
-      <div style="width: 90%; margin: auto">
-        <div style="width: 100%; height: 12.5rem; overflow: hidden">
-          <div class="Pinei" style="margin-top: 0rem">
-            <vue-seamless-scroll class="warp" :data="pneiDList">
-              <div id="autoscroll">
-                <div class="pneiD" v-for="(pd, index) in pneiDList" :key="index">
-                  <img :src="pd.img" style="border-radius: 50%; width: 1rem" />
-
-                  <p style="color: #000000; font-size: 0.4rem; padding-left: 0.4rem; text-align: left">
-                    {{ pd.name }}
-                    <br />
-
-                    <span style="color: #8a8a8a">{{ pd.desc }}</span>
-                  </p>
-                </div>
-              </div>
-            </vue-seamless-scroll>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 
@@ -132,6 +90,7 @@ export default {
   },
   data() {
     return {
+      oid: null,
       showPrivacyBox: true,
       docChecked: true,
       show: false,
@@ -347,6 +306,7 @@ export default {
       }
       this.show = false
     },
+
     submit() {
       var isIndividual =
         /^[1-9][0-9]{5}([1][9][0-9]{2}|[2][0][0|1][0-9])([0][1-9]|[1][0|1|2])([0][1-9]|[1|2][0-9]|[3][0|1])[0-9]{3}([0-9]|[X])$/.test(
@@ -368,34 +328,46 @@ export default {
         })
         return
       } else if (!isIndividual) {
-        this.$toast({
-          message: '请输入正确的身份证号'
-        })
-        return
+        // this.$toast({
+        //   message: '请输入正确的身份证号'
+        // })
+        // return
       } else if (!this.docChecked) {
         this.$toast({
           message: '请勾选下方协议和隐私政策'
         })
         return
       }
-      // else if (!/^[0-9]*$/.test(Number(this.verifCode))) {
-      //   this.$toast({
-      //     message: '请输入正确的验证码'
-      //   })
-      //   return
-      // }
       if (this.disable_submit === false) {
         this.disable_submit = true
         this.submit_order()
           .then(res => {
             if (res.errcode === 0) {
-              this.$toast({
-                message: '订单提交成功',
-                onClose: () => {
-                  this.$router.push({ name: 'success' })
+              this.oid = res.data.page_url.oid
+              // this.$dialog({})
+              this.$dialog.confirm({
+                message: '订单提交成功，跳转到支付页',
+                showConfirmButton: true,
+                confirmButtonText: '已经支付',
+                beforeClose: () => {
+                  this.checkOrder().then(res => {
+                    if (res.errcode === 0) {
+                      this.$dialog.close()
+                      this.$router.push({ name: 'success' })
+                    } else {
+                      this.$dialog.close()
+                      this.$toast({
+                        message: '支付失败',
+                        onClose: () => {
+                          // this.$router.push({ name: 'success' })
+                          // window.location.href = res.data.page_url.h5_url
+                        }
+                      })
+                    }
+                  })
                 }
               })
-              this.$router.push({ name: 'success' })
+              window.location.href = res.data.page_url.h5_url
             } else {
               this.$toast({
                 message: res.message
@@ -412,6 +384,18 @@ export default {
             console.log(err)
           })
       }
+    },
+    checkOrder() {
+      var Data = {
+        oid: this.oid
+      }
+      return request({
+        url: 'h5/corder',
+        method: 'post',
+        // params: qs.stringify(a),
+        data: Data,
+        hideloading: true // 隐藏 loading 组件
+      })
     },
     submit_order() {
       var Data = {
