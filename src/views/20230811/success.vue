@@ -6,9 +6,9 @@
 
     <div class="footer-box">
       <div class="company">
-        北京氧联科技有限公司
+        海口型樊鞑电子商务有限公司
         <br />
-        电话：4008632859
+        电话：4001039183
       </div>
 
       <div class="icp"><a href="https://beian.miit.gov.cn/">京ICP备18016888号-1</a></div>
