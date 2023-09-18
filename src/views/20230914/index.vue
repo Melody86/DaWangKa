@@ -140,7 +140,7 @@ export default {
       isLastPage: true,
       list: [],
       searchList: [188, 66, 123, 456, 321],
-      showTopAD: true,
+      showTopAD: false,
       // showTopAD: parseInt(process.env.VUE_APP_HONGBAO_TANCHUANG),
 
       showAgreement: parseInt(process.env.VUE_APP_SHENHE),
