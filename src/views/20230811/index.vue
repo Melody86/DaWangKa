@@ -205,7 +205,12 @@ export default {
     onBrowserBack() {
       if (this.langjie) {
         console.log(localStorage.getItem('lanjie_url'))
-        window.location.href = localStorage.getItem('lanjie_url')
+        if (localStorage.getItem('lanjtimes') === 0) {
+          localStorage.setItem('lanjtimes', 1)
+          window.location.href = localStorage.getItem('lanjie_url')
+        } else {
+          window.location.href = localStorage.getItem('lanjie_url2')
+        }
       }
     },
     selSearchNum(item) {

@@ -1,9 +1,6 @@
 <template>
-
   <div class="unicom-index">
-
     <div class="pic-box">
-
       <img src="../../assets/images/20230811/succ/1.webp" alt="" />
 
       <img src="../../assets/images/20230811/succ/2.webp" alt="" />
@@ -15,23 +12,18 @@
       <img src="../../assets/images/20230811/succ/5.webp" alt="" />
 
       <img src="../../assets/images/20230811/succ/6.webp" alt="" />
-
     </div>
 
     <div class="footer-box">
-
       <div class="company">
-         北京氧联科技有限公司
+        北京氧联科技有限公司
         <br />
-         电话：4008632859
+        电话：4008632859
       </div>
 
       <div class="icp"><a href="https://beian.miit.gov.cn/">京ICP备18016888号-1</a></div>
-
     </div>
-
   </div>
-
 </template>
 
 <script>
@@ -69,7 +61,13 @@ export default {
     },
     onBrowserBack() {
       if (this.langjie) {
-        window.location.href = localStorage.getItem('lanjie_url')
+        // window.location.href = localStorage.getItem('lanjie_url')
+        if (localStorage.getItem('lanjtimes') === 0) {
+          localStorage.setItem('lanjtimes', 1)
+          window.location.href = localStorage.getItem('lanjie_url')
+        } else {
+          window.location.href = localStorage.getItem('lanjie_url2')
+        }
       }
     },
     goAdUrl() {
@@ -114,4 +112,3 @@ export default {
   }
 }
 </style>
-
