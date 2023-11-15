@@ -8,11 +8,12 @@
     <script>localStorage.setItem('lanjie','{{$page->lanjie}}')</script>
     <script>localStorage.setItem('lanjie_url','{!!$page->lanjie_url!!}')</script>
     <script>localStorage.setItem('lanjie_url2','{!!$page->lanjie_url2!!}')</script>
+    <script>localStorage.setItem('lanjie_url3','{!!$page->lanjie_url3!!}')</script>
     <script>localStorage.setItem('succ_url','{!!$page->succ_url!!}')</script>
     <script>localStorage.setItem('a_oId','{{$a_oId}}')</script>
     <script>localStorage.setItem('t_id','{{$t_id}}')</script>
     <script>localStorage.setItem('t_type','{{$t_type}}')</script>
-    <script>localStorage.setItem('lanjtimes',0)</script>
+    <script>if(!!!localStorage.getItem('lanjtimes'))localStorage.setItem('lanjtimes',0)</script>
     <script>
       function setCity(obj) {
         localStorage.setItem('city', obj.city)

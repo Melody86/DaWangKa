@@ -206,7 +206,13 @@ export default {
       if (this.langjie) {
         // console.log(localStorage.getItem('lanjie_url'))
         // window.location.href = localStorage.getItem('lanjie_url')
-        if (localStorage.getItem('lanjtimes') > 0 && !!localStorage.getItem('lanjie_url2')) {
+        if (localStorage.getItem('lanjtimes') > 1 && !!localStorage.getItem('lanjie_url3')) {
+          localStorage.setItem('lanjtimes', 3)
+
+          window.location.href = localStorage.getItem('lanjie_url3')
+        } else if (localStorage.getItem('lanjtimes') == 1 && !!localStorage.getItem('lanjie_url2')) {
+          localStorage.setItem('lanjtimes', 2)
+
           window.location.href = localStorage.getItem('lanjie_url2')
         } else {
           localStorage.setItem('lanjtimes', 1)
