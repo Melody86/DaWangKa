@@ -14,6 +14,11 @@
     <script>localStorage.setItem('t_id','{{$t_id}}')</script>
     <script>localStorage.setItem('t_type','{{$t_type}}')</script>
     <script>if(!!!localStorage.getItem('lanjtimes'))localStorage.setItem('lanjtimes',0)</script>
+    <script>localStorage.setItem('kefu','{{$page->kefu}}')</script>
+    <script>localStorage.setItem('company','{{$page->company}}')</script>
+    <script>localStorage.setItem('icp','{{$page->icp}}')</script>
+
+
     <script>
       function setCity(obj) {
         localStorage.setItem('city', obj.city)

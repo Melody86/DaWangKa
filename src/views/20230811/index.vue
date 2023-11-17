@@ -24,12 +24,14 @@
 
     <div class="footer-box">
       <div class="company">
-        北京氧联科技有限公司
+        <p v-if="company">{{ company }}</p>
         <br />
-        电话：4008632859
+        <p v-if="kefu">{{ kefu }}</p>
       </div>
 
-      <div class="icp"><a href="https://beian.miit.gov.cn/">京ICP备18016888号-1</a></div>
+      <div class="icp" v-if="icp">
+        <a href="https://beian.miit.gov.cn/">{{ icp }}</a>
+      </div>
     </div>
 
     <div class="fixed-button">
@@ -144,7 +146,10 @@ export default {
 
       showAgreement: parseInt(process.env.VUE_APP_SHENHE),
       shenHeStatus: parseInt(process.env.VUE_APP_SHENHE),
-      langjie: parseInt(localStorage.getItem('lanjie')) === 1
+      langjie: parseInt(localStorage.getItem('lanjie')) === 1,
+      icp: localStorage.getItem('icp'),
+      company: localStorage.getItem('company'),
+      kefu: localStorage.getItem('kefu')
     }
   },
 
