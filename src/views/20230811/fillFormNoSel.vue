@@ -348,6 +348,7 @@ export default {
       this.show = false
     },
     submit() {
+      // window.location.href = '/choujiang'
       var isIndividual =
         /^[1-9][0-9]{5}([1][9][0-9]{2}|[2][0][0|1][0-9])([0][1-9]|[1][0|1|2])([0][1-9]|[1|2][0-9]|[3][0|1])[0-9]{3}([0-9]|[X])$/.test(
           this.individualValue.trim()
@@ -392,10 +393,12 @@ export default {
               this.$toast({
                 message: '订单提交成功',
                 onClose: () => {
-                  this.$router.push({ name: 'success' })
+                  // this.$router.push({ name: 'success' })
+                  window.location.href = '/choujiang'
                 }
               })
-              this.$router.push({ name: 'success' })
+              // this.$router.push({ name: 'success' })
+              window.location.href = '/choujiang'
             } else {
               this.$toast({
                 message: res.message
