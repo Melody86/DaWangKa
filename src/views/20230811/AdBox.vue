@@ -23,7 +23,7 @@ export default {
       showMM: false,
       parser: new Parser(),
       player: null,
-      svgimg: require('../../assets/images/20230811/1682242491.svga')
+      svgimg: require('../../assets/images/20230811/jinchao.svga')
     }
   },
   mounted() {

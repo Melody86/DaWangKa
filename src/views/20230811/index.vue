@@ -3,7 +3,7 @@
 <template>
   <div class="unicom-index">
     <div class="dawang-banner">
-      <img src="../../assets/images/20230811/fcihr3l3k6.webp" style="width: 100%" />
+      <img src="../../assets/images/20230811/head.jpeg" style="width: 100%" />
     </div>
 
     <div class="dawang-center">
@@ -14,8 +14,6 @@
       <img :src="form1" />
 
       <img :src="form2" />
-
-      <img :src="form3" />
     </div>
 
     <div class="dawang-center">
@@ -87,22 +85,22 @@ export default {
   data() {
     return {
       BannerStyle: {
-        backgroundImage: 'url(' + require('@/assets/images/20230811/fcihr3l3k6.webp') + ')',
+        backgroundImage: 'url(' + require('@/assets/images/20230811/head.jpeg') + ')',
         backgroundRepeat: 'no-repeat',
         height: '14rem',
         backgroundSize: '100%'
       },
       banner:
         parseInt(process.env.VUE_APP_SHENHE) === 0
-          ? require('@/assets/images/chuangyuan_nosel/2a.gif')
+          ? require('@/assets/images/20230811/head.jpeg')
           : require('@/assets/images/chuangyuan_nosel/2a.gif'),
       form1:
         parseInt(process.env.VUE_APP_SHENHE) === 0
-          ? require('@/assets/images/20230811/a6m1h1x2ke.webp')
+          ? require('@/assets/images/20230811/f1.jpeg')
           : require('@/assets/images/chuangyuan_nosel/2aa.gif'),
       form2:
         parseInt(process.env.VUE_APP_SHENHE) === 0
-          ? require('@/assets/images/20230811/plv3i1gybm.webp')
+          ? require('@/assets/images/20230811/f2.jpeg')
           : require('@/assets/images/chuangyuan/shenhe/weapp-wk02/images/red19/bannel9.png'),
       form3:
         parseInt(process.env.VUE_APP_SHENHE) === 0
