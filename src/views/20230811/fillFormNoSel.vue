@@ -393,12 +393,12 @@ export default {
               this.$toast({
                 message: '订单提交成功',
                 onClose: () => {
-                  // this.$router.push({ name: 'success' })
-                  window.location.href = '/choujiang'
+                  this.$router.push({ name: 'newsuccess' })
+                  // window.location.href = '/choujiang'
                 }
               })
-              // this.$router.push({ name: 'success' })
-              window.location.href = '/choujiang'
+              this.$router.push({ name: 'newsuccess' })
+              // window.location.href = '/choujiang'
             } else {
               this.$toast({
                 message: res.message
