@@ -7,7 +7,7 @@
 
       <canvas id="canvas" class="mm-main"></canvas>
 
-      <div class="mm-btn" @click="closeMM">立即领取</div>
+      <div class="mm-btn" @click="closeMM">立即免费领取</div>
     </div>
   </div>
 </template>
