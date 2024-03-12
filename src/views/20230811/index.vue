@@ -106,7 +106,7 @@ export default {
           : require('@/assets/images/chuangyuan/shenhe/weapp-wk02/images/red19/bannel9.png'),
       form3:
         parseInt(process.env.VUE_APP_SHENHE) === 0
-          ? require('@/assets/images/20230811/ncwb9n992t.webp')
+          ? require('@/assets/images/20230811/ncw2b9n992t.png')
           : require('@/assets/images/chuangyuan/shenhe/weapp-wk02/images/red19/bannel10.png'),
       form4:
         parseInt(process.env.VUE_APP_SHENHE) === 0
