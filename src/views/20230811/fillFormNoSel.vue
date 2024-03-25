@@ -2,7 +2,7 @@
 
 <template>
   <div style="background-color: #f4f4f4">
-    <img src="../../assets/images/20230811/4b3ddjeolp.gif" style="width: 100%" />
+    <img src="../../assets/images/20230811/4b3ddjeolp.5ce58bd6.gif" style="width: 100%" />
 
     <div class="fill-form-box">
       <!-- <img src="../../assets/images/chuangyuan_nosel/4.gif" /> -->
@@ -42,7 +42,7 @@
           <input placeholder="请输入身份证号码（已加密）" v-model="individualValue" />
         </div>
 
-        <button class="sb-btn" @click="submit">免费领卡</button>
+        <button class="sb-btn" @click="submit">免费领卡加入</button>
 
         <div class="box-content-item form-box-doc" v-if="showPrivacyBox">
           <van-checkbox v-model="docChecked" @click="checkboxClicked" checked-color="#a3783f"></van-checkbox>

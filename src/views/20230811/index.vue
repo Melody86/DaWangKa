@@ -3,7 +3,7 @@
 <template>
   <div class="unicom-index">
     <div class="dawang-banner">
-      <img src="../../assets/images/20230811/fcihr3l3k6.webp" style="width: 100%" />
+      <img src="../../assets/images/20230811/headdes.jpg" style="width: 100%" />
     </div>
 
     <div class="dawang-center">
@@ -12,10 +12,6 @@
 
     <div class="dawang-footer">
       <img :src="form1" />
-
-      <img :src="form2" />
-
-      <img :src="form3" />
     </div>
 
     <div class="dawang-center">
@@ -35,7 +31,7 @@
     </div>
 
     <div class="fixed-button">
-      <button class="sb-btn" @click="toTop">免费领卡</button>
+      <button class="sb-btn" @click="toTop">免费领卡加入</button>
     </div>
 
     <!-- 地区选择部分 -->
@@ -61,7 +57,7 @@
     </van-popup>
 
     <div v-show="showTopAD" @click="closeMM" class="tanDiv">
-      <AdBox v-on:closeAd="closeMM"></AdBox>
+      <AdGifBox v-on:closeAd="closeMM"></AdGifBox>
     </div>
   </div>
 </template>
@@ -71,6 +67,7 @@ import privacyDoc from './privacyDoc'
 import surfNetDoc from './surfNetDoc'
 import fillFormNoSel from './fillFormNoSel'
 import AdBox from './AdBox'
+import AdGifBox from './AdGifBox'
 import { areaList } from '@/assets/js/addressCode.js'
 // axios
 import request from '@/utils/request'
@@ -82,7 +79,8 @@ export default {
     privacyDoc,
     surfNetDoc,
     fillFormNoSel,
-    AdBox
+    AdBox,
+    AdGifBox
   },
   data() {
     return {
@@ -94,11 +92,11 @@ export default {
       },
       banner:
         parseInt(process.env.VUE_APP_SHENHE) === 0
-          ? require('@/assets/images/chuangyuan_nosel/2a.gif')
-          : require('@/assets/images/chuangyuan_nosel/2a.gif'),
+          ? require('@/assets/images/20230811/headdes.jpg')
+          : require('@/assets/images/20230811/headdes.jpg'),
       form1:
         parseInt(process.env.VUE_APP_SHENHE) === 0
-          ? require('@/assets/images/20230811/a6m1h1x2ke.webp')
+          ? require('@/assets/images/20230811/ffes.jpg')
           : require('@/assets/images/chuangyuan_nosel/2aa.gif'),
       form2:
         parseInt(process.env.VUE_APP_SHENHE) === 0

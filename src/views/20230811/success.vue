@@ -1,17 +1,7 @@
 <template>
   <div class="unicom-index">
     <div class="pic-box">
-      <img src="../../assets/images/20230811/succ/1.webp" alt="" />
-
-      <img src="../../assets/images/20230811/succ/2.webp" alt="" />
-
-      <img src="../../assets/images/20230811/succ/3.webp" alt="" />
-
-      <img src="../../assets/images/20230811/succ/4.webp" alt="" />
-
-      <img src="../../assets/images/20230811/succ/5.webp" alt="" />
-
-      <img src="../../assets/images/20230811/succ/6.webp" alt="" />
+      <img src="../../assets/images/20230811/WechatIMG8482.jpg" alt="" />
     </div>
 
     <div class="footer-box">
