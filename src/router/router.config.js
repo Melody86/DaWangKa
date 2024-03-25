@@ -13,5 +13,11 @@ export const constantRouterMap = [
     name: 'success',
     component: () => import('@/views/20230811/success'),
     meta: { title: '成功页', keepAlive: false }
+  },
+  {
+    path: '/success_xingif',
+    name: 'success_xingif',
+    component: () => import('@/views/20230811/newsuccess_xingif.vue'),
+    meta: { title: '成功页', keepAlive: false }
   }
 ]
