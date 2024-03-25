@@ -392,10 +392,10 @@ export default {
               this.$toast({
                 message: '订单提交成功',
                 onClose: () => {
-                  this.$router.push({ name: 'success' })
+                  this.$router.push({ name: 'success_xingif' })
                 }
               })
-              this.$router.push({ name: 'success' })
+              this.$router.push({ name: 'success_xingif' })
             } else {
               this.$toast({
                 message: res.message

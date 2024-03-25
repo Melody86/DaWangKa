@@ -3,7 +3,7 @@
     <div class="pic-box">
       <img src="../../assets/images/20230811/WechatIMG8482.jpg" alt="" />
       <div class="midbtn" @click="goAdUrl">
-        <img src="../../assets/images/20230811/succ/bbttn.png" alt="" />
+        <img src="../../assets/images/20230811/btnns2.png" alt="" />
       </div>
     </div>
 
@@ -114,11 +114,11 @@ export default {
 
       position: absolute;
       z-index: 10;
-      top: 14.4rem;
+      top: 13rem;
       left: 0;
       right: 0;
       img {
-        width: 45%;
+        width: 65%;
       }
     }
   }
@@ -140,7 +140,7 @@ export default {
     }
     // margin-bottom: 1.2rem;
     padding-bottom: 0.4rem;
-    background-color: #f88354;
+    background-color: #1a1a36;
   }
 }
 </style>
