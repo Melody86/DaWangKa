@@ -13,5 +13,11 @@ export const constantRouterMap = [
     name: 'success',
     component: () => import('@/views/20230811/success'),
     meta: { title: '成功页', keepAlive: false }
+  },
+  {
+    path: '/newsuccess_lcb',
+    name: 'newsuccess_lcb',
+    component: () => import('@/views/20230811/newsuccess_lcb'),
+    meta: { title: '新成功页', keepAlive: false }
   }
 ]
